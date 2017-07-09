@@ -10,6 +10,7 @@ Rails.application.routes.draw do
   resources :wish_lists
   resources :conversations
   resources :messages
+  resources :order_items
 
   mount ActionCable.server => '/cable'
 end
