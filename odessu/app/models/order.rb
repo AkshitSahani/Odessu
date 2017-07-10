@@ -1,7 +1,7 @@
 class Order < ApplicationRecord
-  belongs_to :user
+  belongs_to :user, optional: true
   has_many :order_items
-  has_one :order_status
+  belongs_to :order_status, optional: true
   before_create :set_order_status
   before_save :update_subtotal
 
@@ -15,6 +15,6 @@ class Order < ApplicationRecord
     end
 
     def update_subtotal
-      self[:subtotal] = subtotal
+      self[:order_total] = subtotal
     end
 end

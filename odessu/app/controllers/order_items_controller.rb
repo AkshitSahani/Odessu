@@ -1,7 +1,15 @@
 class OrderItemsController < ApplicationController
   def create
       @order = current_order
-      @order_item = @order.order_items.new(order_item_params)
+      @order_items = @order.order_items
+      if @order_items.where(product_id: order_item_params['product_id']).empty?
+        @order_item = @order.order_items.new(order_item_params)
+      else
+        @order_item = @order_items.where(product_id: order_item_params['product_id']).first
+        @order_item.quantity += order_item_params["quantity"].to_i
+      end
+      # byebug
+      @order_item.save
       @order.save
       session[:order_id] = @order.id
     end
@@ -21,6 +29,6 @@ class OrderItemsController < ApplicationController
     end
   private
     def order_item_params
-      params.require(:order_item).permit(:unit_price, :order_id, :quantity, :product_id)
+      params.require(:order_item).permit(:order_id, :unit_price, :quantity, :product_id)
     end
 end

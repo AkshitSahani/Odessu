@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170709211458) do
+ActiveRecord::Schema.define(version: 20170710171832) do
 
   create_table "conversations", force: :cascade do |t|
     t.integer  "author_id"
@@ -36,10 +36,11 @@ ActiveRecord::Schema.define(version: 20170709211458) do
   create_table "order_items", force: :cascade do |t|
     t.integer  "order_id"
     t.integer  "product_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
     t.integer  "quantity"
     t.decimal  "unit_price"
+    t.decimal  "total_price"
   end
 
   create_table "order_reviews", force: :cascade do |t|
@@ -50,7 +51,7 @@ ActiveRecord::Schema.define(version: 20170709211458) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "order_staus", force: :cascade do |t|
+  create_table "order_statuses", force: :cascade do |t|
     t.integer  "order_id"
     t.string   "status"
     t.datetime "created_at", null: false
@@ -60,17 +61,18 @@ ActiveRecord::Schema.define(version: 20170709211458) do
   create_table "orders", force: :cascade do |t|
     t.integer  "user_id"
     t.integer  "order_total"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
+    t.integer  "order_status_id"
   end
 
   create_table "products", force: :cascade do |t|
     t.integer  "store_id"
     t.string   "name"
-    t.integer  "price"
     t.string   "description"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
+    t.decimal  "price"
   end
 
   create_table "stores", force: :cascade do |t|
