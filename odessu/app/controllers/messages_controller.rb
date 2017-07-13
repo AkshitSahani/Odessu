@@ -23,7 +23,7 @@ class MessagesController < ApplicationController
   private
 
   def personal_message_params
-    params.require(:personal_message).permit(:body, :author_id, :receiver_id, :conversation_id)
+    params.require(:message).permit(:body, :author_id, :receiver_id, :conversation_id)
   end
 
   def find_conversation!
@@ -36,5 +36,5 @@ class MessagesController < ApplicationController
       redirect_to(root_path) and return unless @conversation && @conversation.participates?(current_user)
     end
   end
-  
+
 end

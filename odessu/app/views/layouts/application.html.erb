@@ -25,6 +25,23 @@
       </div>
     </div>
     <hr>
+
+    <% unless user_signed_in? %>
+      <%= link_to "Sign Up", new_user_registration_path%><br>
+      <%= link_to "Sign In", new_user_session_path %>
+    <% else %>
+      <%= link_to "Logout", destroy_user_session_path, :method => :delete %>
+    <% end %>
+
+
+    <% if flash[:notice] %>
+      <p id="notice"><%= flash[:notice] %></p>
+    <% end %>
+
+    <% if flash[:alert] %>
+      <p id="alert"><%= flash[:alert] %></p>
+    <% end %>
+
     <%= yield %>
   </div>
   </body>

@@ -15,3 +15,14 @@
 //= require turbolinks
 //= require_tree .
 //= require cable
+
+$(document).ready(function() {
+  setTimeout(function(){
+    $('#alert').slideUp();
+  }, 2000);
+
+  setTimeout(function(){
+    $('#notice').slideUp();
+  }, 2000);
+
+})

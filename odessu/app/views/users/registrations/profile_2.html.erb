@@ -1,0 +1,23 @@
+
+<%= form_for(current_user, url: create_profile_2_path) do |f| %>
+  <%= f.label :body_shape, "Body Shape" %>
+  <%= f.select :body_shape, ['curvy', 'voluptous', 'straight', 'pear shaped'] %>
+
+  <h3>How do you like your clothes to fit</h3>
+
+  <%= f.label :Tops  %><br>
+  <%= f.radio_button :tops_fit, 'tight' %>Tight
+  <%= f.radio_button :tops_fit, 'just right' %>Just Right
+  <%= f.radio_button :tops_fit, 'loose' %>Loose
+  <br>
+  <%= f.label :Bottoms  %><br>
+  <%= f.radio_button :bottoms_fit, 'tight' %>Tight
+  <%= f.radio_button :bottoms_fit, 'just right' %>Just Right
+  <%= f.radio_button :bottoms_fit, 'loose' %>Loose
+
+  <h3> How did you hear about us </h3>
+
+  <%= f.select :advertisement_source, ['LinkedIn', 'etc'] %>
+
+  <%= f.submit "Next" %>
+<% end %>

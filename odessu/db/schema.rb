@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170710171832) do
+ActiveRecord::Schema.define(version: 20170712192650) do
 
   create_table "conversations", force: :cascade do |t|
     t.integer  "author_id"
@@ -19,6 +19,14 @@ ActiveRecord::Schema.define(version: 20170710171832) do
     t.datetime "updated_at",  null: false
     t.index ["author_id"], name: "index_conversations_on_author_id"
     t.index ["receiver_id"], name: "index_conversations_on_receiver_id"
+  end
+
+  create_table "issues", force: :cascade do |t|
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+    t.integer  "user_id"
+    t.string   "issue_top"
+    t.string   "issue_bottom"
   end
 
   create_table "messages", force: :cascade do |t|
@@ -79,20 +87,37 @@ ActiveRecord::Schema.define(version: 20170710171832) do
     t.string   "store_name"
     t.string   "address"
     t.string   "store_size"
-    t.string   "type"
     t.string   "size_min"
     t.string   "size_max"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string   "feature"
   end
 
   create_table "users", force: :cascade do |t|
+    t.string   "email",                  default: "", null: false
+    t.string   "encrypted_password",     default: "", null: false
+    t.string   "reset_password_token"
+    t.datetime "reset_password_sent_at"
+    t.datetime "remember_created_at"
+    t.integer  "sign_in_count",          default: 0,  null: false
+    t.datetime "current_sign_in_at"
+    t.datetime "last_sign_in_at"
+    t.string   "current_sign_in_ip"
+    t.string   "last_sign_in_ip"
+    t.string   "confirmation_token"
+    t.datetime "confirmed_at"
+    t.datetime "confirmation_sent_at"
+    t.string   "unconfirmed_email"
+    t.integer  "failed_attempts",        default: 0,  null: false
+    t.string   "unlock_token"
+    t.datetime "locked_at"
+    t.datetime "created_at",                          null: false
+    t.datetime "updated_at",                          null: false
     t.string   "first_name"
     t.string   "last_name"
-    t.string   "email"
     t.string   "address"
     t.string   "age_range"
-    t.string   "height"
     t.string   "weight"
     t.string   "bust"
     t.string   "hip"
@@ -108,13 +133,18 @@ ActiveRecord::Schema.define(version: 20170710171832) do
     t.string   "bra_cup"
     t.string   "body_shape"
     t.string   "tops_fit"
-    t.string   "bottoms_fit"
     t.string   "preference"
-    t.string   "zip_code"
+    t.string   "bottoms_fit"
     t.string   "birthdate"
     t.string   "advertisement_source"
-    t.datetime "created_at",           null: false
-    t.datetime "updated_at",           null: false
+    t.string   "weight_type"
+    t.integer  "height_ft"
+    t.integer  "height_in"
+    t.integer  "height_cm"
+    t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
+    t.index ["email"], name: "index_users_on_email", unique: true
+    t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+    t.index ["unlock_token"], name: "index_users_on_unlock_token", unique: true
   end
 
   create_table "wish_list_items", force: :cascade do |t|

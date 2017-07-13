@@ -1,0 +1,15 @@
+<h3> What issues do you usually have with your clothing? </h3>
+
+<%= form_for @issue, url: '/issue', method: :post do |f| %>
+  <h4> Top </h4>
+  <% ['everything', 'nothing', 'too loose', 'too tight'].each do |value| %>
+    <%= f.check_box(:issue_top, { :multiple => true }, value, nil)%>
+    <%= f.label :issue_top, "#{value}" %>
+  <% end %>
+  <h4> Bottom </h4>
+  <% ['everything', 'nothing', 'too loose', 'too tight'].each do |value| %>
+    <%= f.check_box(:issue_bottom, { :multiple => true }, value, nil)%>
+    <%= f.label :issue_bottom, "#{value}" %>
+  <% end %>
+  <%= f.submit 'Save' %>
+<% end %>

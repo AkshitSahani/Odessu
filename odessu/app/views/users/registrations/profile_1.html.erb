@@ -1,0 +1,66 @@
+<%= form_for(current_user, url: create_profile_1_path) do |f| %>
+  <%# devise_error_messages! %>
+  <%= f.label :first_name, "First Name" %>
+  <%= f.text_field :first_name %>
+
+  <%= f.label :last_name, "Last Name" %>
+  <%= f.text_field :last_name %>
+
+  <%= f.label :age_range, "Age Range" %>
+  <%= f.select :age_range, ['11-19', '20-29', '21-29', '31-39', '41-49', '51-59'] %>
+
+  Height:
+  <%= f.text_field :height_ft %> ft <%= f.text_field :height_in %> in
+  or
+  <%= f.text_field :height_cm %> cms
+
+  <%= f.label :weight, "Weight" %>
+  <%= f.text_field :weight %>
+  <%= f.radio_button :weight_type, 'Kg'%>Kg
+  <%= f.radio_button :weight_type, 'Lbs'%>Lbs
+
+  <%= f.label :bust, "Bust" %>
+  <%= f.text_field :bust %>in
+
+  <%= f.label :hip, "Hip" %>
+  <%= f.text_field :hip %>in
+
+  <%= f.label :waist, "Waist" %>
+  <%= f.text_field :waist %>in
+
+  <h3>Tops</h3>
+  <%= f.label :tops_store, "Store" %>
+  <%= f.select :tops_store, ['', 'Addition Elle', 'Leo'] %>
+
+  <%= f.label :tops_size, "Size" %>
+  <%= f.text_field :tops_size %>
+
+  <%= f.label :tops_store_fit, "How does it fit?" %>
+  <%= f.radio_button :tops_store_fit, 'tight' %>Tight
+  <%= f.radio_button :tops_store_fit, 'perfect' %>Perfect
+  <%= f.radio_button :tops_store_fit, 'loose' %>Loose
+
+  <h3>Bottoms</h3>
+
+  <%= f.label :bottoms_store, "Store" %>
+  <%= f.select :bottoms_store, ['', 'Addition Elle', 'Leo'] %>
+
+  <%= f.label :bottoms_fit, "Size" %>
+  <%= f.text_field :bottoms_fit %>
+
+  <%= f.label :tops_store_fit, "How does it fit?" %>
+  <%= f.radio_button :bottoms_store_fit, 'tight' %>Tight
+  <%= f.radio_button :bottoms_store_fit, 'perfect' %>Perfect
+  <%= f.radio_button :bottoms_store_fit, 'loose' %>Loose
+
+  <h3>Bras</h3>
+
+  <%= f.label :bra_size, "Bra Size" %>
+  <%= f.select :bra_size, ['28', '30', '32', '34', '36', '38', '40', '42', '44', '46', '48', '50'] %>
+
+  <%= f.label :bra_cup, "Bra Cup" %>
+  <%= f.select :bra_cup, ['AA', 'A', 'B', 'C', 'D', 'DD or E', 'DDD or F', 'G', 'H', 'I', 'J'] %>
+
+  <%= f.submit "Next" %>
+
+<% end %>
