@@ -131,5 +131,47 @@
 
     <br><span class="submit_issue"><%= submit_tag "submit" %></span></span>
   <% end %>
+  <h3>What Insecurities do you usually have?</h3>
+  <span class="third_form"><%= form_tag update_issues_path, method: :put , id: 'form2' do %>
 
+    <h4> top </h4>
+    <% ['too loose', 'nothing', 'everything', 'too tight'].each do |x| %>
+    <% i = 0 %>
+    <% counter = 0 %>
+      <% while i < @insecurities_top.count %>
+            <% if x == @insecurities_top[i].insecurity_top %>
+              <%= x %><%= check_box_tag('insecurity_top[]', x, true)%>
+              <% i += 1 %>
+              <% break %>
+            <% else %>
+            <% i += 1 %>
+            <% counter += 1 %>
+            <% end %>
+            <% if counter == @insecurities_top.count %>
+              <%= x %><%= check_box_tag('insecurity_top[]', x, false, { :multiple => true })%>
+              <% break %>
+            <% end %>
+      <% end %>
+    <% end %>
+    <h4> Bottom</h4>
+    <% ['everything', 'nothing', 'too loose', 'too tight'].each do |x| %>
+    <% i = 0 %>
+    <% counter = 0 %>
+      <% while i < @insecurities_bottom.count %>
+            <% if x == @insecurities_bottom[i].insecurity_bottom %>
+              <%= x %><%= check_box_tag('insecurity_bottom[]', x, { :multiple => true, :checked => "checked" })%>
+              <% i += 1 %>
+              <% break %>
+            <% else %>
+              <% i += 1 %>
+              <% counter += 1 %>
+            <% end %>
+            <% if counter == @insecurities_bottom.count %>
+              <%= x %><%= check_box_tag('insecurity_bottom[]', x, false, { :multiple => true })%>
+              <% break %>
+            <% end %>
+      <% end %>
+    <% end %>
+  <br><span class="submit_insecure"><%= submit_tag "submit" %></span></span>
+<% end %>
   <br><br><%= link_to 'Save', '#', :class => 'button_submit' %>

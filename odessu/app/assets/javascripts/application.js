@@ -28,6 +28,8 @@ $(document).ready(function() {
     e.preventDefault();
     var issuesTop = [];
     var issuesBottom = [];
+    var insecuritiesTop = [];
+    var insecuritiesBottom = [];
     $(':checkbox:checked').each(function(i){
       if ($(this).attr('name')==="issue_top[]"){
         issuesTop.push($(this).val());
@@ -35,12 +37,19 @@ $(document).ready(function() {
       else if ($(this).attr('name')==="issue_bottom[]"){
         issuesBottom.push($(this).val());
       }
+      else if ($(this).attr('name')==="insecurity_bottom[]"){
+        insecuritiesBottom.push($(this).val());
+      }
+      else if ($(this).attr('name')==="insecurity_top[]"){
+        insecuritiesTop.push($(this).val());
+      }
     });
     $.ajax({
       url: '/update_issues',
       method: 'put',
       data: {
-        issues_top: issuesTop, issues_bottom: issuesBottom
+        issues_top: issuesTop, issues_bottom: issuesBottom,
+        insecurities_top: insecuritiesTop, insecurities_bottom: insecuritiesBottom
       }
     }).done(function(){
       $(".form1 > form").submit();

@@ -100,7 +100,8 @@ class Users::RegistrationsController < Devise::RegistrationsController
   def edit_profile
     @issues_top = current_user.issues.where(issue_bottom: nil)
     @issues_bottom = current_user.issues.where(issue_top: nil)
-    @insecurities = current_user.insecurities
+    @insecurities_top = current_user.insecurities.where(insecurity_bottom: nil)
+    @insecurities_bottom= current_user.insecurities.where(insecurity_top: nil)
   end
 
   def update_profile
@@ -125,15 +126,20 @@ class Users::RegistrationsController < Devise::RegistrationsController
   def update_issues
     if request.xhr?
       current_user.issues.delete_all
+      current_user.insecurities.delete_all
+
       params["issues_top"].each do |issue|
-        # if Issue.where(issue_top: issue, user_id: current_user.id).empty?
           current_user.issues << Issue.create(issue_top: issue)
-        # end
       end
       params["issues_bottom"].each do |issue|
-        # if Issue.where(issue_top: issue, user_id: current_user.id).empty?
           current_user.issues << Issue.create(issue_bottom: issue)
-        # end
+      end
+
+      params["insecurities_top"].each do |insecurity|
+          current_user.insecurities << Insecurity.create(insecurity_top: insecurity)
+      end
+      params["insecurities_bottom"].each do |insecurity|
+          current_user.insecurities << Insecurity.create(insecurity_bottom: insecurity)
       end
     end
   end
