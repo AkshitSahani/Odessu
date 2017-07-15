@@ -11,6 +11,9 @@ class User < ApplicationRecord
   has_many :orders
   has_one :wish_list
   has_many :issues
+  accepts_nested_attributes_for :issues, reject_if: :all_blank?
+  has_many :insecurities
+  accepts_nested_attributes_for :insecurities, reject_if: :all_blank?
 
   def self.bmiCalculator(user)
     if user.weight_type == "Kg"
@@ -713,7 +716,7 @@ class User < ApplicationRecord
       end
     end
 
-    averageTopBustMin = (topBustMin.to_f) / countTopMinBust)
+    averageTopBustMin = ((topBustMin.to_f) / countTopMinBust)
     #       puts "Top Bust Min Sum: " + topBustMin
     #       puts "<br>"
     #       puts "Top Bust Min Count: " + countTopMinBust
@@ -831,7 +834,7 @@ class User < ApplicationRecord
       else
         if (res_bust.size_min == bustIn)
 
-          looseBustArray[res_bust.id = res_bust.store_size
+          looseBustArray[res_bust.id = res_bust.store_size]
         elsif (res_bust.size_max == bustIn)
 
           tightBustArray[res_bust.id] = res_bust.store_size
@@ -1076,5 +1079,307 @@ class User < ApplicationRecord
 
     return "No Size In Store"
   end
+
+  def getUserSizeForStoreBottom(user, storeName)
+
+    # userBWHSQL = "SELECT Waist, Hip FROM users WHERE Email = '" + emailIn + "'"
+    #
+    # resultMeasure = mysqli_query(dataTransfer, userBWHSQL)
+    # rowOFMeasure = mysqli_fetch_row(resultMeasure)
+    waistIn = user.waist
+    hipIn = user.hip
+
+    resultWaist = Store.where(store_name: storeName, feature: "waist")
+    # "SELECT STORE_ID, store_size, size_Min, size_Max FROM sizes WHERE (store_ID = '" + storeName + "' AND type = 'WAIST')"
+    resultHip = Store.where(store_name: storeName, feature: "hip")
+    # "SELECT STORE_ID, store_size, size_Min, size_Max FROM sizes WHERE (store_ID = '" + storeName + "' AND type = 'HIP')"
+
+    previousMinWaist = 0
+    previousMaxWaist = 0
+    previousMinHip = 0
+    previousMaxHip = 0
+
+    previousStoreSizeWaist = ""
+    previousStoreSizeHip = ""
+
+    previousStoreNameWaist = ""
+    previousStoreNameHip = ""
+
+    perfectWaistArray = {}
+    perfectHipArray = {}
+
+    tightWaistArray = {}
+    tightHipArray = {}
+
+    looseWaistArray = {}
+    looseHipArray = {}
+
+    # resultWaist = mysqli_query(dataTransfer, waistStoreSizeSQL)
+    sizeOfResultWaist = resultWaist.count
+    if(sizeOfResultWaist < 1)
+      return "Bad Read Waist"
+    end
+    countWaistLoops = 0
+
+    resultWaist.each do |res_waist|
+
+      countWaistLoops+= 1
+
+      if ((res_waist.size_min < waistIn) && (res_waist.size_max > waistIn))
+
+        perfectWaistArray[res_waist.id] = res_waist.store_size
+
+      else
+        if (res_waist.size_min == waistIn)
+
+          looseWaistArray[res_waist.id] = res_waist.store_size
+        elsif (res_waist.size_max == waistIn)
+
+          tightWaistArray[res_waist.id] = res_waist.store_size
+        elsif ((waistIn > previousMaxWaist) && (waistIn < res_waist.size_min))
+
+          if (((previousMaxWaist + res_waist.size_min) / 2) == waistIn)
+
+            looseWaistArray[previousStoreNameWaist] = previousStoreSizeWaist
+            tightWaistArray[res_waist.id] = res_waist.store_size
+          elsif (((previousMaxWaist + res_waist.size_min) / 2) > waistIn)
+
+            looseWaistArray[previousStoreNameWaist] = previousStoreSizeWaist
+          elsif (((previousMaxWaist + res_waist.size_min) / 2) < waistIn)
+
+            tightWaistArray[res_waist.id] = res_waist.store_size
+          end
+        elsif ((previousStoreNameWaist != res_waist.id) && ((waistIn - 1) == previousMaxWaist))
+
+          tightWaistArray[previousStoreNameWaist] = previousStoreSizeWaist
+        elsif ((countWaistLoops == sizeOfResultWaist) && ((waistIn - 1) == res_waist.size_max))
+
+          tightWaistArray[res_waist.id] = res_waist.store_size
+        end
+      end
+
+      previousStoreNameWaist = res_waist.id
+      previousStoreSizeWaist = res_waist.store_size
+      previousMinWaist = res_waist.size_min
+      previousMaxWaist = res_waist.size_max
+
+    end
+
+    # resultHip = mysqli_query(dataTransfer, hipStoreSizeSQL)
+    sizeOfResultHip = resultHip.count
+    if(sizeOfResultHip < 1)
+      return "Bad Read Hip"
+    end
+    countHipLoops = 0
+
+    resultHip.each do |res_hip|
+
+      countWaistLoops+= 1
+
+      if ((res_hip.size_min < waistIn) && (res_hip.size_max > waistIn))
+
+        perfectWaistArray[res_hip.id] = res_hip.store_size
+
+      else
+        if (res_hip.size_min == waistIn)
+
+          looseWaistArray[res_hip.id] = res_hip.store_size
+        elsif (res_hip.size_max == waistIn)
+
+          tightWaistArray[res_hip.id] = res_hip.store_size
+        elsif ((waistIn > previousMaxWaist) && (waistIn < res_hip.size_min))
+
+          if (((previousMaxWaist + res_hip.size_min) / 2) == waistIn)
+
+            looseWaistArray[previousStoreNameWaist] = previousStoreSizeWaist
+            tightWaistArray[res_hip.id] = res_hip.store_size
+          elsif (((previousMaxWaist + res_hip.size_min) / 2) > waistIn)
+
+            looseWaistArray[previousStoreNameWaist] = previousStoreSizeWaist
+          elsif (((previousMaxWaist + res_hip.size_min) / 2) < waistIn)
+
+            tightWaistArray[res_hip.id] = res_hip.store_size
+          end
+        elsif ((previousStoreNameWaist != res_hip.id) && ((waistIn - 1) == previousMaxWaist))
+
+          tightWaistArray[previousStoreNameWaist] = previousStoreSizeWaist
+        elsif ((countWaistLoops == sizeOfResultWaist) && ((waistIn - 1) == res_hip.size_max))
+
+          tightWaistArray[res_hip.id] = res_hip.store_size
+        end
+      end
+
+      previousStoreNameWaist = res_hip.id
+      previousStoreSizeWaist = res_hip.store_size
+      previousMinWaist = res_hip.size_min
+      previousMaxWaist = res_hip.size_max
+
+    end
+    #Perfect vs All
+    #Perfect vs Perfect
+    perfectWaistArray.each do |storeNameKey, storeSizeValue|
+
+      if (perfectBustArray.key?(storeNameKey))
+
+        perfectBustSize = perfectHipArray[storeNameKey]
+        perfectWaistSize = storeSizeValue
+
+        if (perfectBustSize == perfectWaistSize)
+          return perfectBustSize
+        elsif (perfectBustSize > perfectWaistSize)
+          return perfectBustSize
+        elsif (perfectBustSize < perfectWaistSize)
+          return perfectWaistSize
+        end
+
+      end
+    end
+
+    #Perfect vs Tight
+    perfectWaistArray.each do |storeNameKey, storeSizeValue|
+
+      if (perfectBustArray.key?(storeNameKey))
+
+        tightBustSize = tightHipArray[storeNameKey]
+        perfectWaistSize = storeSizeValue
+
+        if (tightBustSize == perfectWaistSize)
+          return tightBustSize
+        elsif (tightBustSize > perfectWaistSize)
+          return tightBustSize
+        elsif (tightBustSize < perfectWaistSize)
+          return perfectWaistSize
+        end
+
+      end
+    end
+
+    perfectHipArray.each do |storeNameKey, storeSizeValue|
+
+      if (perfectBustArray.key?(storeNameKey))
+        tightWaistSize = tightWaistArray[storeNameKey]
+        perfectBustSize = storeSizeValue
+
+        if (perfectBustSize == tightWaistSize)
+          return perfectBustSize
+        elsif (perfectBustSize > tightWaistSize)
+          return perfectBustSize
+        elsif (perfectBustSize < tightWaistSize)
+          return tightWaistSize
+        end
+      end
+    end
+
+    #Perfect vs Loose
+    perfectWaistArray.each do |storeNameKey, storeSizeValue|
+
+      if (perfectBustArray.key?(storeNameKey))
+
+        looseBustSize = looseHipArray[storeNameKey]
+        perfectWaistSize = storeSizeValue
+
+        if (looseBustSize == perfectWaistSize)
+          return looseBustSize
+        elsif (looseBustSize > perfectWaistSize)
+          return perfectWaistSize
+        elsif (looseBustSize < perfectWaistSize)
+          return looseBustSize
+        end
+
+      end
+    end
+
+    perfectHipArray.each do |storeNameKey, storeSizeValue|
+
+      if (perfectBustArray.key?(storeNameKey))
+        looseWaistSize = looseWaistArray[storeNameKey]
+        perfectBustSize = storeSizeValue
+
+        if (perfectBustSize == looseWaistSize)
+          return perfectBustSize
+        elsif (perfectBustSize > looseWaistSize)
+          return looseWaistSize
+        elsif (perfectBustSize < looseWaistSize)
+          return perfectBustSize
+        end
+      end
+    end
+
+    #Tight vs All
+    #Tight vs Tight
+    tightWaistArray.each do |storeNameKey, storeSizeValue|
+
+      if (perfectBustArray.key?(storeNameKey))
+        tightBustSize = tightHipArray[tightStoreNameKey]
+        tightWaistSize = tightStoreSizeValue
+
+        if (tightWaistSize > tightBustSize)
+          return tightWaistSize
+        elsif (tightWaistSize < tightBustSize)
+          return tightBustSize
+        elsif (tightWaistSize == tightBustSize)
+          return tightBustSize
+        end
+
+      end
+    end
+
+    #Tight vs Loose
+    tightHipArray.each do |storeNameKey, storeSizeValue|
+
+      if (perfectBustArray.key?(storeNameKey))
+        looseWaistSize = looseWaistArray[tightStoreNameKey]
+        tightBustSize = tightStoreSizeValue
+
+        if (looseWaistSize > tightBustSize)
+          return looseWaistSize
+        elsif (looseWaistSize < tightBustSize)
+          return tightBustSize
+        elsif (looseWaistSize == tightBustSize)
+          return tightBustSize
+        end
+
+      end
+    end
+
+    tightWaistArray.each do |storeNameKey, storeSizeValue|
+
+      if (perfectBustArray.key?(storeNameKey))
+
+        looseBustSize = looseHipArray[tightStoreNameKey]
+        tightWaistSize = tightStoreSizeValue
+
+        if (tightWaistSize > looseBustSize)
+          return looseBustSize
+        elsif (tightWaistSize < looseBustSize)
+          return looseBustSize
+        elsif (tightWaistSize == looseBustSize)
+          return looseBustSize
+        end
+      end
+    end
+
+    #Loose vs All
+    #Loose vs Loose
+    looseWaistArray.each do |storeNameKey, storeSizeValue|
+
+      if (perfectBustArray.key?(storeNameKey))
+
+        looseBustSize = looseHipArray[looseStoreNameKey]
+        looseWaistSize = looseStoreSizeValue
+
+        if (looseWaistSize > looseBustSize)
+          return looseBustSize
+        elsif (looseWaistSize < looseBustSize)
+          return looseWaistSize
+        elsif (looseWaistSize == looseBustSize)
+          return looseBustSize
+        end
+      end
+    end
+
+    return "No Size In Store"
+  end
+
 
 end

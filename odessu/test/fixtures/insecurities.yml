@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  user_id: 1
+  insecurity_top: MyString
+  insecurity_boity_bottom: MyString
+
+two:
+  user_id: 1
+  insecurity_top: MyString
+  insecurity_boity_bottom: MyString

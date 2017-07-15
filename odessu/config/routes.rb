@@ -10,6 +10,9 @@ Rails.application.routes.draw do
     get '/profile_3', to: 'users/registrations#profile_3', as: 'profile_3'
     patch '/create_profile_3', to: 'users/registrations#create_profile_3', as: 'create_profile_3'
     get '/users/:id', to: 'users/registrations#show', as: 'user'
+    get '/edit_profile', to: 'users/registrations#edit_profile', as: 'edit_profile'
+    patch '/update_profile', to: 'users/registrations#update_profile', as: 'update_profile'
+    put '/update_issues', to: 'users/registrations#update_issues', as: 'update_issues'
   end
   resources :stores
   resources :orders do

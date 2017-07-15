@@ -1,0 +1,135 @@
+<span class="form1"><%= form_for(current_user, url: update_profile_path) do |f| %>
+<%= current_user.id %>
+  <h1>Profile 1</h1>
+  <%= f.label :first_name, "First Name" %>
+  <%= f.text_field :first_name %>
+
+  <%= f.label :last_name, "Last Name" %>
+  <%= f.text_field :last_name %>
+
+  <%= f.label :age_range, "Age Range" %>
+  <%= f.select :age_range, ['11-19', '20-29', '21-29', '31-39', '41-49', '51-59'] %>
+
+  Height:
+  <%= f.text_field :height_ft %> ft <%= f.text_field :height_in %> in
+  or
+  <%= f.text_field :height_cm %> cms
+
+  <%= f.label :weight, "Weight" %>
+  <%= f.text_field :weight %>
+  <%= f.radio_button :weight_type, 'Kg'%>Kg
+  <%= f.radio_button :weight_type, 'Lbs'%>Lbs
+
+  <%= f.label :bust, "Bust" %>
+  <%= f.text_field :bust %>in
+
+  <%= f.label :hip, "Hip" %>
+  <%= f.text_field :hip %>in
+
+  <%= f.label :waist, "Waist" %>
+  <%= f.text_field :waist %>in
+
+  <h3>Tops</h3>
+  <%= f.label :tops_store, "Store" %>
+  <%= f.select :tops_store, ['', 'Addition Elle', 'Leo'] %>
+
+  <%= f.label :tops_size, "Size" %>
+  <%= f.text_field :tops_size %>
+
+  <%= f.label :tops_store_fit, "How does it fit?" %>
+  <%= f.radio_button :tops_store_fit, 'tight' %>Tight
+  <%= f.radio_button :tops_store_fit, 'perfect' %>Perfect
+  <%= f.radio_button :tops_store_fit, 'loose' %>Loose
+
+  <h3>Bottoms</h3>
+
+  <%= f.label :bottoms_store, "Store" %>
+  <%= f.select :bottoms_store, ['', 'Addition Elle', 'Leo'] %>
+
+  <%= f.label :bottoms_fit, "Size" %>
+  <%= f.text_field :bottoms_fit %>
+
+  <%= f.label :tops_store_fit, "How does it fit?" %>
+  <%= f.radio_button :bottoms_store_fit, 'tight' %>Tight
+  <%= f.radio_button :bottoms_store_fit, 'perfect' %>Perfect
+  <%= f.radio_button :bottoms_store_fit, 'loose' %>Loose
+
+  <h3>Bras</h3>
+
+  <%= f.label :bra_size, "Bra Size" %>
+  <%= f.select :bra_size, ['28', '30', '32', '34', '36', '38', '40', '42', '44', '46', '48', '50'] %>
+
+  <%= f.label :bra_cup, "Bra Cup" %>
+  <%= f.select :bra_cup, ['AA', 'A', 'B', 'C', 'D', 'DD or E', 'DDD or F', 'G', 'H', 'I', 'J'] %>
+
+  <h1>Profile 2</h1>
+
+  <%= f.label :body_shape, "Body Shape" %>
+  <%= f.select :body_shape, ['curvy', 'voluptous', 'straight', 'pear shaped'] %>
+
+  <h3>How do you like your clothes to fit</h3>
+
+  <%= f.label :Tops  %><br>
+  <%= f.radio_button :tops_fit, 'tight' %>Tight
+  <%= f.radio_button :tops_fit, 'just right' %>Just Right
+  <%= f.radio_button :tops_fit, 'loose' %>Loose
+  <br>
+  <%= f.label :Bottoms  %><br>
+  <%= f.radio_button :bottoms_fit, 'tight' %>Tight
+  <%= f.radio_button :bottoms_fit, 'just right' %>Just Right
+  <%= f.radio_button :bottoms_fit, 'loose' %>Loose
+
+  <h3> How did you hear about us </h3>
+
+  <%= f.select :advertisement_source, ['LinkedIn', 'etc'] %>
+  <%= f.submit "Save changes" %>
+  <% end %></span>
+
+  <h1>Profile 3</h1>
+  <h3> What issues do you usually have with your clothing? </h3>
+  <%# @issues.each do |issue| %>
+  <span class="second_form"><%= form_tag update_issues_path, method: :put , id: 'form1' do %>
+
+    <h4> top </h4>
+    <% ['too loose', 'nothing', 'everything', 'too tight'].each do |x| %>
+    <% i = 0 %>
+    <% counter = 0 %>
+      <% while i < @issues_top.count %>
+            <% if x == @issues_top[i].issue_top %>
+              <%= x %><%= check_box_tag('issue_top[]', x, true)%>
+              <% i += 1 %>
+              <% break %>
+            <% else %>
+            <% i += 1 %>
+            <% counter += 1 %>
+            <% end %>
+            <% if counter == @issues_top.count %>
+              <%= x %><%= check_box_tag('issue_top[]', x, false, { :multiple => true })%>
+              <% break %>
+            <% end %>
+      <% end %>
+    <% end %>
+    <h4> Bottom</h4>
+    <% ['everything', 'nothing', 'too loose', 'too tight'].each do |x| %>
+    <% i = 0 %>
+    <% counter = 0 %>
+      <% while i < @issues_bottom.count %>
+            <% if x == @issues_bottom[i].issue_bottom %>
+              <%= x %><%= check_box_tag('issue_bottom[]', x, { :multiple => true, :checked => "checked" })%>
+              <% i += 1 %>
+              <% break %>
+            <% else %>
+              <% i += 1 %>
+              <% counter += 1 %>
+            <% end %>
+            <% if counter == @issues_bottom.count %>
+              <%= x %><%= check_box_tag('issue_bottom[]', x, false, { :multiple => true })%>
+              <% break %>
+            <% end %>
+      <% end %>
+    <% end %>
+
+    <br><span class="submit_issue"><%= submit_tag "submit" %></span></span>
+  <% end %>
+
+  <br><br><%= link_to 'Save', '#', :class => 'button_submit' %>

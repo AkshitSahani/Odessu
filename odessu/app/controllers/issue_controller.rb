@@ -15,6 +15,18 @@ class IssueController < ApplicationController
       redirect_to root_path
   end
 
+  def edit
+
+  end
+
+  def update
+    if @issue.update_attributes(issue_params)
+
+    else
+      render :edit
+    end
+  end
+
   private
 
   def issue_params

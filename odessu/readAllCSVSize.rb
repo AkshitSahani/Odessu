@@ -21,7 +21,7 @@ module readAllCSVSize
   bodyIn = rowOFShape[0]
 
 
-  #Voluptuous
+  #Voluptuous. This can just go in the view, calling the class methods and then acting based on conditional statements.
   topSize = getUserSizeForStoreTop(emailIn, "VOLUPTUOUS")
   bottomSize = getUserSizeForStoreBottom(emailIn, "VOLUPTUOUS")
 

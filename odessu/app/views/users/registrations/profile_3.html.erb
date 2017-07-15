@@ -1,15 +1,31 @@
 <h3> What issues do you usually have with your clothing? </h3>
 
-<%= form_for @issue, url: '/issue', method: :post do |f| %>
-  <h4> Top </h4>
-  <% ['everything', 'nothing', 'too loose', 'too tight'].each do |value| %>
-    <%= f.check_box(:issue_top, { :multiple => true }, value, nil)%>
-    <%= f.label :issue_top, "#{value}" %>
+<%= form_for current_user, url: create_profile_3_path do |f| %>
+  <%= fields_for :issues do |i| %>
+    <h4> Top </h4>
+    <% ['everything', 'nothing', 'too loose', 'too tight'].each do |value| %>
+      <%= i.check_box(:issue_top, { :multiple => true }, value, nil)%>
+      <%= i.label :issue_top, "#{value}" %>
+    <% end %>
+    <h4> Bottom </h4>
+    <% ['everything', 'nothing', 'too loose', 'too tight'].each do |value| %>
+      <%= i.check_box(:issue_bottom, { :multiple => true }, value, nil)%>
+      <%= i.label :issue_bottom, "#{value}" %>
+    <% end %>
   <% end %>
-  <h4> Bottom </h4>
-  <% ['everything', 'nothing', 'too loose', 'too tight'].each do |value| %>
-    <%= f.check_box(:issue_bottom, { :multiple => true }, value, nil)%>
-    <%= f.label :issue_bottom, "#{value}" %>
+<h3>What insecurities do you have </h3>
+  <%= fields_for :insecurities do |j| %>
+    <h4> Top </h4>
+    <% ['everything', 'nothing', 'too loose', 'too tight'].each do |value| %>
+      <%= j.check_box(:insecurity_top, { :multiple => true }, value, nil)%>
+      <%= j.label :insecurity_top, "#{value}" %>
+    <% end %>
+    <h4> Bottom </h4>
+    <% ['everything', 'nothing', 'too loose', 'too tight'].each do |value| %>
+      <%= j.check_box(:insecurity_bottom, { :multiple => true }, value, nil)%>
+      <%= j.label :insecurity_bottom, "#{value}" %>
+    <% end %>
   <% end %>
+
   <%= f.submit 'Save' %>
 <% end %>

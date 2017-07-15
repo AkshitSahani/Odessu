@@ -12,7 +12,6 @@
 //
 //= require jquery
 //= require jquery_ujs
-//= require turbolinks
 //= require_tree .
 //= require cable
 
@@ -25,4 +24,26 @@ $(document).ready(function() {
     $('#notice').slideUp();
   }, 2000);
 
+  $(".button_submit").on("click", function(e) {
+    e.preventDefault();
+    var issuesTop = [];
+    var issuesBottom = [];
+    $(':checkbox:checked').each(function(i){
+      if ($(this).attr('name')==="issue_top[]"){
+        issuesTop.push($(this).val());
+      }
+      else if ($(this).attr('name')==="issue_bottom[]"){
+        issuesBottom.push($(this).val());
+      }
+    });
+    $.ajax({
+      url: '/update_issues',
+      method: 'put',
+      data: {
+        issues_top: issuesTop, issues_bottom: issuesBottom
+      }
+    }).done(function(){
+      $(".form1 > form").submit();
+    })
+  })
 })

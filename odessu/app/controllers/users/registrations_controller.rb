@@ -1,7 +1,7 @@
 class Users::RegistrationsController < Devise::RegistrationsController
   before_action :configure_sign_up_params, only: [:create]
   before_action :configure_account_update_params, only: [:update]
-  before_filter :configure_permitted_parameters, if: :devise_controller?
+  before_action :configure_permitted_parameters, if: :devise_controller?
   # GET /resource/sign_up
   # def new
   #   super
@@ -34,16 +34,32 @@ class Users::RegistrationsController < Devise::RegistrationsController
   end
 
   def profile_3
-    @issue = Issue.new
-    @issue.user_id = current_user.id
+
   end
 
   def create_profile_3
-    if current_user.update_attributes(sign_up_params)
-      redirect_to root_path
-    else
-      render :profile_3
+    byebug #right now this page only has nested attributes, so the code below isnt required. If you include any other
+    #user attributes on this page, uncomment the code below.
+    # if current_user.update_attributes(sign_up_params)
+    #   redirect_to root_path
+    # else
+    #   render :profile_3
+    # end
+    params["insecurities"]["insecurity_bottom"].each do |ins|
+      current_user.insecurities << Insecurity.create(insecurity_bottom: ins)
     end
+
+    params["insecurities"]["insecurity_top"].each do |ins|
+      current_user.insecurities << Insecurity.create(insecurity_top: ins)
+    end
+
+    params['issues']['issue_top'].each do |issue_top|
+      current_user.issues << Issue.create(issue_top: issue_top)
+    end
+    params['issues']['issue_bottom'].each do |issue_bottom|
+      current_user.issues << Issue.create(issue_bottom: issue_bottom)
+    end
+    redirect_to root_path
   end
 
   def show
@@ -81,6 +97,46 @@ class Users::RegistrationsController < Devise::RegistrationsController
   #   super
   # end
 
+  def edit_profile
+    @issues_top = current_user.issues.where(issue_bottom: nil)
+    @issues_bottom = current_user.issues.where(issue_top: nil)
+    @insecurities = current_user.insecurities
+  end
+
+  def update_profile
+    # current_user.issues.delete_all
+    # params["issue"]["issue_top"].each do |issue|
+    #   # if Issue.where(issue_top: issue, user_id: current_user.id).empty?
+    #     current_user.issues << Issue.create(issue_top: issue)
+    #   # end
+    # end
+    # params["issue"]["issue_bottom"].each do |issue|
+    #   # if Issue.where(issue_bottom: issue, user_id: current_user.id).empty?
+    #     current_user.issues << Issue.create(issue_bottom: issue)
+    #   # end
+    # end
+    if current_user.update_attributes(sign_up_params)
+      redirect_to user_path(current_user), notice: "Profile Updated Successfully!"
+    else
+      render :edit_profile
+    end
+  end
+
+  def update_issues
+    if request.xhr?
+      current_user.issues.delete_all
+      params["issues_top"].each do |issue|
+        # if Issue.where(issue_top: issue, user_id: current_user.id).empty?
+          current_user.issues << Issue.create(issue_top: issue)
+        # end
+      end
+      params["issues_bottom"].each do |issue|
+        # if Issue.where(issue_top: issue, user_id: current_user.id).empty?
+          current_user.issues << Issue.create(issue_bottom: issue)
+        # end
+      end
+    end
+  end
   # PUT /resource
   # def update
   #   super
@@ -107,7 +163,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
     devise_parameter_sanitizer.permit(:sign_up, keys: [:first_name, :last_name, :address, :age_range, :height_ft,
       :height_in, :height_cm, :weight,:bust, :hip, :waist, :account_type, :tops_store, :tops_size, :tops_store_fit,
       :bottoms_store, :bottoms_size,:bottoms_store_fit, :bra_size, :bra_cup, :body_shape, :tops_fit, :preference, :bottoms_fit,
-      :birthdate, :advertisement_source])
+      :birthdate, :advertisement_source, :weight_type])
   end
 
   # If you have extra params to permit, append them to the sanitizer.
@@ -115,7 +171,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
     devise_parameter_sanitizer.permit(:account_update, keys: [:first_name, :last_name, :address, :age_range, :height_ft,
       :height_in, :height_cm, :weight,:bust, :hip, :waist, :account_type, :tops_store, :tops_size, :tops_store_fit,
       :bottoms_store, :bottoms_size,:bottoms_store_fit, :bra_size, :bra_cup, :body_shape, :tops_fit, :preference, :bottoms_fit,
-      :birthdate, :advertisement_source])
+      :birthdate, :advertisement_source, :weight_type])
   end
 
   # The path used after sign up.
