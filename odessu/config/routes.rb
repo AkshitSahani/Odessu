@@ -9,10 +9,13 @@ Rails.application.routes.draw do
     patch '/create_profile_2', to: 'users/registrations#create_profile_2', as: 'create_profile_2'
     get '/profile_3', to: 'users/registrations#profile_3', as: 'profile_3'
     patch '/create_profile_3', to: 'users/registrations#create_profile_3', as: 'create_profile_3'
+    get '/body_shape', to: 'users/registrations#body_shape', as: 'body_shape'
+    post '/create_body_shape', to: 'users/registrations#create_body_shape', as: 'create_body_shape'
     get '/users/:id', to: 'users/registrations#show', as: 'user'
     get '/edit_profile', to: 'users/registrations#edit_profile', as: 'edit_profile'
     patch '/update_profile', to: 'users/registrations#update_profile', as: 'update_profile'
     put '/update_issues', to: 'users/registrations#update_issues', as: 'update_issues'
+    get '/get_results', to: 'users/sessions#get_results', as: 'get_results'
   end
   resources :stores
   resources :orders do

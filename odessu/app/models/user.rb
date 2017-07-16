@@ -15,6 +15,15 @@ class User < ApplicationRecord
   has_many :insecurities
   accepts_nested_attributes_for :insecurities, reject_if: :all_blank?
 
+  def self.get_results(search)
+    results_hash = {}
+    results_stores = Store.where('store_name LIKE ?', "%#{search}%")
+    results_products = Product.where('name LIKE ? OR description LIKE ?', "%#{search}%", "%#{search}%")
+    results_hash[:store_results] = results_stores
+    results_hash[:product_results] = results_products
+    return results_hash
+  end
+
   def self.bmiCalculator(user)
     if user.weight_type == "Kg"
       weightKg = user.weight.to_i

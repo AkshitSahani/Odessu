@@ -24,6 +24,23 @@ $(document).ready(function() {
     $('#notice').slideUp();
   }, 2000);
 
+  $('.body_shape_img').on('click', function(){
+    $('.body_shape_img').removeClass('body_shape_clicked').css('opacity', '1');
+    $(this).addClass('body_shape_clicked').css('opacity', '0.3');
+  })
+
+  $('button.body_shape_save').on('click', function(e){
+    // e.preventDefault();
+    var bodyShape = $('.body_shape_clicked').attr('name');
+    $.ajax({
+      url: '/create_body_shape',
+      method: 'post',
+      data: {
+        body_shape: bodyShape
+      }
+    })
+  })
+
   $(".button_submit").on("click", function(e) {
     e.preventDefault();
     var issuesTop = [];

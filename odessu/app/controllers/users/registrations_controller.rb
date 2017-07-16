@@ -27,9 +27,22 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
   def create_profile_2
     if current_user.update_attributes(sign_up_params)
-      redirect_to profile_3_path(current_user)
+      redirect_to body_shape_path(current_user)
     else
       render :profile_2
+    end
+  end
+
+  def body_shape
+    #code
+  end
+
+  def create_body_shape
+    if request.xhr?
+      current_user.update_attributes(body_shape: params['body_shape'])
+      # redirect_to profile_3_path(current_user)
+      location = "/profile_3.#{current_user.id}"
+      render :js => "window.location = '#{location}'"
     end
   end
 
@@ -37,8 +50,9 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
   end
 
+
   def create_profile_3
-    byebug #right now this page only has nested attributes, so the code below isnt required. If you include any other
+    #right now this page only has nested attributes, so the code below isnt required. If you include any other
     #user attributes on this page, uncomment the code below.
     # if current_user.update_attributes(sign_up_params)
     #   redirect_to root_path
@@ -123,7 +137,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
     end
   end
 
-  def update_issues
+  def update_issues #and insecurities
     if request.xhr?
       current_user.issues.delete_all
       current_user.insecurities.delete_all

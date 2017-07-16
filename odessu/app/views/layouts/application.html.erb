@@ -26,10 +26,16 @@
     </div>
     <hr>
 
+    <%= form_tag(get_results_path, method: :get, id: "search-form") do %>
+      <%= text_field_tag :search, params[:search], placeholder: "Search Odessu"%>
+      <%= submit_tag "Search", :name => nil %>
+    <% end %>
+
     <% unless user_signed_in? %>
       <%= link_to "Sign Up", new_user_registration_path%><br>
       <%= link_to "Sign In", new_user_session_path %>
     <% else %>
+      <%= link_to "My profile", user_path(current_user) %>
       <%= link_to "Logout", destroy_user_session_path, :method => :delete %>
     <% end %>
 

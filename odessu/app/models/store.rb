@@ -37,7 +37,7 @@ class Store < ApplicationRecord
 
     sizeResults = Store.where(store_name: storeName).distinct.pluck(:store_size)
 
-    if(sizeResults.count) < 1)
+    if(sizeResults.count < 1)
       "Size Currently Not Available In Store"
     else
       sizeResults

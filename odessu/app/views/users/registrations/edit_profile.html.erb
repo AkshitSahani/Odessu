@@ -82,7 +82,7 @@
   <h3> How did you hear about us </h3>
 
   <%= f.select :advertisement_source, ['LinkedIn', 'etc'] %>
-  <%= f.submit "Save changes" %>
+  <span class="hide_submit"><%= f.submit "Save changes" %></span>
   <% end %></span>
 
   <h1>Profile 3</h1>
@@ -129,7 +129,7 @@
       <% end %>
     <% end %>
 
-    <br><span class="submit_issue"><%= submit_tag "submit" %></span></span>
+    <br><span class="hide_submit"><%= submit_tag "submit" %></span></span>
   <% end %>
   <h3>What Insecurities do you usually have?</h3>
   <span class="third_form"><%= form_tag update_issues_path, method: :put , id: 'form2' do %>
@@ -172,6 +172,6 @@
             <% end %>
       <% end %>
     <% end %>
-  <br><span class="submit_insecure"><%= submit_tag "submit" %></span></span>
+  <br><span class="hide_submit"><%= submit_tag "submit" %></span></span>
 <% end %>
-  <br><br><%= link_to 'Save', '#', :class => 'button_submit' %>
+  <br><button class="button_submit">Save Changes</button>

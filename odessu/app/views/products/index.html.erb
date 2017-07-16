@@ -6,7 +6,4 @@
       <%= render "product_row", product: product, order_item: @order_item %>
     <% end %>
   </div>
-  <% if current_user %>
-    <%= link_to "My profile", user_path(current_user) %>
-  <% end %>
 </div>
