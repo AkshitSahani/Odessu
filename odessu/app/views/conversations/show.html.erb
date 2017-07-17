@@ -1,13 +1,13 @@
-<h1>Chatting with <%= @conversation.with(current_user).studio_name %></h1>
+<h1>Chatting with Admin</h1>
 
 <div id="conversation-main">
   <div id="conversation-body" data-conversation-id="<%= @conversation.id %>">
-    <%= render @conversation.personal_messages %>
+    <%= render @conversation.messages %>
   </div>
 
-  <%= form_for @personal_message do |f| %>
+  <%= form_for @message do |f| %>
     <%= hidden_field_tag 'conversation_id', @conversation.id %>
-    <%= hidden_field_tag 'message_receiver_id', @conversation.with(current_user).id %>
+    <%= hidden_field_tag 'receiver_id', 1 %>
     <%= f.label :body %>
     <%= f.text_area :body %>
 <div class="sendmessage">

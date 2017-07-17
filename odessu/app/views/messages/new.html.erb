@@ -1,7 +1,7 @@
-<h1>New message to <%= @receiver.studio_name %></h1>
+<h1>New message to Admin</h1>
 
-<%= form_for @personal_message do |f| %>
-  <%= hidden_field_tag 'receiver_id', @receiver.id %>
+<%= form_for @message do |f| %>
+  <%= hidden_field_tag 'receiver_id', 1 %>
 
   <%= f.label :body %>
   <%= f.text_area :body %>
@@ -10,12 +10,12 @@
 </div>
 <% end %>
 
-<% if @personal_message.errors.any? %>
+<% if @message.errors.any? %>
   <div id="error_explanation">
-    <h2><%= pluralize(@personal_message.errors.count, "error") %> are between you and your profile right now:</h2>
+    <h2><%= pluralize(@message.errors.count, "error") %> are between you and your profile right now:</h2>
 
     <ul>
-    <% @personal_message.errors.full_messages.each do |msg| %>
+    <% @message.errors.full_messages.each do |msg| %>
       <li> <%= msg %> </li>
     <% end %>
     </ul>

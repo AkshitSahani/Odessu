@@ -11,7 +11,7 @@ class ConversationsController < ApplicationController
   end
 
   def show
-    @personal_message = PersonalMessage.new
+    @message = Message.new
       respond_to do |format|
         format.html { render :layout => false if request.xhr? }
     end

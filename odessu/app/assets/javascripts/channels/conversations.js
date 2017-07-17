@@ -43,11 +43,11 @@ $(document).ready( function() {
 
   if (messages.length > 0) {
     messages_to_bottom();
-    return $('#new_personal_message').submit(function(e) {
+    return $('#new_message').submit(function(e) {
       let $this = $(this);
-      let textarea = $this.find('#personal_message_body');
+      let textarea = $this.find('#message_body');
       if ($.trim(textarea.val()).length > 0) {
-        App.personal_chat.send_message(textarea.val(), $this.find('#conversation_id').val(), $this.find('#message_receiver_id').val());
+        App.personal_chat.send_message(textarea.val(), $this.find('#conversation_id').val(), $this.find('#receiver_id').val());
         textarea.val('');
       }
       e.preventDefault();

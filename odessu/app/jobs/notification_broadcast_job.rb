@@ -1,17 +1,17 @@
 class NotificationBroadcastJob < ApplicationJob
   queue_as :default
 
-  def perform(personal_message)
-    message = render_message(personal_message)
-    ActionCable.server.broadcast "notifications_#{personal_message.receiver_id}_channel",
+  def perform(message)
+    message = render_message(message)
+    ActionCable.server.broadcast "notifications_1_channel",
                                  message: message,
-                                 conversation_id: personal_message.conversation.id,
-                                 message_receiver_id: personal_message.receiver_id
+                                 conversation_id: message.conversation.id,
+                                 receiver_id: 1
 
-    ActionCable.server.broadcast "notifications_#{personal_message.receiver_id}_channel",
-                           notification: render_notification(personal_message),
-                           conversation_id: personal_message.conversation.id,
-                           message_receiver_id: personal_message.receiver_id
+    ActionCable.server.broadcast "notifications_1_channel",
+                           notification: render_notification(message),
+                           conversation_id: message.conversation.id,
+                           receiver_id: 1
   end
 
   private
@@ -21,7 +21,7 @@ class NotificationBroadcastJob < ApplicationJob
   end
 
   def render_message(message)
-    PersonalMessagesController.render partial: 'personal_messages/personal_message',
-                                      locals: {personal_message: message}
+    MessagesController.render partial: 'messages/message',
+                                      locals: {message: message}
   end
 end

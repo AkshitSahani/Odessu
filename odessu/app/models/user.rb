@@ -97,8 +97,18 @@ class User < ApplicationRecord
      return results_hash
   end
 
-  def self.calcAvrgFromStore(topsArray, bottomsArray, getHeight, getWeight, getBraBust)
-
+  def self.calcAvrgFromStore(user)
+    if user.height_cm
+      getHeight = (user.height_cm.to_f) * 0.393701
+    elsif user.height_ft
+      getHeight = (user.height_ft.to_f * 12) + user.height_in.to_f
+    end
+    if user.weight_type == "Lbs"
+      getWeight = user.weight.to_f
+    else
+      getWeight = ((user.weight.to_f) * 2.20462)
+    end
+    getBraBust = user.bust #(bra size)
     #Variable Instantiation
     topBustMax = 0
     topBustMin = 0
@@ -136,32 +146,14 @@ class User < ApplicationRecord
     countBottomWaistLoops = 0
     countBottomHipLoops = 0
 
-    #Input Splitting
-    arrayOfTops = topsArray.split('')
-    arrayOfBottoms = bottomsArray.split('')
+      storeName = user.tops_store.upcase
+      storeSizeTop = user.tops_size
 
-    arrayOfTops.each do |topValue|
-
-      topValueSplit = topValue.strip.split(' ')
-
-      storeSizeTop = topValueSplit[topValueSplit.count - 2]
-      storeSizeTop = storeSizeTop.upcase
-      storeName = ""
-
-      topValueSplit.each_with_index do|element, index|
-        if index < topValueSplit.count - 2
-          storeName = storeName + element
-          if(index < (topValueSplit.count - 3))
-            storeName = storeName + " "
-          end
-        end
-      end
-
-      resultTopBust = Store.where(store_name: storeName, feature: 'bust')
+      resultTopBust = Store.where(store_name: storeName, feature: 'BUST')
       # "SELECT store_size, size_min, size_max FROM sizes WHERE (store_id = '" + storeName + "' AND feature = 'bust')"
-      resultTopWaist = Store.where(store_name: storeName, feature: 'waist')
+      resultTopWaist = Store.where(store_name: storeName, feature: 'WAIST')
       # "SELECT store_size, size_min, size_max FROM sizes WHERE (store_id = '" + storeName + "' AND feature = 'waist')"
-      resultTopHip = Store.where(store_name: storeName, feature: 'hip')
+      resultTopHip = Store.where(store_name: storeName, feature: 'HIP')
       # "SELECT store_size, size_min, size_max FROM sizes WHERE (store_id = '" + storeName + "' AND feature = 'hip')"
 
       #Get Data For Top Bust
@@ -228,7 +220,6 @@ class User < ApplicationRecord
         elsif(numRowsTopWaist == countTopWaistLoops)
           puts storeSizeTop + " not found in " + storeName + "<br>"
         end
-
       end
 
       # resultTopHip = mysqli_query(dataTransfer, queryTopHip)
@@ -257,31 +248,32 @@ class User < ApplicationRecord
           puts storeSizeTop + " not found in " + storeName + "<br>"
         end
       end
-    end
+    # end
 
-    arrayOfBottoms.each do |bottomValue|
+    # arrayOfBottoms.each do |bottomValue|
+    #
+    #   bottomValueSplit = bottomValue.strip.split('')
+    #
+    #   storeSizeBottom = bottomValueSplit[bottomValueSplit.count - 2]
+    #   storeSizeBottom = storeSizeBottom.upcase
+    #   storeName = ""
+    #
+    #   bottomValueSplit.each_with_index do|element, index|
+    #     if index < bottomValueSplit.count - 2
+    #       storeName = storeName + element
+    #       if(index < (bottomValueSplit.count - 3))
+    #         storeName = storeName + " "
+    #       end
+    #     end
+    #   end
+      storeName = user.bottoms_store.upcase
+      storeSizeBottom = user.bottoms_size
 
-      bottomValueSplit = bottomValue.strip.split('')
-
-      storeSizeBottom = bottomValueSplit[bottomValueSplit.count - 2]
-      storeSizeBottom = storeSizeBottom.upcase
-      storeName = ""
-
-      bottomValueSplit.each_with_index do|element, index|
-        if index < bottomValueSplit.count - 2
-          storeName = storeName + element
-          if(index < (bottomValueSplit.count - 3))
-            storeName = storeName + " "
-          end
-        end
-      end
-
-
-      resultBottomBust = Store.where(store_name: storeName, feature: "bust")
+      resultBottomBust = Store.where(store_name: storeName, feature: "BUST")
       # "SELECT store_size, size_min, size_max FROM sizes WHERE (store_id = '" + storeName + "' AND feature = 'bust')"
-      resultBottomWaist = Store.where(store_name: storeName, feature: "waist")
+      resultBottomWaist = Store.where(store_name: storeName, feature: "WAIST")
       # "SELECT store_size, size_min, size_max FROM sizes WHERE (store_id = '" + storeName + "' AND feature = 'waist')"
-      resultBottomHip = Store.where(store_name: storeName, feature: "hip")
+      resultBottomHip = Store.where(store_name: storeName, feature: "HIP")
       # "SELECT store_size, size_min, size_max FROM sizes WHERE (store_id = '" + storeName + "' AND feature = 'hip')"
 
       # resultBottomBust = mysqli_query(dataTransfer, queryBottomBust)
@@ -292,7 +284,11 @@ class User < ApplicationRecord
         #puts "Bottom StoreSize: " + rowBottomBust[0] + ", Size Min: " + rowBottomBust[1] + ", Size Max: " + rowBottomBust[2] + "<br>"
 
         countBottomBustLoops+=1
-        if((resultBottomBust[a].store_size.include?(storeSizeTop)) && (resultBottomBust[a].store_size.include?("X" + storeSizeTop) == false) && (resultBottomBust[a].store_size.include?("0" + storeSizeTop) == false) && (resultBottomBust[a].store_size.include?( "1" + storeSizeTop) == false) && (resultBottomBust[a].store_size.include?( "2" + storeSizeTop) == false))
+        if((resultBottomBust[a].store_size.include?(storeSizeBottom)) &&
+          !(resultBottomBust[a].store_size.include?("X" + storeSizeBottom)) &&
+          !(resultBottomBust[a].store_size.include?("0" + storeSizeBottom)) &&
+          !(resultBottomBust[a].store_size.include?( "1" + storeSizeBottom)) &&
+          !(resultBottomBust[a].store_size.include?( "2" + storeSizeBottom)))
 
           #puts "Match Long StoreSize: " + res_btm_bust.store_size + ", Size Min: " + res_btm_bust.size_min + ", Size Max: " + res_btm_bust.size_max + "<br>"
 
@@ -324,11 +320,11 @@ class User < ApplicationRecord
 
         countBottomWaistLoops+=1
 
-        if((resultBottomWaist[b].store_size.include?(storeSizeTop)) &&
-            (resultBottomWaist[b].store_size.include?("X" + storeSizeTop) == false) &&
-            (resultBottomWaist[b].store_size.include?("0" + storeSizeTop) == false) &&
-            (resultBottomWaist[b].store_size.include?( "1" + storeSizeTop) == false) &&
-            (resultBottomWaist[b].store_size.include?( "2" + storeSizeTop) == false))
+        if((resultBottomWaist[b].store_size.include?(storeSizeBottom)) &&
+            !(resultBottomWaist[b].store_size.include?("X" + storeSizeBottom)) &&
+            !(resultBottomWaist[b].store_size.include?("0" + storeSizeBottom)) &&
+            !(resultBottomWaist[b].store_size.include?( "1" + storeSizeBottom)) &&
+            !(resultBottomWaist[b].store_size.include?( "2" + storeSizeBottom)))
 
           bottomWaistMin = bottomWaistMin + resultBottomWaist[b].size_min
           bottomWaistMax = bottomWaistMax + resultBottomWaist[b].size_max
@@ -354,11 +350,11 @@ class User < ApplicationRecord
       while c < resultBottomHip.count
 
         countBottomHipLoops+=1
-        if((resultBottomHip[c].store_size.include?(storeSizeTop)) &&
-            (resultBottomHip[c].store_size.include?("X" + storeSizeTop) == false) &&
-            (resultBottomHip[c].store_size.include?("0" + storeSizeTop) == false) &&
-            (resultBottomHip[c].store_size.include?( "1" + storeSizeTop) == false) &&
-            (resultBottomHip[c].store_size.include?( "2" + storeSizeTop) == false))
+        if((resultBottomHip[c].store_size.include?(storeSizeBottom)) &&
+            !(resultBottomHip[c].store_size.include?("X" + storeSizeBottom)) &&
+            !(resultBottomHip[c].store_size.include?("0" + storeSizeBottom)) &&
+            !(resultBottomHip[c].store_size.include?( "1" + storeSizeBottom)) &&
+            !(resultBottomHip[c].store_size.include?( "2" + storeSizeBottom)))
 
           bottomHipMin = bottomHipMin + resultBottomHip[c].size_min
           bottomHipMax = bottomHipMax + resultBottomHip[c].size_max
@@ -377,7 +373,7 @@ class User < ApplicationRecord
           puts storeSizeBottom + " not found in " + storeName + "<br>"
         end
       end
-    end
+    # end
 
     averageTopBustMin = (topBustMin / countTopMinBust)
     #       puts "Top Bust Min Sum: " + topBustMin
@@ -410,9 +406,9 @@ class User < ApplicationRecord
     averageWaist = (((averageTopWaist.to_f * 2) + (averageBottomWaist * 8)) / 10)
     averageHip = ((averageTopHip.to_f + (averageBottomHip * 9)) / 10)
 
-    predictedBust = (42 + (getHeight.to_f * (-0.9)) + (getWeight * 0.2))
-    predictedWaist = (34 + (getHeight.to_f * (-0.6)) + (getWeight * 0.3))
-    predictedHip = (36 + (getHeight.to_f * (-0.2)) + (getWeight * 0.2))
+    predictedBust = (39.8828 + (getHeight.to_f * (-0.303664)) + (getWeight * 0.120713))
+    predictedWaist = (37.9338 + (getHeight.to_f * (-0.427647)) + (getWeight * 0.139814))
+    predictedHip = (33.4630 + (getHeight.to_f * (-0.163644)) + (getWeight * 0.118256))
 
     #        puts "Store Predict Bust: " + averageBust
     #        puts "<br>"
@@ -442,13 +438,21 @@ class User < ApplicationRecord
     #        puts "Final Hip: " . trueHip
     #        puts "<br>"
     #        puts "<br>"
+    results_hash = {}
+    results_hash[:true_bust] = trueBust
+    results_hash[:true_waist] = trueWaist
+    results_hash[:true_hip] = trueHip
 
-
-    return trueBust + " " + trueWaist + " " + trueHip
+    return results_hash
   end
 
-  def calcAvrgFromStoreKnownMeasure(topsArray, bottomsArray, getBust, getWaist, getHip, getBraSize)
+  def calcAvrgFromStoreKnownMeasure(user)
 
+    getBust = user.bust
+    getWaist = user.waist
+    getHip = user.hip
+
+    getBraSize = user.bra_size + (['AA', 'A', 'B', 'C', 'D', 'DD or E', 'DDD or F', 'G', 'H', 'I', 'J'].find_index(user.bra_cup))
     #Variable Instantiation
     topBustMax = 0
     topBustMin = 0
@@ -487,31 +491,34 @@ class User < ApplicationRecord
     countBottomHipLoops = 0
 
     #Input Splitting
-    arrayOfTops = topsArray.split('')
-    arrayOfBottoms = bottomsArray.split('')
+    # arrayOfTops = topsArray.split('')
+    # arrayOfBottoms = bottomsArray.split('')
+    #
+    # arrayOfTops.each do |topValue|
+    #
+    #   topValueSplit = topValue.strip.split(' ')
+    #
+    #   storeSizeTop = topValueSplit[topValueSplit.count - 2]
+    #   storeSizeTop = storeSizeTop.upcase
+    #   storeName = ""
+    #
+    #   topValueSplit.each_with_index do|element, index|
+    #     if index < topValueSplit.count - 2
+    #       storeName = storeName + element
+    #       if(index < (topValueSplit.count - 3))
+    #         storeName = storeName + " "
+    #       end
+    #     end
+    #   end
 
-    arrayOfTops.each do |topValue|
+    storeName = user.tops_store.upcase
+    storeSizeTop = user.tops_size
 
-      topValueSplit = topValue.strip.split(' ')
-
-      storeSizeTop = topValueSplit[topValueSplit.count - 2]
-      storeSizeTop = storeSizeTop.upcase
-      storeName = ""
-
-      topValueSplit.each_with_index do|element, index|
-        if index < topValueSplit.count - 2
-          storeName = storeName + element
-          if(index < (topValueSplit.count - 3))
-            storeName = storeName + " "
-          end
-        end
-      end
-
-      resultTopBust = Store.where(store_name: storeName, feature: "bust")
+      resultTopBust = Store.where(store_name: storeName, feature: "BUST")
       # "SELECT store_size, size_min, size_max FROM sizes WHERE (store_id = '" + storeName + "' AND type = 'bust')"
-      resultTopWaist = Store.where(store_name: storeName, feature: "waist")
+      resultTopWaist = Store.where(store_name: storeName, feature: "WAIST")
       # "SELECT store_size, size_min, size_max FROM sizes WHERE (store_id = '" + storeName + "' AND type = 'waist')"
-      resultTopHip = Store.where(store_name: storeName, feature: "hip")
+      resultTopHip = Store.where(store_name: storeName, feature: "HIP")
       # "SELECT store_size, size_min, size_max FROM sizes WHERE (store_id = '" + storeName + "' AND type = 'hip')"
 
       #Get Data For Top Bust
@@ -524,7 +531,11 @@ class User < ApplicationRecord
 
         countTopBustLoops+= 1
 
-        if((resultTopBust[a].store_size.include?(storeSizeTop)) && (resultTopBust[a].store_size.include?("X" + storeSizeTop) == false) && (resultTopBust[a].store_size.include?("0" + storeSizeTop) == false) && (resultTopBust[a].store_size.include?( "1" + storeSizeTop) == false) && (resultTopBust[a].store_size.include?( "2" + storeSizeTop) == false))
+        if((resultTopBust[a].store_size.include?(storeSizeTop)) &&
+          !(resultTopBust[a].store_size.include?("X" + storeSizeTop)) &&
+          !(resultTopBust[a].store_size.include?("0" + storeSizeTop)) &&
+          !(resultTopBust[a].store_size.include?( "1" + storeSizeTop)) &&
+          !(resultTopBust[a].store_size.include?( "2" + storeSizeTop)))
 
           #puts "Match Long StoreSize: " + rowTopBust[0] + ", Size Min: " + rowTopBust[1] + ", Size Max: " + rowTopBust[2] + "<br>"
 
@@ -557,7 +568,12 @@ class User < ApplicationRecord
       while b < resultTopWaist.count
 
         countTopWaistLoops+=1
-        if((resultTopWaist[b].store_size.include?(storeSizeTop)) && (resultTopWaist[b].store_size.include?("X" + storeSizeTop) == false) && (resultTopWaist[b].store_size.include?("0" + storeSizeTop) == false) && (resultTopWaist[b].store_size.include?( "1" + storeSizeTop) == false) && (resultTopWaist[b].store_size.include?( "2" + storeSizeTop) == false))
+        if((resultTopWaist[b].store_size.include?(storeSizeTop)) &&
+          !(resultTopWaist[b].store_size.include?("X" + storeSizeTop)) &&
+          !(resultTopWaist[b].store_size.include?("0" + storeSizeTop)) &&
+          !(resultTopWaist[b].store_size.include?( "1" + storeSizeTop)) &&
+          !(resultTopWaist[b].store_size.include?( "2" + storeSizeTop)))
+
           topWaistMin = topWaistMin + resultTopWaist[b].size_min
           topWaistMax = topWaistMax + resultTopWaist[b].size_max
 
@@ -575,7 +591,6 @@ class User < ApplicationRecord
         elsif(numRowsTopWaist == countTopWaistLoops)
           puts storeSizeTop + " not found in " + storeName + "<br>"
         end
-
       end
 
       # resultTopHip = mysqli_query(dataTransfer, queryTopHip)
@@ -584,7 +599,11 @@ class User < ApplicationRecord
       while c < resultTopHip.count
 
         countTopHipLoops+=1
-        if((resultTopHip[c].store_size.include?(storeSizeTop)) && (resultTopHip[c].store_size.include?("X" + storeSizeTop) == false) && (resultTopHip[c].store_size.include?("0" + storeSizeTop) == false) && (resultTopHip[c].store_size.include?( "1" + storeSizeTop) == false) && (resultTopHip[c].store_size.include?( "2" + storeSizeTop) == false))
+        if((resultTopHip[c].store_size.include?(storeSizeTop)) &&
+          !(resultTopHip[c].store_size.include?("X" + storeSizeTop)) &&
+          !(resultTopHip[c].store_size.include?("0" + storeSizeTop)) &&
+          !(resultTopHip[c].store_size.include?( "1" + storeSizeTop)) &&
+          !(resultTopHip[c].store_size.include?( "2" + storeSizeTop)))
 
           topHipMin = topHipMin + resultTopHip[c].size_min
           topHipMax = topHipMax + resultTopHip[c].size_max
@@ -603,31 +622,31 @@ class User < ApplicationRecord
           puts storeSizeTop + " not found in " + storeName + "<br>"
         end
       end
-    end
 
-    arrayOfBottoms.each do |bottomValue|
+    # arrayOfBottoms.each do |bottomValue|
+    #
+    #   bottomValueSplit = bottomValue.strip.split('')
+    #
+    #   storeSizeBottom = bottomValueSplit[bottomValueSplit.count - 2]
+    #   storeSizeBottom = storeSizeBottom.upcase
+    #   storeName = ""
+    #
+    #   bottomValueSplit.each_with_index do|element, index|
+    #     if index < bottomValueSplit.count - 2
+    #       storeName = storeName + element
+    #       if(index < (bottomValueSplit.count - 3))
+    #         storeName = storeName + " "
+    #       end
+    #     end
+    #   end
+    storeName = user.bottoms_store.upcase
+    storeSizeBottom = user.bottoms_size
 
-      bottomValueSplit = bottomValue.strip.split('')
-
-      storeSizeBottom = bottomValueSplit[bottomValueSplit.count - 2]
-      storeSizeBottom = storeSizeBottom.upcase
-      storeName = ""
-
-      bottomValueSplit.each_with_index do|element, index|
-        if index < bottomValueSplit.count - 2
-          storeName = storeName + element
-          if(index < (bottomValueSplit.count - 3))
-            storeName = storeName + " "
-          end
-        end
-      end
-
-
-      resultBottomBust = Store.where(store_name: storeName, feature: "bust")
+      resultBottomBust = Store.where(store_name: storeName, feature: "BUST")
       # "SELECT store_size, size_min, size_max FROM sizes WHERE (store_id = '" + storeName + "' AND type = 'bust')"
-      resultBottomWaist = Store.where(store_name: storeName, feature: "waist")
+      resultBottomWaist = Store.where(store_name: storeName, feature: "WAIST")
       # "SELECT store_size, size_min, size_max FROM sizes WHERE (store_id = '" + storeName + "' AND type = 'waist')"
-      resultBottomHip = Store.where(store_name: storeName, feature: "hip")
+      resultBottomHip = Store.where(store_name: storeName, feature: "HIP")
       # "SELECT store_size, size_min, size_max FROM sizes WHERE (store_id = '" + storeName + "' AND type = 'hip')"
 
       # resultBottomBust = mysqli_query(dataTransfer, queryBottomBust)
@@ -638,7 +657,11 @@ class User < ApplicationRecord
         #puts "Bottom StoreSize: " + res_btm_bust.store_size + ", Size Min: " + res_btm_bust.size_min + ", Size Max: " + res_btm_bust.size_max + "<br>"
 
         countBottomBustLoops+=1
-        if((resultBottomBust[i].store_size.include?(storeSizeTop)) && (resultBottomBust[i].store_size.include?("X" + storeSizeTop) == false) && (resultBottomBust[i].store_size.include?("0" + storeSizeTop) == false) && (resultBottomBust[i].store_size.include?( "1" + storeSizeTop) == false) && (resultBottomBust[i].store_size.include?( "2" + storeSizeTop) == false))
+        if((resultBottomBust[i].store_size.include?(storeSizeBottom)) &&
+          !(resultBottomBust[i].store_size.include?("X" + storeSizeBottom)) &&
+          !(resultBottomBust[i].store_size.include?("0" + storeSizeBottom)) &&
+          !(resultBottomBust[i].store_size.include?( "1" + storeSizeBottom)) &&
+          !(resultBottomBust[i].store_size.include?( "2" + storeSizeBottom)))
 
           #puts "Match Long StoreSize: " + res_btm_bust.store_size + ", Size Min: " + res_btm_bust.size_min + ", Size Max: " + res_btm_bust.size_max + "<br>"
 
@@ -670,11 +693,11 @@ class User < ApplicationRecord
 
         countBottomWaistLoops+=1
 
-        if((resultBottomWaist[j].store_size.include?(storeSizeTop)) &&
-            (resultBottomWaist[j].store_size.include?("X" + storeSizeTop) == false) &&
-            (resultBottomWaist[j].store_size.include?("0" + storeSizeTop) == false) &&
-            (resultBottomWaist[j].store_size.include?( "1" + storeSizeTop) == false) &&
-            (resultBottomWaist[j].store_size.include?( "2" + storeSizeTop) == false))
+        if((resultBottomWaist[j].store_size.include?(storeSizeBottom)) &&
+            !(resultBottomWaist[j].store_size.include?("X" + storeSizeBottom)) &&
+            !(resultBottomWaist[j].store_size.include?("0" + storeSizeBottom)) &&
+            !(resultBottomWaist[j].store_size.include?( "1" + storeSizeBottom)) &&
+            !(resultBottomWaist[j].store_size.include?( "2" + storeSizeBottom)))
 
           bottomWaistMin = bottomWaistMin + resultBottomWaist[j].size_min
           bottomWaistMax = bottomWaistMax + resultBottomWaist[j].size_max
@@ -700,11 +723,11 @@ class User < ApplicationRecord
       while k < resultBottomHip.count
 
         countBottomHipLoops+=1
-        if((resultBottomHip[k].store_size.include?(storeSizeTop)) &&
-            (resultBottomHip[k].store_size.include?("X" + storeSizeTop) == false) &&
-            (resultBottomHip[k].store_size.include?("0" + storeSizeTop) == false) &&
-            (resultBottomHip[k].store_size.include?( "1" + storeSizeTop) == false) &&
-            (resultBottomHip[k].store_size.include?( "2" + storeSizeTop) == false))
+        if((resultBottomHip[k].store_size.include?(storeSizeBottom)) &&
+            !(resultBottomHip[k].store_size.include?("X" + storeSizeBottom)) &&
+            !(resultBottomHip[k].store_size.include?("0" + storeSizeBottom)) &&
+            !(resultBottomHip[k].store_size.include?( "1" + storeSizeBottom)) &&
+            !(resultBottomHip[k].store_size.include?( "2" + storeSizeBottom)))
 
           bottomHipMin = bottomHipMin + resultBottomHip[k].size_min
           bottomHipMax = bottomHipMax + resultBottomHip[k].size_max
@@ -723,7 +746,6 @@ class User < ApplicationRecord
           puts storeSizeBottom + " not found in " + storeName + "<br>"
         end
       end
-    end
 
     averageTopBustMin = ((topBustMin.to_f) / countTopMinBust)
     #       puts "Top Bust Min Sum: " + topBustMin
@@ -756,9 +778,9 @@ class User < ApplicationRecord
     averageWaist = (((averageTopWaist.to_f * 2) + (averageBottomWaist * 8)) / 10)
     averageHip = ((averageTopHip.to_f + (averageBottomHip * 9)) / 10)
 
-    predictedBust = (42 + (getHeight.to_f * (-0.9)) + (getWeight * 0.2))
-    predictedWaist = (34 + (getHeight.to_f * (-0.6)) + (getWeight * 0.3))
-    predictedHip = (36 + (getHeight.to_f * (-0.2)) + (getWeight * 0.2))
+    predictedBust = getBust
+    predictedWaist = getWaist
+    predictedHip = getHip
 
     #        puts "Store Predict Bust: " + averageBust
     #        puts "<br>"
@@ -788,9 +810,12 @@ class User < ApplicationRecord
     #        puts "Final Hip: " . trueHip
     #        puts "<br>"
     #        puts "<br>"
+    results_hash = {}
+    results_hash[:true_bust] = trueBust
+    results_hash[:true_waist] = trueWaist
+    results_hash[:true_hip] = trueHip
 
-
-    return trueBust + " " + trueWaist + " " + trueHip
+    return results_hash
   end
 
   def getUserSizeForStoreTop(user, storeName)
@@ -802,9 +827,9 @@ class User < ApplicationRecord
     bustIn = user.bust
     waistIn = user.waist
 
-    resultBust = Store.where(store_name: storeName, feature: "bust")
+    resultBust = Store.where(store_name: storeName, feature: "BUST")
     # "SELECT STORE_ID, store_size, size_Min, size_Max FROM sizes WHERE (store_ID = '" + storeName + "' AND type = 'BUST')"
-    resultWaist = Store.where(store_name: storeName, feature: "waist")
+    resultWaist = Store.where(store_name: storeName, feature: "WAIST")
     # "SELECT STORE_ID, store_size, size_Min, size_Max FROM sizes WHERE (store_ID = '" + storeName + "' AND type = 'WAIST')"
 
     previousMinBust = 0

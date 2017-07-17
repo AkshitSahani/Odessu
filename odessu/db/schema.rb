@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170714224455) do
+ActiveRecord::Schema.define(version: 20170716001353) do
 
   create_table "conversations", force: :cascade do |t|
     t.integer  "author_id"
@@ -100,6 +100,38 @@ ActiveRecord::Schema.define(version: 20170714224455) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string   "feature"
+  end
+
+  create_table "tutorials", force: :cascade do |t|
+    t.string   "Dresses"
+    t.string   "Dresses_href"
+    t.string   "Blouses"
+    t.string   "Blouses_href"
+    t.string   "Jeans"
+    t.string   "Jeans_href"
+    t.string   "Jackets_Outwear"
+    t.string   "Jackets_Outwear_href"
+    t.string   "Jumpsuits_Jumpers"
+    t.string   "Jumpsuits_Jumpers_href"
+    t.string   "Swimsuit"
+    t.string   "Swimsuit_href"
+    t.string   "Link"
+    t.string   "Link_href"
+    t.string   "Garment_Name"
+    t.decimal  "Prices_before_and_after"
+    t.string   "Description1"
+    t.string   "Description2"
+    t.string   "Description3"
+    t.string   "Description4"
+    t.string   "Description5"
+    t.string   "Description6"
+    t.string   "Color"
+    t.string   "Sizes"
+    t.integer  "SKU_code"
+    t.decimal  "Prices_before"
+    t.decimal  "Price_after"
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
   end
 
   create_table "users", force: :cascade do |t|

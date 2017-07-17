@@ -7,3 +7,11 @@
     <% end %>
   </div>
 </div>
+<h1> Product setup</h1>
+<%= Tutorial.first.Swimsuit %>
+<%# image_tag %>
+
+<h1>Testing messaging</h1>
+<%= link_to 'Need help?', new_message_path(receiver_id: 1) %>
+
+<%# User.calcAvrgFromStore(current_user) %>
