@@ -18,7 +18,7 @@ class User < ApplicationRecord
   def self.get_results(search)
     results_hash = {}
     results_stores = Store.where('store_name LIKE ?', "%#{search}%")
-    results_products = Product.where('name LIKE ? OR description LIKE ?', "%#{search}%", "%#{search}%")
+    results_products = Product.where('name LIKE ? OR description1 LIKE ? OR description2 LIKE ? OR description3 LIKE ? OR description4 LIKE ? OR description5 LIKE ?', "%#{search}%", "%#{search}%", "%#{search}%", "%#{search}%", "%#{search}%", "%#{search}%")
     results_hash[:store_results] = results_stores
     results_hash[:product_results] = results_products
     return results_hash

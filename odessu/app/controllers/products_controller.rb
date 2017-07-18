@@ -1,7 +1,9 @@
 class ProductsController < ApplicationController
   def index
-    @products = Product.all
+    @products = Product.all  
+  end
+
+  def show
     @order_item = current_order.order_items.new
-    Tutorial.get_csv_data
   end
 end

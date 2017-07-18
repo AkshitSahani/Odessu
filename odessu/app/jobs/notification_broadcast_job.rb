@@ -1,27 +1,26 @@
 class NotificationBroadcastJob < ApplicationJob
-  queue_as :default
+    queue_as :default
 
-  def perform(message)
-    message = render_message(message)
-    ActionCable.server.broadcast "notifications_1_channel",
-                                 message: message,
-                                 conversation_id: message.conversation.id,
-                                 receiver_id: 1
+    def perform(message)
+      del_message = render_message(message)
+      ActionCable.server.broadcast "notifications_#{message.receiver_id}_channel",
+                                   message: del_message,
+                                   conversation_id: message.conversation.id,
+                                   message_receiver_id: message.receiver_id
 
-    ActionCable.server.broadcast "notifications_1_channel",
-                           notification: render_notification(message),
-                           conversation_id: message.conversation.id,
-                           receiver_id: 1
+      ActionCable.server.broadcast "notifications_#{message.receiver_id}_channel",
+                             notification: render_notification(message),
+                             conversation_id: message.conversation.id,
+                             message_receiver_id: message.receiver_id
+    end
+
+    private
+
+    def render_notification(message)
+      NotificationsController.render partial: 'notifications/notification', locals: {message: message}
+    end
+
+    def render_message(message)
+      MessagesController.render partial: 'messages/message', locals: {message: message}
+    end
   end
-
-  private
-
-  def render_notification(message)
-    NotificationsController.render partial: 'notifications/notification', locals: {message: message}
-  end
-
-  def render_message(message)
-    MessagesController.render partial: 'messages/message',
-                                      locals: {message: message}
-  end
-end

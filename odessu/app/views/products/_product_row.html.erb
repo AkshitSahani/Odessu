@@ -5,9 +5,13 @@
       <h4><%= product.name %></small></h4>
     </div>
     <div class="col-xs-4">
-
       <%= form_for order_item, remote: true do |f| %>
-      <h4 class="text-right">Unit Price: <span style="color: green"><%= number_to_currency product.price %></span></h4>
+      <h4 class="text-right">Unit Price: <span style="color: green"><%= product.priceafter %></span></h4>
+      <h4>Price elsewhere: <%= product.pricebefore %> </h4>
+        <div><%= image_tag(product.picture_src, height: '300', width: '200') %></div>
+        <% product.get_product_colors.each do |color| %>
+          <%= color %>   
+        <% end %>
         <div class="input-group">
           <%= f.number_field :quantity, value: 1, class: "form-control", min: 1 %>
           <div class="input-group-btn">

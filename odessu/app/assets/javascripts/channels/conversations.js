@@ -14,6 +14,7 @@ $(document).ready( function() {
       // Called when the subscription has been terminated by the server
 
     received(data) {
+      console.log('Received data');
 
       if ((messages.size() > 0) && (messages.data('conversation-id') === data['conversation_id'])) {
         messages.append(data['message']);
@@ -24,13 +25,13 @@ $(document).ready( function() {
         if ($('#conversations').size() > 0) { $.getScript('/conversations'); }
 
         if (data['notification']) {
-
           return $('body').append(data['notification']);
         }
       }
     },
 
     send_message(message, conversation_id, message_receiver_id) {
+      console.log('message sent!');
       return this.perform('send_message', {message, conversation_id, message_receiver_id});
     }
   }
@@ -47,7 +48,11 @@ $(document).ready( function() {
       let $this = $(this);
       let textarea = $this.find('#message_body');
       if ($.trim(textarea.val()).length > 0) {
-        App.personal_chat.send_message(textarea.val(), $this.find('#conversation_id').val(), $this.find('#receiver_id').val());
+        App.personal_chat.send_message(textarea.val(), $this.find('#conversation_id').val(), $this.find('#message_receiver_id').val());
+        console.log('form submitted and data being sent.');
+        console.log(textarea.val());
+        console.log($this.find('#conversation_id').val());
+        console.log($this.find('#message_receiver_id').val());
         textarea.val('');
       }
       e.preventDefault();

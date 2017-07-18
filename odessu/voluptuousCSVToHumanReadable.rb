@@ -1,9 +1,9 @@
 module voluptuousCSVToHumanReadable
   def readVoluptuousCSV(bodyShape)
-    require 'csv'
-    #specify file_location
-    csv_text = File.read(file_location)
-    csv = CSV.parse(csv_text, :headers => true )
+    # require 'csv'
+    # #specify file_location
+    # csv_text = File.read(file_location)
+    # csv = CSV.parse(csv_text, :headers => true )
     #
     # topFilter = array()
     # bottomFilter = array()

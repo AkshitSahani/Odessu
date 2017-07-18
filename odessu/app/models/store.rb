@@ -1,6 +1,15 @@
 class Store < ApplicationRecord
   has_many :products
 
+  def self.get_csv_data
+    require 'csv'
+    csv_text = File.read('/Users/AkshitSahani/Desktop/bitmaker/projects/odessu/app/assets/BETA SIZING CHART MAY 10.csv', :encoding => 'ISO-8859-1')
+    csv = CSV.parse(csv_text, :headers => true)
+    csv.each do |row|
+      Store.create!(row.to_hash)
+    end
+  end
+
   def self.returnStores()
     #
     # serverName = "localhost"#find

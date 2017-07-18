@@ -1,4 +1,4 @@
-<h1>Chatting with Admin</h1>
+<h1>Chatting with <%= @conversation.with(current_user).first_name %></h1>
 
 <div id="conversation-main">
   <div id="conversation-body" data-conversation-id="<%= @conversation.id %>">
@@ -7,7 +7,7 @@
 
   <%= form_for @message do |f| %>
     <%= hidden_field_tag 'conversation_id', @conversation.id %>
-    <%= hidden_field_tag 'receiver_id', 1 %>
+    <%= hidden_field_tag 'message_receiver_id', @conversation.with(current_user).id %>
     <%= f.label :body %>
     <%= f.text_area :body %>
 <div class="sendmessage">

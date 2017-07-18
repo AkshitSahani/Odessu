@@ -17,6 +17,9 @@ Rails.application.routes.draw do
     put '/update_issues', to: 'users/registrations#update_issues', as: 'update_issues'
     get '/get_results', to: 'users/sessions#get_results', as: 'get_results'
   end
+
+  mount ActionCable.server => '/cable'
+
   resources :stores
   resources :orders do
     resources :order_reviews
@@ -29,5 +32,4 @@ Rails.application.routes.draw do
   resource :cart
   resources :issue
 
-  mount ActionCable.server => '/cable'
 end

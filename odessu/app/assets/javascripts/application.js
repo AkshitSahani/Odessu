@@ -15,6 +15,7 @@
 //= require_tree .
 //= require cable
 
+
 $(document).ready(function() {
   setTimeout(function(){
     $('#alert').slideUp();
