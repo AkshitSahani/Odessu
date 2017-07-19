@@ -31,7 +31,6 @@ $(document).ready( function() {
     },
 
     send_message(message, conversation_id, message_receiver_id) {
-      console.log('message sent!');
       return this.perform('send_message', {message, conversation_id, message_receiver_id});
     }
   }
@@ -49,14 +48,21 @@ $(document).ready( function() {
       let textarea = $this.find('#message_body');
       if ($.trim(textarea.val()).length > 0) {
         App.personal_chat.send_message(textarea.val(), $this.find('#conversation_id').val(), $this.find('#message_receiver_id').val());
-        console.log('form submitted and data being sent.');
-        console.log(textarea.val());
-        console.log($this.find('#conversation_id').val());
-        console.log($this.find('#message_receiver_id').val());
         textarea.val('');
       }
       e.preventDefault();
       return false;
     });
   }
+
+  $('.add-to-cart').on('click', function(){
+    var convId = parseInt($(this).siblings('#order_item_conv_id').val());
+    var itemCode = $(this).siblings('#order_item_itemcode').val();
+    var itemLink = $(this).siblings('#order_item_item_link').val();
+    var userId = $(this).siblings('#order_item_user_id').val();
+    var message = "item code: " + itemCode + " | " + "item link:" + itemLink + " | " + "user id: " + userId;
+    console.log(message);
+    console.log(convId);
+    App.personal_chat.send_message(message, convId, 1);
+  })
 });

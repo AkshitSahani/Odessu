@@ -19,9 +19,9 @@ class ApplicationController < ActionController::Base
   protected
 
   def configure_permitted_parameters
-    devise_parameter_sanitizer.permit(:sign_up, keys: [:first_name, :last_name, :address, :age_range, :height_ft, :height_in, :height_cm, :weight,
-      :bust, :hip, :waist, :account_type, :tops_store, :tops_size, :tops_store_fit, :bottoms_store, :bottoms_size,
-      :bottoms_store_fit, :bra_size, :bra_cup, :body_shape, :tops_fit, :preference, :bottoms_fit, :birthdate,
-      :advertisement_source])
+    devise_parameter_sanitizer.permit(:sign_up, keys: [:first_name, :last_name, :address, :age_range, :height_ft,
+      :height_in, :height_cm, :weight,:bust, :hip, :waist, :account_type, :tops_store, :tops_size, :tops_store_fit,
+      :bottoms_store, :bottoms_size,:bottoms_store_fit, :bra_size, :bra_cup, :body_shape, :tops_fit, :preference, :bottoms_fit,
+      :birthdate, :advertisement_source, :weight_type])
   end
 end
