@@ -31,5 +31,6 @@ Rails.application.routes.draw do
   resources :order_items
   resource :cart
   resources :issue
+  resources :charges
 
 end
