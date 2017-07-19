@@ -87,17 +87,15 @@ $(document).ready(function() {
       var results = $("<div>").addClass("results-container").addClass('index');
       for(i=0; i < data.length; i++){
         var filterResultContainer = $("<div>").addClass('filter-result');
-        filterResultContainer.append($("<span>").html(data[i]["name"]));
+        filterResultContainer.append($("<span>").html(data[i]["name"])).append($('<br>'));
         var imgSrc = data[i]['picture_src']
         var resultImage = $("<img>").attr('src', imgSrc).attr('height', "300").attr('width', "200");
-        filterResultContainer.append(resultImage);
-        filterResultContainer.append($("<span>").html(data[i]["pricebefore"]));
-        filterResultContainer.append($("<span>").html(data[i]["priceafter"]));
-        results.append(filterResultContainer);
+        filterResultContainer.append(resultImage).append($('<br>'));
+        filterResultContainer.append($("<span>").addClass('price-before').html(data[i]["pricebefore"]));
+        filterResultContainer.append('&nbsp; &nbsp;').append($("<span>").html(data[i]["priceafter"]));
+        results.append(filterResultContainer).append($('<br>')).append($('<br>'));
       }
-      // var replace = $(".row")[1]
       $('.index').replaceWith(results);
-      // $("body").append(results);
       })
     })
 

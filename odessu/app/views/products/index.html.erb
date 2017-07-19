@@ -1,4 +1,4 @@
-<h2 class="text-center">All Products</h2>
+<h2 class="text-center">Products</h2>
 <h3 class="filter">All</h3>
 <h3 class="filter">Dresses</h3>
 <h3 class="filter">Tops</h3>
@@ -11,7 +11,7 @@
         <div>
           <%= product.name %>
           <div><%= image_tag(product.picture_src, height: '300', width: '200') %></div>
-          Price elsewhere: <span><%= product.pricebefore %></span><br>
+          Price elsewhere: <span class="price-before"><%= product.pricebefore %></span><br>
           Price: <%= product.priceafter %><br><br>
         </div>
       <% end %>
@@ -24,4 +24,3 @@
 <% if current_user.id == 1 %>
   <%= link_to "my conversations", conversations_path %>
 <% end %>
-<%# User.calcAvrgFromStore(current_user) %>

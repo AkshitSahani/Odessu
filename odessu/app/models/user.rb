@@ -17,9 +17,11 @@ class User < ApplicationRecord
 
   def self.get_results(search)
     results_hash = {}
-    results_stores = Store.where('store_name LIKE ?', "%#{search}%")
-    results_products = Product.where('name LIKE ? OR description1 LIKE ? OR description2 LIKE ? OR description3 LIKE ? OR description4 LIKE ? OR description5 LIKE ?', "%#{search}%", "%#{search}%", "%#{search}%", "%#{search}%", "%#{search}%", "%#{search}%")
-    results_hash[:store_results] = results_stores
+    results_stores = Store.where('lower(store_name) LIKE lower(?)', "%#{search}%") #change LIKE to ILIKE and remove lower term for deployment
+    results_products = Product.where('lower(name) LIKE (?) OR lower(description1) LIKE lower(?)
+    OR lower(description2) LIKE lower(?) OR lower(description3) LIKE lower(?) OR lower(description4) LIKE lower(?)
+    OR lower(description5) LIKE lower(?)', "%#{search}%", "%#{search}%", "%#{search}%", "%#{search}%", "%#{search}%", "%#{search}%")
+    results_hash[:store_results] = results_stores #heroku uses postgres which uses ILIKE for case-insensitive searches.
     results_hash[:product_results] = results_products
     return results_hash
   end
