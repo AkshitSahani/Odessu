@@ -30,10 +30,10 @@
 
   <h3>Tops</h3>
   <%= f.label :tops_store, "Store" %>
-  <%= f.select :tops_store, ['', 'Addition Elle', 'Leo'] %>
+  <%= f.select :tops_store, @stores %>
 
   <%= f.label :tops_size, "Size" %>
-  <%= f.text_field :tops_size %>
+  <%= f.select :tops_size, [] %>
 
   <%= f.label :tops_store_fit, "How does it fit?" %>
   <%= f.radio_button :tops_store_fit, 'tight' %>Tight
@@ -43,10 +43,10 @@
   <h3>Bottoms</h3>
 
   <%= f.label :bottoms_store, "Store" %>
-  <%= f.select :bottoms_store, ['', 'Addition Elle', 'Leo'] %>
+  <%= f.select :bottoms_store, @stores %>
 
-  <%= f.label :bottoms_fit, "Size" %>
-  <%= f.text_field :bottoms_fit %>
+  <%= f.label :bottoms_size, "Size" %>
+  <%= f.select :bottoms_size, [] %>
 
   <%= f.label :tops_store_fit, "How does it fit?" %>
   <%= f.radio_button :bottoms_store_fit, 'tight' %>Tight

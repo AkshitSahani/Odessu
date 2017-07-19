@@ -8,6 +8,14 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # end
 
   def profile_1
+    @stores = (["Select a store"] << Store.all.distinct.pluck(:store_name)).flatten
+    if request.xhr?
+      @sizes = Store.where(store_name: params['store_name'], feature: "BUST").map{|x| x.store_size}
+      respond_to do |format|
+        format.html
+        format.json { render json: @sizes }
+      end
+    end
     # build_resource({})
     # yield resource if block_given?
     # respond_with resource

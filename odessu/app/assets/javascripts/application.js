@@ -99,4 +99,38 @@ $(document).ready(function() {
       })
     })
 
+    $('#user_tops_store').change(function(){
+      var storeName = $(this).val();
+      $.ajax({
+        url: '/profile_1',
+        method: 'get',
+        data:{
+          store_name: storeName
+        },
+        dataType: 'JSON'
+      }).done(function(data){
+        $('#user_tops_size').empty();
+        for(i=0; i < data.length; i++){
+          $('#user_tops_size').append("<option>" + data[i] + "</option>")
+        }
+      })
+    })
+
+    $('#user_bottoms_store').change(function(){
+      var storeName = $(this).val();
+      $.ajax({
+        url: '/profile_1',
+        method: 'get',
+        data:{
+          store_name: storeName
+        },
+        dataType: 'JSON'
+      }).done(function(data){
+        $('#user_bottoms_size').empty();
+        for(i=0; i < data.length; i++){
+          $('#user_bottoms_size').append("<option>" + data[i] + "</option>")
+        }
+      })
+    })
+
   })

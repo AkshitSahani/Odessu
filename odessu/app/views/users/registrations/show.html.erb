@@ -6,5 +6,7 @@
   <em><b><%= key %>: <%= value %></b></em><br><br>
 <% end %>
 
+<%= User.calcAvrgFromStore(current_user) %>
+
 <%= link_to "Edit my account", edit_user_registration_path %>
 <%= link_to "Edit my profile", edit_profile_path %>
