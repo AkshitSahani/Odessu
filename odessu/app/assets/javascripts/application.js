@@ -73,4 +73,32 @@ $(document).ready(function() {
       $(".form1 > form").submit();
     })
   })
-})
+
+  $('.filter').click(function(){
+    var filter = $(this).html();
+    $.ajax({
+      url: '/products',
+      method: "get",
+      data: {
+        filter: filter
+      },
+      dataType: 'json'
+    }).done(function(data){
+      var results = $("<div>").addClass("results-container").addClass('index');
+      for(i=0; i < data.length; i++){
+        var filterResultContainer = $("<div>").addClass('filter-result');
+        filterResultContainer.append($("<span>").html(data[i]["name"]));
+        var imgSrc = data[i]['picture_src']
+        var resultImage = $("<img>").attr('src', imgSrc).attr('height', "300").attr('width', "200");
+        filterResultContainer.append(resultImage);
+        filterResultContainer.append($("<span>").html(data[i]["pricebefore"]));
+        filterResultContainer.append($("<span>").html(data[i]["priceafter"]));
+        results.append(filterResultContainer);
+      }
+      // var replace = $(".row")[1]
+      $('.index').replaceWith(results);
+      // $("body").append(results);
+      })
+    })
+
+  })

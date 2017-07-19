@@ -10,7 +10,10 @@
       <h4>Price elsewhere: <%= product.pricebefore %> </h4>
         <div><%= image_tag(product.picture_src, height: '300', width: '200') %></div>
         <% product.get_product_colors.each do |color| %>
-          <%= color %>   
+          <%= color %>
+        <% end %>
+        <% product.get_product_sizes.each do |size| %>
+          <%= size %>
         <% end %>
         <div class="input-group">
           <%= f.number_field :quantity, value: 1, class: "form-control", min: 1 %>

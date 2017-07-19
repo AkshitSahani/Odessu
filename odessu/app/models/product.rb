@@ -18,19 +18,33 @@ class Product < ApplicationRecord
   end
 
   def get_product_sizes
-    self.size.split("Choose an option")[1]
+    all_sizes = self.size.split("Choose an option")[1]
+    all_sizes_split = all_sizes.chars
+    size_count = all_sizes_split.count / 2
+    result = []
+    size_count.times do result << [] end
+    i = 0
+    counter = 0
+    all_sizes_split.each do |char|
+      counter += 1
+      result[i] << char
+      i += 1 if counter % 2 == 0
+    end
+    result.map {|x| x.join('')}
   end
 
-  def test(string)
-    tests = string.chars
-    count = (tests.count)/2
-    a = []
-    count.times do a << [] end
-    i = 0
-    tests.each do |x|
-      a[i] << x
-      i+=1 if x == "X"
+  def self.filter_results(filter)
+    if filter == "All"
+      Product.all
+    elsif filter == "Dresses"
+      Product.where.not(dresses: nil)
+    elsif filter == "Tops"
+      Product.where.not(tops: nil)
+    elsif filter == "Bottoms"
+      Product.where.not(bottoms: nil)
+    elsif filter == "Jumpsuits"
+      Product.where.not(jumpsuit: nil)
     end
-    a.map {|x| x.join('')}
   end
+
 end

@@ -1,16 +1,21 @@
-<h2> Stores </h2>
-<% if !@results[:store_results].empty? %>
-  <% @results[:store_results].each do |store|%>
-    <%= store %><br>
-  <% end %>
-<% else %>
+<!-- <h2> Stores </h2>
+<%# if !@results[:store_results].empty? %>
+  <%# @results[:store_results].each do |store|%>
+    <%# store.store_name %><br>
+  <%# end %>
+<%# else %>
   <h4> There were no stores found containing the term "<%= params[:search] %>".</h4>
-<% end %>
+<%# end %> -->
 
-<h2> Products </h2>
+<h2> Search results </h2>
 <% if !@results[:product_results].empty? %>
   <% @results[:product_results].each do |product| %>
-    <%= product%><br>
+    <div class="search-result">
+      <%= product.name%><br>
+      <%= image_tag(product.picture_src, height:300, width: 200) %><br>
+      Price elsewhere: <%= product.pricebefore %><br>
+      Price on Odessu: <%= product.priceafter %>
+    </div><br>
   <% end %>
 <% else %>
   <h4>There were no products found containing the term "<%= params[:search] %>".</h4>

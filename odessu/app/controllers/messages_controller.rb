@@ -11,7 +11,7 @@ class MessagesController < ApplicationController
   end
 
   def create
-    byebug
+    # byebug
     @conversation ||= Conversation.create(author_id: current_user.id, receiver_id: @receiver.id)
     @message = current_user.sent_messages.build(body: params[:message][:body], receiver_id: @receiver.id)
     @message.conversation_id = @conversation.id
