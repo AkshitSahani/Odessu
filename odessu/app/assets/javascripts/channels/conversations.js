@@ -15,9 +15,6 @@ $(document).ready( function() {
 
     received(data) {
 
-      console.log(data);
-      console.log(data['message_receiver_id']);
-
       if (data['message_receiver_id'] !== 1) {
         if ($('.messager').size() > 0) {
           $('#conversation-body').append(data["message"]);
@@ -46,8 +43,6 @@ $(document).ready( function() {
           messager.show().animate({right:"0px"}).addClass('visible');
         }
       }
-
-
 
       if ((messages.size() > 0) && (messages.data('conversation-id') === data['conversation_id'])) {
         messages.append(data['message']);

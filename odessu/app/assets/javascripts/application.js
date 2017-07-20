@@ -86,6 +86,9 @@ $(document).ready(function() {
     }).done(function(data){
       var results = $("<div>").addClass("results-container").addClass('index');
       for(i=0; i < data.length; i++){
+        var productId = data[i]['id'];
+        var url = 'http://localhost:3000/products/' + productId;
+        var link = $('<a>').attr('href', url);
         var filterResultContainer = $("<div>").addClass('filter-result');
         filterResultContainer.append($("<span>").html(data[i]["name"])).append($('<br>'));
         var imgSrc = data[i]['picture_src']
@@ -93,7 +96,7 @@ $(document).ready(function() {
         filterResultContainer.append(resultImage).append($('<br>'));
         filterResultContainer.append($("<span>").addClass('price-before').html(data[i]["pricebefore"]));
         filterResultContainer.append('&nbsp; &nbsp;').append($("<span>").html(data[i]["priceafter"]));
-        results.append(filterResultContainer).append($('<br>')).append($('<br>'));
+        (results.append(link.append(filterResultContainer))).append($('<br>')).append($('<br>'));
       }
       $('.index').replaceWith(results);
       })
@@ -139,7 +142,6 @@ $(document).ready(function() {
     })
 
     $('body').delegate('.messager-submit', 'click', function(e){
-      console.log('clicking');
       e.preventDefault();
       // var messageSubmit = $('<div>', {class: 'campaign-message-submit', text: "Your message has successfully been sent!"});
       var message = $('.new_message textarea').last().val();
