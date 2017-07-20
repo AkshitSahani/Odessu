@@ -6,21 +6,21 @@
       </div>
     <% end %>
     <label class="amount">
-      <span>Amount: $<%= @amount %></span>
+      <span>Amount: CAD <%= @amount %></span>
     </label><br>
     <label class="tax">
-      <span>Tax: $<%= @tax %></span>
+      <span>Tax: CAD <%= @tax %></span>
     </label><br>
     <hr>
     <label class="final-charge">
-      <span>Total: $<%= @charge %></span>
+      <span>Total: CAD <%= @charge %></span>
     </label>
   </article>
 
   <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
           data-key="<%= Rails.configuration.stripe[:publishable_key] %>"
           data-description="Pay for cart items"
-          data-amount="<%= @charge * 100 %>"
+          data-amount="<%= (@charge * 100).to_i %>"
           data-locale="auto">
   </script>
 <% end %>
