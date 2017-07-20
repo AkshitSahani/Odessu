@@ -10,11 +10,11 @@ class ApplicationController < ActionController::Base
      end
    end
 
-  def cookie_set
-    @user = current_user
-    return unless current_user
-    cookies[:user_id] = @user.id
-  end
+  # def cookie_set
+  #   @user = current_user
+  #   return unless current_user
+  #   cookies[:user_id] = @user.id
+  # end
 
   protected
 

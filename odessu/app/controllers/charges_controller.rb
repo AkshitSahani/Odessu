@@ -1,11 +1,15 @@
 class ChargesController < ApplicationController
   def new
+    @amount = current_order.subtotal
+    @tax = @amount * 0.13
+    @charge = @amount + @tax
   end
 
   def create
     # Amount in cents
-    @amount = 500
-
+    @amount = current_order.subtotal
+    @tax = @amount * 0.13
+    @charge = @amount + @tax
     customer = Stripe::Customer.create(
       :email => params[:stripeEmail],
       :source  => params[:stripeToken]
@@ -13,9 +17,9 @@ class ChargesController < ApplicationController
 
     charge = Stripe::Charge.create(
       :customer    => customer.id,
-      :amount      => @amount,
+      :amount      => (@charge * 100),
       :description => 'Rails Stripe customer',
-      :currency    => 'usd'
+      :currency    => 'cad'
     )
 
   rescue Stripe::CardError => e
