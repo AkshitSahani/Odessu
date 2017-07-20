@@ -21,6 +21,7 @@ $(document).ready( function() {
       if (data['message_receiver_id'] !== 1) {
         if ($('.messager').size() > 0) {
           $('#conversation-body').append(data["message"]);
+          $('#conversation-body').scrollTop($('#conversation-body').prop("scrollHeight"));
         }
         else {
           var messager = $('<div>').addClass('messager').text('Chat ');
