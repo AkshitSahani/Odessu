@@ -2,7 +2,12 @@
 
 <div id="conversation-main">
   <div id="conversation-body" data-conversation-id="<%= @conversation.id %>">
-    <%= render @conversation.messages %>
+    <% if current_user.id == 1 %>
+      <%= render @conversation.messages.last(50) %>
+    <% else %>
+      <%= render @conversation.messages.last(2) %>
+    <% end %>
+    <!-- remember you changed this to show only two messages in the convo -->
   </div>
 
   <%= form_for @message do |f| %>

@@ -133,4 +133,39 @@ $(document).ready(function() {
       })
     })
 
+
+    $('body').delegate('.close-chat', 'click', function(){
+      $('.messager').animate({right:"-1000px"}).removeClass('visible');
+    })
+
+    $('body').delegate('.messager-submit', 'click', function(e){
+      console.log('clicking');
+      e.preventDefault();
+      // var messageSubmit = $('<div>', {class: 'campaign-message-submit', text: "Your message has successfully been sent!"});
+      var message = $('.new_message textarea').last().val();
+
+      $.ajax({
+        url:'/messages',
+        method: "POST",
+        data:{
+          body: message,
+          receiver_id: 1
+        }
+      }).done(function(data){
+        $('.new_message textarea').last().val('');
+        $.ajax({
+          url:'/messages/new',
+          method: 'GET',
+          data: {
+            receiver_id: 1
+          }
+        }).done(function(data){
+          $('.chat-content').html(data);
+          $('.sendmessage').addClass('messager-submit');
+          $('.sendmessage').removeClass('sendmessage');
+          $('#conversation-body').scrollTop($('#conversation-body').prop("scrollHeight"));
+        })
+      })
+
+    })
   })

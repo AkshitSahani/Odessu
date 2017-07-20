@@ -13,7 +13,11 @@ class MessagesController < ApplicationController
   def create
     # byebug
     @conversation ||= Conversation.create(author_id: current_user.id, receiver_id: @receiver.id)
-    @message = current_user.sent_messages.build(body: params[:message][:body], receiver_id: @receiver.id)
+    if params[:message]
+      @message = current_user.sent_messages.build(body: params[:message][:body], receiver_id: @receiver.id)
+    elsif params[:body]
+      @message = current_user.sent_messages.build(body: params[:body], receiver_id: @receiver.id)
+    end
     @message.conversation_id = @conversation.id
     @message.save
 
@@ -33,9 +37,9 @@ class MessagesController < ApplicationController
       redirect_to(root_path) and return unless @receiver
       @conversation = Conversation.between(current_user.id, @receiver.id)[0]
     elsif params[:message_receiver_id]
-        @receiver = User.find(params[:message_receiver_id])
-        redirect_to(root_path) and return unless @receiver
-        @conversation = Conversation.between(current_user.id, @receiver.id)[0]
+      @receiver = User.find(params[:message_receiver_id])
+      redirect_to(root_path) and return unless @receiver
+      @conversation = Conversation.between(current_user.id, @receiver.id)[0]
     else
       @conversation = Conversation.find(params[:conversation_id])
       redirect_to(root_path) and return unless @conversation && @conversation.participates?(current_user)
