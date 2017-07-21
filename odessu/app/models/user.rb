@@ -92,7 +92,7 @@ class User < ApplicationRecord
      return results_hash
   end
 
-  def self.calcAvrgFromHeightWeight(user) #when you only have height and weight from the user.
+  def self.calcFromHeightWeight(user) #when you only have height and weight from the user.
     if user.height_cm
       getHeight = (user.height_cm.to_f) * 0.393701
     elsif user.height_ft
@@ -118,7 +118,7 @@ class User < ApplicationRecord
     return results_hash
   end
 
-  def self.calcAvrgForKnownStoresAndSizes(user) # when you only know the stores and sizes in each store for the user.
+  def self.calcFromStoresAndSizes(user) # when you only know the stores and sizes in each store for the user.
 
     #Variable Instantiation
     topBustMax = 0
@@ -182,9 +182,8 @@ class User < ApplicationRecord
         topBustMax = topBustMax + resultTopBust[a].size_max.to_f
 
         countTopMinBust += 1
-        countTopMaxBust +=1
+        countTopMaxBust += 1
         break
-
       elsif(resultTopBust[a].store_size == storeSizeTop)
 
         topBustMin = topBustMin + resultTopBust[a].size_min.to_f
@@ -192,7 +191,7 @@ class User < ApplicationRecord
 
         countTopMinBust+= 1
         countTopMaxBust+= 1
-        break
+        a += 1
       elsif(numRowsTopBust == countTopBustLoops)
         puts storeSizeTop + " not found in " + storeName + "<br>"
         break
@@ -228,7 +227,7 @@ class User < ApplicationRecord
 
         countTopMinWaist+=1
         countTopMaxWaist+=1
-        break
+        b+=1
       elsif(numRowsTopWaist == countTopWaistLoops)
         puts storeSizeTop + " not found in " + storeName + "<br>"
         break
@@ -253,7 +252,6 @@ class User < ApplicationRecord
 
         countTopMinHip+=1
         countTopMaxHip+=1
-
         break
       elsif(resultTopHip[c].store_size == storeSizeTop)
         topHipMin = topHipMin + resultTopHip[c].size_min.to_f
@@ -261,7 +259,7 @@ class User < ApplicationRecord
 
         countTopMinHip+=1
         countTopMaxHip+=1
-        break
+        c+=1
       elsif(numRowsTopHip == countTopHipLoops)
         puts storeSizeTop + " not found in " + storeName + "<br>"
         break
@@ -302,7 +300,7 @@ class User < ApplicationRecord
 
         countBottomMinBust+=1
         countBottomMaxBust+=1
-        break
+        i+=1
       elsif(numRowsBottomBust == countBottomBustLoops)
         puts storeSizeBottom + " not found in " + storeName + "<br>"
         break
@@ -328,7 +326,6 @@ class User < ApplicationRecord
 
         countBottomMinWaist+=1
         countBottomMaxWaist+=1
-
         break
       elsif(resultBottomWaist[j].store_size == storeSizeBottom)
         bottomWaistMin = bottomWaistMin + resultBottomWaist[j].size_min.to_f
@@ -336,7 +333,7 @@ class User < ApplicationRecord
 
         countBottomMinWaist+=1
         countBottomMaxWaist+=1
-        break
+        j+=1
       elsif(numRowsBottomWaist == countBottomWaistLoops)
         puts storeSizeBottom + " not found in " + storeName + "<br>"
         break
@@ -361,7 +358,6 @@ class User < ApplicationRecord
 
         countBottomMinHip+=1
         countBottomMaxHip+=1
-
         break
       elsif(resultBottomHip[k].store_size == storeSizeBottom)
         bottomHipMin = bottomHipMin + resultBottomHip[k].size_min.to_f
@@ -369,7 +365,7 @@ class User < ApplicationRecord
 
         countBottomMinHip+=1
         countBottomMaxHip+=1
-        break
+        k+=1
       elsif(numRowsBottomHip == countBottomHipLoops)
         puts storeSizeBottom + " not found in " + storeName + "<br>"
         break
@@ -412,16 +408,305 @@ class User < ApplicationRecord
     return results_hash
   end
 
-  def self.calcAvrgFromKnownStoreAndBWHMeasure(user, averageBust, averageWaist, averageHip) #when you get both bust, waist, hip measurements and stores with sizes from the user
-    getBust = user.bust #here instead of repeating the code above in this function, we can just get the avg_bust, avg_waist and avg_hip as results
-    getWaist = user.waist #of the function above.
-    getHip = user.hip
+  def self.calcFromStoreAndHeightWeightBust(user) #when you get both bust, waist, hip measurements and stores with sizes from the user
+    #Variable Instantiation
+    topBustMax = 0
+    topBustMin = 0
+    topWaistMax = 0
+    topWaistMin = 0
+    topHipMax = 0
+    topHipMin = 0
+
+    bottomBustMax = 0
+    bottomBustMin = 0
+    bottomWaistMax = 0
+    bottomWaistMin = 0
+    bottomHipMax = 0
+    bottomHipMin = 0
+
+    countTopMinBust = 0
+    countTopMaxBust = 0
+    countTopMinWaist = 0
+    countTopMaxWaist = 0
+    countTopMinHip = 0
+    countTopMaxHip = 0
+
+    countTopBustLoops = 0
+    countTopWaistLoops = 0
+    countTopHipLoops = 0
+
+    countBottomMinBust = 0
+    countBottomMaxBust = 0
+    countBottomMinWaist = 0
+    countBottomMaxWaist = 0
+    countBottomMinHip = 0
+    countBottomMaxHip = 0
+
+    countBottomBustLoops = 0
+    countBottomWaistLoops = 0
+    countBottomHipLoops = 0
+
+    storeName = user.tops_store.upcase
+    storeSizeTop = user.tops_size
+
+    resultTopBust = Store.where(store_name: storeName, feature: "BUST")
+    resultTopWaist = Store.where(store_name: storeName, feature: "WAIST")
+    resultTopHip = Store.where(store_name: storeName, feature: "HIP")
+
+    #Get Data For Top Bust
+
+    numRowsTopBust = resultTopBust.count
+    a = 0
+    while a < resultTopBust.count
+
+      countTopBustLoops+= 1
+
+      if((resultTopBust[a].store_size.include?(storeSizeTop)) &&
+        !(resultTopBust[a].store_size.include?("X" + storeSizeTop)) &&
+        !(resultTopBust[a].store_size.include?("0" + storeSizeTop)) &&
+        !(resultTopBust[a].store_size.include?( "1" + storeSizeTop)) &&
+        !(resultTopBust[a].store_size.include?( "2" + storeSizeTop)))
+
+        topBustMin = topBustMin + resultTopBust[a].size_min.to_f
+        topBustMax = topBustMax + resultTopBust[a].size_max.to_f
+
+        countTopMinBust += 1
+        countTopMaxBust += 1
+        break
+      elsif(resultTopBust[a].store_size == storeSizeTop)
+
+        topBustMin = topBustMin + resultTopBust[a].size_min.to_f
+        topBustMax = topBustMax + resultTopBust[a].size_max.to_f
+
+        countTopMinBust+= 1
+        countTopMaxBust+= 1
+        a += 1
+      elsif(numRowsTopBust == countTopBustLoops)
+        puts storeSizeTop + " not found in " + storeName + "<br>"
+        break
+      else
+        a += 1
+      end
+    end
+
+
+    #Get Data For Top Waist
+    numRowsTopWaist = resultTopWaist.count
+    b = 0
+    while b < resultTopWaist.count
+
+      countTopWaistLoops+=1
+      if((resultTopWaist[b].store_size.include?(storeSizeTop)) &&
+        !(resultTopWaist[b].store_size.include?("X" + storeSizeTop)) &&
+        !(resultTopWaist[b].store_size.include?("0" + storeSizeTop)) &&
+        !(resultTopWaist[b].store_size.include?( "1" + storeSizeTop)) &&
+        !(resultTopWaist[b].store_size.include?( "2" + storeSizeTop)))
+
+        topWaistMin = topWaistMin + resultTopWaist[b].size_min.to_f
+        topWaistMax = topWaistMax + resultTopWaist[b].size_max.to_f
+
+        countTopMinWaist+=1
+        countTopMaxWaist+=1
+
+        break
+      elsif(resultTopWaist[b].store_size == storeSizeTop)
+
+        topWaistMin = topWaistMin + resultTopWaist[b].size_min.to_f
+        topWaistMax = topWaistMax + resultTopWaist[b].size_max.to_f
+
+        countTopMinWaist+=1
+        countTopMaxWaist+=1
+        b+=1
+      elsif(numRowsTopWaist == countTopWaistLoops)
+        puts storeSizeTop + " not found in " + storeName + "<br>"
+        break
+      else
+        b += 1
+      end
+    end
+
+    numRowsTopHip = resultTopHip.count
+    c = 0
+    while c < resultTopHip.count
+
+      countTopHipLoops+=1
+      if((resultTopHip[c].store_size.include?(storeSizeTop)) &&
+        !(resultTopHip[c].store_size.include?("X" + storeSizeTop)) &&
+        !(resultTopHip[c].store_size.include?("0" + storeSizeTop)) &&
+        !(resultTopHip[c].store_size.include?( "1" + storeSizeTop)) &&
+        !(resultTopHip[c].store_size.include?( "2" + storeSizeTop)))
+
+        topHipMin = topHipMin + resultTopHip[c].size_min.to_f
+        topHipMax = topHipMax + resultTopHip[c].size_max.to_f
+
+        countTopMinHip+=1
+        countTopMaxHip+=1
+        break
+      elsif(resultTopHip[c].store_size == storeSizeTop)
+        topHipMin = topHipMin + resultTopHip[c].size_min.to_f
+        topHipMax = topHipMax + resultTopHip[c].size_max.to_f
+
+        countTopMinHip+=1
+        countTopMaxHip+=1
+        c+=1
+      elsif(numRowsTopHip == countTopHipLoops)
+        puts storeSizeTop + " not found in " + storeName + "<br>"
+        break
+      else
+        c += 1
+      end
+    end
+
+    storeName = user.bottoms_store.upcase
+    storeSizeBottom = user.bottoms_size
+
+    resultBottomBust = Store.where(store_name: storeName, feature: "BUST")
+    resultBottomWaist = Store.where(store_name: storeName, feature: "WAIST")
+    resultBottomHip = Store.where(store_name: storeName, feature: "HIP")
+
+    numRowsBottomBust = resultBottomBust.count
+    i = 0
+    while i < resultBottomBust.count
+
+      countBottomBustLoops+=1
+      if((resultBottomBust[i].store_size.include?(storeSizeBottom)) &&
+        !(resultBottomBust[i].store_size.include?("X" + storeSizeBottom)) &&
+        !(resultBottomBust[i].store_size.include?("0" + storeSizeBottom)) &&
+        !(resultBottomBust[i].store_size.include?( "1" + storeSizeBottom)) &&
+        !(resultBottomBust[i].store_size.include?( "2" + storeSizeBottom)))
+
+        bottomBustMin = bottomBustMin + resultBottomBust[i].size_min.to_f
+        bottomBustMax = bottomBustMax + resultBottomBust[i].size_max.to_f
+
+        countBottomMinBust+=1
+        countBottomMaxBust+=1
+
+        break
+      elsif(resultBottomBust[i].store_size == storeSizeBottom)
+
+        bottomBustMin = bottomBustMin + resultBottomBust[i].size_max.to_f
+        bottomBustMax = bottomBustMax + resultBottomBust[i].size_min.to_f
+
+        countBottomMinBust+=1
+        countBottomMaxBust+=1
+        i+=1
+      elsif(numRowsBottomBust == countBottomBustLoops)
+        puts storeSizeBottom + " not found in " + storeName + "<br>"
+        break
+      else
+        i += 1
+      end
+    end
+
+    numRowsBottomWaist = resultBottomWaist.count
+    j = 0
+    while j < resultBottomWaist.count
+
+      countBottomWaistLoops+=1
+
+      if((resultBottomWaist[j].store_size.include?(storeSizeBottom)) &&
+        !(resultBottomWaist[j].store_size.include?("X" + storeSizeBottom)) &&
+        !(resultBottomWaist[j].store_size.include?("0" + storeSizeBottom)) &&
+        !(resultBottomWaist[j].store_size.include?( "1" + storeSizeBottom)) &&
+        !(resultBottomWaist[j].store_size.include?( "2" + storeSizeBottom)))
+
+        bottomWaistMin = bottomWaistMin + resultBottomWaist[j].size_min.to_f
+        bottomWaistMax = bottomWaistMax + resultBottomWaist[j].size_max.to_f
+
+        countBottomMinWaist+=1
+        countBottomMaxWaist+=1
+        break
+      elsif(resultBottomWaist[j].store_size == storeSizeBottom)
+        bottomWaistMin = bottomWaistMin + resultBottomWaist[j].size_min.to_f
+        bottomWaistMax = bottomWaistMax + resultBottomWaist[j].size_max.to_f
+
+        countBottomMinWaist+=1
+        countBottomMaxWaist+=1
+        j+=1
+      elsif(numRowsBottomWaist == countBottomWaistLoops)
+        puts storeSizeBottom + " not found in " + storeName + "<br>"
+        break
+      else
+        j += 1
+      end
+    end
+
+    numRowsBottomHip = resultBottomHip.count
+    k = 0
+    while k < resultBottomHip.count
+
+      countBottomHipLoops+=1
+      if((resultBottomHip[k].store_size.include?(storeSizeBottom)) &&
+        !(resultBottomHip[k].store_size.include?("X" + storeSizeBottom)) &&
+        !(resultBottomHip[k].store_size.include?("0" + storeSizeBottom)) &&
+        !(resultBottomHip[k].store_size.include?( "1" + storeSizeBottom)) &&
+        !(resultBottomHip[k].store_size.include?( "2" + storeSizeBottom)))
+
+        bottomHipMin = bottomHipMin + resultBottomHip[k].size_min.to_f
+        bottomHipMax = bottomHipMax + resultBottomHip[k].size_max.to_f
+
+        countBottomMinHip+=1
+        countBottomMaxHip+=1
+        break
+      elsif(resultBottomHip[k].store_size == storeSizeBottom)
+        bottomHipMin = bottomHipMin + resultBottomHip[k].size_min.to_f
+        bottomHipMax = bottomHipMax + resultBottomHip[k].size_max.to_f
+
+        countBottomMinHip+=1
+        countBottomMaxHip+=1
+        k+=1
+      elsif(numRowsBottomHip == countBottomHipLoops)
+        puts storeSizeBottom + " not found in " + storeName + "<br>"
+        break
+      else
+        k += 1
+      end
+    end
+
+    averageTopBustMin = ((topBustMin.to_f) / countTopMinBust)
+    averageTopBustMax = (topBustMax.to_f / countTopMaxBust)
+    averageTopWaistMin = (topWaistMin.to_f / countTopMinWaist)
+    averageTopWaistMax = (topWaistMax.to_f / countTopMaxWaist)
+    averageTopHipMin = (topHipMin.to_f / countTopMinHip)
+    averageTopHipMax = (topHipMax.to_f / countTopMaxHip)
+
+    averageBottomBustMin = (bottomBustMin.to_f / countBottomMinBust)
+    averageBottomBustMax = (bottomBustMax.to_f / countBottomMaxBust)
+    averageBottomWaistMin = (bottomWaistMin.to_f / countBottomMinWaist)
+    averageBottomWaistMax = (bottomWaistMax.to_f / countBottomMaxWaist)
+    averageBottomHipMin = (bottomHipMin.to_f / countBottomMinHip)
+    averageBottomHipMax = (bottomHipMax.to_f/ countBottomMaxHip)
+
+    averageTopBust = (((averageTopBustMin.to_f * 6) + (averageTopBustMax * 4)) / 10)
+    averageTopWaist = (((averageTopWaistMin.to_f * 6) + (averageTopWaistMax * 4)) / 10)
+    averageTopHip = (((averageTopHipMin.to_f * 6) + (averageTopHipMax * 4)) / 10)
+
+    averageBottomBust = (((averageBottomBustMin.to_f * 6) + (averageBottomBustMax * 4)) / 10)
+    averageBottomWaist = (((averageBottomWaistMin.to_f * 6) + (averageBottomWaistMax * 4)) / 10)
+    averageBottomHip = (((averageBottomHipMin.to_f * 6) + (averageBottomHipMax * 4)) / 10)
+
+    averageBust = (((averageTopBust.to_f * 9) + averageBottomBust) / 10)
+    averageWaist = (((averageTopWaist.to_f * 2) + (averageBottomWaist * 8)) / 10)
+    averageHip = ((averageTopHip.to_f + (averageBottomHip * 9)) / 10)
+
+    if user.height_cm
+      getHeight = (user.height_cm.to_f) * 0.393701
+    elsif user.height_ft
+      getHeight = (user.height_ft.to_f * 12) + user.height_in.to_f
+    end
+
+    if user.weight_type == "Lbs"
+      getWeight = user.weight.to_f
+    elsif user.weight_type == "Kg"
+      getWeight = ((user.weight.to_f) * 2.20462)
+    end
+    # getBraBust = user.bust #(bra size)
+
+    predictedBust = (39.8828 + (getHeight.to_f * (-0.303664)) + (getWeight * 0.120713))
+    predictedWaist = (37.9338 + (getHeight.to_f * (-0.427647)) + (getWeight * 0.139814))
+    predictedHip = (33.4630 + (getHeight.to_f * (-0.163644)) + (getWeight * 0.118256))
 
     getBraBust = user.bra_size.to_f + (['AA', 'A', 'B', 'C', 'D', 'DD or E', 'DDD or F', 'G', 'H', 'I', 'J'].find_index(user.bra_cup))
-
-    predictedBust = getBust
-    predictedWaist = getWaist
-    predictedHip = getHip
 
     trueBust = (((predictedBust.to_f * 3) + (averageBust * 3) + (getBraBust * 4)) / 10)
     trueWaist = (((predictedWaist.to_f * 4) + (averageWaist * 6)) / 10)
@@ -435,15 +720,354 @@ class User < ApplicationRecord
     return results_hash
   end
 
+  def self.calcFromHeightWeightStore(user)
+    if user.height_cm
+      getHeight = (user.height_cm.to_f) * 0.393701
+    elsif user.height_ft
+      getHeight = (user.height_ft.to_f * 12) + user.height_in.to_f
+    end
+
+    if user.weight_type == "Lbs"
+      getWeight = user.weight.to_f
+    elsif user.weight_type == "Kg"
+      getWeight = ((user.weight.to_f) * 2.20462)
+    end
+    # getBraBust = user.bust #(bra size)
+
+    predictedBust = (39.8828 + (getHeight.to_f * (-0.303664)) + (getWeight * 0.120713))
+    predictedWaist = (37.9338 + (getHeight.to_f * (-0.427647)) + (getWeight * 0.139814))
+    predictedHip = (33.4630 + (getHeight.to_f * (-0.163644)) + (getWeight * 0.118256))
+
+    #Variable Instantiation
+    topBustMax = 0
+    topBustMin = 0
+    topWaistMax = 0
+    topWaistMin = 0
+    topHipMax = 0
+    topHipMin = 0
+
+    bottomBustMax = 0
+    bottomBustMin = 0
+    bottomWaistMax = 0
+    bottomWaistMin = 0
+    bottomHipMax = 0
+    bottomHipMin = 0
+
+    countTopMinBust = 0
+    countTopMaxBust = 0
+    countTopMinWaist = 0
+    countTopMaxWaist = 0
+    countTopMinHip = 0
+    countTopMaxHip = 0
+
+    countTopBustLoops = 0
+    countTopWaistLoops = 0
+    countTopHipLoops = 0
+
+    countBottomMinBust = 0
+    countBottomMaxBust = 0
+    countBottomMinWaist = 0
+    countBottomMaxWaist = 0
+    countBottomMinHip = 0
+    countBottomMaxHip = 0
+
+    countBottomBustLoops = 0
+    countBottomWaistLoops = 0
+    countBottomHipLoops = 0
+
+    storeName = user.tops_store.upcase
+    storeSizeTop = user.tops_size
+
+    resultTopBust = Store.where(store_name: storeName, feature: "BUST")
+    resultTopWaist = Store.where(store_name: storeName, feature: "WAIST")
+    resultTopHip = Store.where(store_name: storeName, feature: "HIP")
+
+    #Get Data For Top Bust
+
+    numRowsTopBust = resultTopBust.count
+    a = 0
+    while a < resultTopBust.count
+
+      countTopBustLoops+= 1
+
+      if((resultTopBust[a].store_size.include?(storeSizeTop)) &&
+        !(resultTopBust[a].store_size.include?("X" + storeSizeTop)) &&
+        !(resultTopBust[a].store_size.include?("0" + storeSizeTop)) &&
+        !(resultTopBust[a].store_size.include?( "1" + storeSizeTop)) &&
+        !(resultTopBust[a].store_size.include?( "2" + storeSizeTop)))
+
+        topBustMin = topBustMin + resultTopBust[a].size_min.to_f
+        topBustMax = topBustMax + resultTopBust[a].size_max.to_f
+
+        countTopMinBust += 1
+        countTopMaxBust += 1
+        break
+      elsif(resultTopBust[a].store_size == storeSizeTop)
+
+        topBustMin = topBustMin + resultTopBust[a].size_min.to_f
+        topBustMax = topBustMax + resultTopBust[a].size_max.to_f
+
+        countTopMinBust+= 1
+        countTopMaxBust+= 1
+        a += 1
+      elsif(numRowsTopBust == countTopBustLoops)
+        puts storeSizeTop + " not found in " + storeName + "<br>"
+        break
+      else
+        a += 1
+      end
+    end
+
+
+    #Get Data For Top Waist
+    numRowsTopWaist = resultTopWaist.count
+    b = 0
+    while b < resultTopWaist.count
+
+      countTopWaistLoops+=1
+      if((resultTopWaist[b].store_size.include?(storeSizeTop)) &&
+        !(resultTopWaist[b].store_size.include?("X" + storeSizeTop)) &&
+        !(resultTopWaist[b].store_size.include?("0" + storeSizeTop)) &&
+        !(resultTopWaist[b].store_size.include?( "1" + storeSizeTop)) &&
+        !(resultTopWaist[b].store_size.include?( "2" + storeSizeTop)))
+
+        topWaistMin = topWaistMin + resultTopWaist[b].size_min.to_f
+        topWaistMax = topWaistMax + resultTopWaist[b].size_max.to_f
+
+        countTopMinWaist+=1
+        countTopMaxWaist+=1
+
+        break
+      elsif(resultTopWaist[b].store_size == storeSizeTop)
+
+        topWaistMin = topWaistMin + resultTopWaist[b].size_min.to_f
+        topWaistMax = topWaistMax + resultTopWaist[b].size_max.to_f
+
+        countTopMinWaist+=1
+        countTopMaxWaist+=1
+        b+=1
+      elsif(numRowsTopWaist == countTopWaistLoops)
+        puts storeSizeTop + " not found in " + storeName + "<br>"
+        break
+      else
+        b += 1
+      end
+    end
+
+    numRowsTopHip = resultTopHip.count
+    c = 0
+    while c < resultTopHip.count
+
+      countTopHipLoops+=1
+      if((resultTopHip[c].store_size.include?(storeSizeTop)) &&
+        !(resultTopHip[c].store_size.include?("X" + storeSizeTop)) &&
+        !(resultTopHip[c].store_size.include?("0" + storeSizeTop)) &&
+        !(resultTopHip[c].store_size.include?( "1" + storeSizeTop)) &&
+        !(resultTopHip[c].store_size.include?( "2" + storeSizeTop)))
+
+        topHipMin = topHipMin + resultTopHip[c].size_min.to_f
+        topHipMax = topHipMax + resultTopHip[c].size_max.to_f
+
+        countTopMinHip+=1
+        countTopMaxHip+=1
+        break
+      elsif(resultTopHip[c].store_size == storeSizeTop)
+        topHipMin = topHipMin + resultTopHip[c].size_min.to_f
+        topHipMax = topHipMax + resultTopHip[c].size_max.to_f
+
+        countTopMinHip+=1
+        countTopMaxHip+=1
+        c+=1
+      elsif(numRowsTopHip == countTopHipLoops)
+        puts storeSizeTop + " not found in " + storeName + "<br>"
+        break
+      else
+        c += 1
+      end
+    end
+
+    storeName = user.bottoms_store.upcase
+    storeSizeBottom = user.bottoms_size
+
+    resultBottomBust = Store.where(store_name: storeName, feature: "BUST")
+    resultBottomWaist = Store.where(store_name: storeName, feature: "WAIST")
+    resultBottomHip = Store.where(store_name: storeName, feature: "HIP")
+
+    numRowsBottomBust = resultBottomBust.count
+    i = 0
+    while i < resultBottomBust.count
+
+      countBottomBustLoops+=1
+      if((resultBottomBust[i].store_size.include?(storeSizeBottom)) &&
+        !(resultBottomBust[i].store_size.include?("X" + storeSizeBottom)) &&
+        !(resultBottomBust[i].store_size.include?("0" + storeSizeBottom)) &&
+        !(resultBottomBust[i].store_size.include?( "1" + storeSizeBottom)) &&
+        !(resultBottomBust[i].store_size.include?( "2" + storeSizeBottom)))
+
+        bottomBustMin = bottomBustMin + resultBottomBust[i].size_min.to_f
+        bottomBustMax = bottomBustMax + resultBottomBust[i].size_max.to_f
+
+        countBottomMinBust+=1
+        countBottomMaxBust+=1
+
+        break
+      elsif(resultBottomBust[i].store_size == storeSizeBottom)
+
+        bottomBustMin = bottomBustMin + resultBottomBust[i].size_max.to_f
+        bottomBustMax = bottomBustMax + resultBottomBust[i].size_min.to_f
+
+        countBottomMinBust+=1
+        countBottomMaxBust+=1
+        i+=1
+      elsif(numRowsBottomBust == countBottomBustLoops)
+        puts storeSizeBottom + " not found in " + storeName + "<br>"
+        break
+      else
+        i += 1
+      end
+    end
+
+    numRowsBottomWaist = resultBottomWaist.count
+    j = 0
+    while j < resultBottomWaist.count
+
+      countBottomWaistLoops+=1
+
+      if((resultBottomWaist[j].store_size.include?(storeSizeBottom)) &&
+        !(resultBottomWaist[j].store_size.include?("X" + storeSizeBottom)) &&
+        !(resultBottomWaist[j].store_size.include?("0" + storeSizeBottom)) &&
+        !(resultBottomWaist[j].store_size.include?( "1" + storeSizeBottom)) &&
+        !(resultBottomWaist[j].store_size.include?( "2" + storeSizeBottom)))
+
+        bottomWaistMin = bottomWaistMin + resultBottomWaist[j].size_min.to_f
+        bottomWaistMax = bottomWaistMax + resultBottomWaist[j].size_max.to_f
+
+        countBottomMinWaist+=1
+        countBottomMaxWaist+=1
+        break
+      elsif(resultBottomWaist[j].store_size == storeSizeBottom)
+        bottomWaistMin = bottomWaistMin + resultBottomWaist[j].size_min.to_f
+        bottomWaistMax = bottomWaistMax + resultBottomWaist[j].size_max.to_f
+
+        countBottomMinWaist+=1
+        countBottomMaxWaist+=1
+        j+=1
+      elsif(numRowsBottomWaist == countBottomWaistLoops)
+        puts storeSizeBottom + " not found in " + storeName + "<br>"
+        break
+      else
+        j += 1
+      end
+    end
+
+    numRowsBottomHip = resultBottomHip.count
+    k = 0
+    while k < resultBottomHip.count
+
+      countBottomHipLoops+=1
+      if((resultBottomHip[k].store_size.include?(storeSizeBottom)) &&
+        !(resultBottomHip[k].store_size.include?("X" + storeSizeBottom)) &&
+        !(resultBottomHip[k].store_size.include?("0" + storeSizeBottom)) &&
+        !(resultBottomHip[k].store_size.include?( "1" + storeSizeBottom)) &&
+        !(resultBottomHip[k].store_size.include?( "2" + storeSizeBottom)))
+
+        bottomHipMin = bottomHipMin + resultBottomHip[k].size_min.to_f
+        bottomHipMax = bottomHipMax + resultBottomHip[k].size_max.to_f
+
+        countBottomMinHip+=1
+        countBottomMaxHip+=1
+        break
+      elsif(resultBottomHip[k].store_size == storeSizeBottom)
+        bottomHipMin = bottomHipMin + resultBottomHip[k].size_min.to_f
+        bottomHipMax = bottomHipMax + resultBottomHip[k].size_max.to_f
+
+        countBottomMinHip+=1
+        countBottomMaxHip+=1
+        k+=1
+      elsif(numRowsBottomHip == countBottomHipLoops)
+        puts storeSizeBottom + " not found in " + storeName + "<br>"
+        break
+      else
+        k += 1
+      end
+    end
+
+    averageTopBustMin = ((topBustMin.to_f) / countTopMinBust)
+    averageTopBustMax = (topBustMax.to_f / countTopMaxBust)
+    averageTopWaistMin = (topWaistMin.to_f / countTopMinWaist)
+    averageTopWaistMax = (topWaistMax.to_f / countTopMaxWaist)
+    averageTopHipMin = (topHipMin.to_f / countTopMinHip)
+    averageTopHipMax = (topHipMax.to_f / countTopMaxHip)
+
+    averageBottomBustMin = (bottomBustMin.to_f / countBottomMinBust)
+    averageBottomBustMax = (bottomBustMax.to_f / countBottomMaxBust)
+    averageBottomWaistMin = (bottomWaistMin.to_f / countBottomMinWaist)
+    averageBottomWaistMax = (bottomWaistMax.to_f / countBottomMaxWaist)
+    averageBottomHipMin = (bottomHipMin.to_f / countBottomMinHip)
+    averageBottomHipMax = (bottomHipMax.to_f/ countBottomMaxHip)
+
+    averageTopBust = (((averageTopBustMin.to_f * 6) + (averageTopBustMax * 4)) / 10)
+    averageTopWaist = (((averageTopWaistMin.to_f * 6) + (averageTopWaistMax * 4)) / 10)
+    averageTopHip = (((averageTopHipMin.to_f * 6) + (averageTopHipMax * 4)) / 10)
+
+    averageBottomBust = (((averageBottomBustMin.to_f * 6) + (averageBottomBustMax * 4)) / 10)
+    averageBottomWaist = (((averageBottomWaistMin.to_f * 6) + (averageBottomWaistMax * 4)) / 10)
+    averageBottomHip = (((averageBottomHipMin.to_f * 6) + (averageBottomHipMax * 4)) / 10)
+
+    averageBust = (((averageTopBust.to_f * 9) + averageBottomBust) / 10)
+    averageWaist = (((averageTopWaist.to_f * 2) + (averageBottomWaist * 8)) / 10)
+    averageHip = ((averageTopHip.to_f + (averageBottomHip * 9)) / 10)
+
+    trueBust = predictedBust + averageBust
+    trueWaist = ((predictedWaist.to_f * 4) + (averageWaist * 6)) / 10
+    trueHip = ((predictedHip.to_f * 4) + (averageHip * 6)) / 10
+
+    results_hash = {}
+    results_hash[:true_bust] = trueBust
+    results_hash[:true_waist] = trueWaist
+    results_hash[:true_hip] = trueHip
+    return results_hash
+  end
+
+  def calcFromHeightWeightBra
+    getBraBust = user.bra_size.to_f + (['AA', 'A', 'B', 'C', 'D', 'DD or E', 'DDD or F', 'G', 'H', 'I', 'J'].find_index(user.bra_cup))
+
+    if user.height_cm
+      getHeight = (user.height_cm.to_f) * 0.393701
+    elsif user.height_ft
+      getHeight = (user.height_ft.to_f * 12) + user.height_in.to_f
+    end
+
+    if user.weight_type == "Lbs"
+      getWeight = user.weight.to_f
+    elsif user.weight_type == "Kg"
+      getWeight = ((user.weight.to_f) * 2.20462)
+    end
+    # getBraBust = user.bust #(bra size)
+
+    predictedBust = (39.8828 + (getHeight.to_f * (-0.303664)) + (getWeight * 0.120713))
+    predictedWaist = (37.9338 + (getHeight.to_f * (-0.427647)) + (getWeight * 0.139814))
+    predictedHip = (33.4630 + (getHeight.to_f * (-0.163644)) + (getWeight * 0.118256))
+
+    trueBust = ((predictedBust.to_f * 4) + (getBraBust * 6)) / 10
+    trueWaist = predictedWaist
+    trueHip = predictedHip
+
+    results_hash = {}
+    results_hash[:true_bust] = trueBust
+    results_hash[:true_waist] = trueWaist
+    results_hash[:true_hip] = trueHip
+
+    return results_hash
+  end
 
   def getUserSizeForStoreTop(user, storeName)
     bustIn = user.bust
     waistIn = user.waist
 
     resultBust = Store.where(store_name: storeName, feature: "BUST")
-    # "SELECT STORE_ID, store_size, size_min.to_f, size_Max FROM sizes WHERE (store_ID = '" + storeName + "' AND type = 'BUST')"
+
     resultWaist = Store.where(store_name: storeName, feature: "WAIST")
-    # "SELECT STORE_ID, store_size, size_min.to_f, size_Max FROM sizes WHERE (store_ID = '" + storeName + "' AND type = 'WAIST')"
 
     previousMinBust = 0
     previousMaxBust = 0
@@ -513,7 +1137,6 @@ class User < ApplicationRecord
 
     end
 
-    # resultWaist = mysqli_query(dataTransfer, waistStoreSizeSQL)
     sizeOfResultWaist = resultWaist.count
     if(sizeOfResultWaist < 1)
       return "Bad Read Waist"
