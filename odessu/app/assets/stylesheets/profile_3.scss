@@ -77,10 +77,13 @@
 
 .prof3-submit{
   text-align: center;
-  border: 1px solid $odessuBlue;
-  padding: 1% 5%;
+  // border: 1px solid $odessuBlue;
+  // padding: 1% 5%;
   color: white;
   background-color: $odessuBlue;
+  border-radius: 5px;
+  height: 40px;
+  width: 150px;
 }
 
 .issue-submit-container{

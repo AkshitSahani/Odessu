@@ -1,0 +1,33 @@
+<div class="logotop">
+  <%= image_tag "odessu_logo.jpg", height: 60, width: 60 %> <b>ODESSU</b>
+</div>
+
+<div class="prof4-intro">
+  Almost done. We just need your profile info.
+</div>
+
+<hr>
+
+<div>
+  <h4>Shipping Information</h4>
+  <div class="shipping info">
+    <%= form_for current_user, url: create_profile_4_path do |f| %>
+      <%= f.label :full_name, 'Full Name' %>
+      <%= f.text_field :full_name %>
+
+      <%= f.label :address, 'Address' %>
+      <%= f.text_field :address %>
+
+      <%= f.label :phone_number, 'Phone Number' %>
+      <%= f.text_field :phone_number %>
+
+      <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+      data-key="<%= Rails.configuration.stripe[:publishable_key] %>"
+      data-description="Pay for cart items"
+      data-amount="1200"
+      data-locale="auto">
+      </script>
+      
+    <% end %>
+  </div>
+</div>

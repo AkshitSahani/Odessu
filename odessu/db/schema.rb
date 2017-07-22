@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170722071113) do
+ActiveRecord::Schema.define(version: 20170722174411) do
 
   create_table "conversations", force: :cascade do |t|
     t.integer  "author_id"
@@ -33,8 +33,8 @@ ActiveRecord::Schema.define(version: 20170722071113) do
     t.datetime "created_at",   null: false
     t.datetime "updated_at",   null: false
     t.integer  "user_id"
-    t.string   "issue_top"
-    t.string   "issue_bottom"
+    t.string   "issue_fit"
+    t.string   "issue_length"
     t.string   "other1"
     t.string   "other2"
   end
@@ -118,6 +118,12 @@ ActiveRecord::Schema.define(version: 20170722071113) do
     t.string "itemcode"
   end
 
+  create_table "showoffs", force: :cascade do |t|
+    t.string   "showoff"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "stores", force: :cascade do |t|
     t.string   "store_name"
     t.string   "address"
@@ -149,8 +155,6 @@ ActiveRecord::Schema.define(version: 20170722071113) do
     t.datetime "locked_at"
     t.datetime "created_at",                              null: false
     t.datetime "updated_at",                              null: false
-    t.string   "first_name"
-    t.string   "last_name"
     t.string   "address"
     t.string   "age_range"
     t.string   "weight"
@@ -181,6 +185,9 @@ ActiveRecord::Schema.define(version: 20170722071113) do
     t.float    "predicted_bust"
     t.string   "bust_waist_hip_inseam_type"
     t.string   "inseam"
+    t.string   "full_name"
+    t.string   "phone_number"
+    t.string   "stripe_customer_id"
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true

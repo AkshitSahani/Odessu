@@ -231,4 +231,13 @@ $(document).ready(function() {
       }, 2000);
     });
 
+    $('.showoff-option').on('click', function(){
+      if($(this).attr('class').indexOf('showoff-clicked') !== -1){
+        $(this).removeClass('showoff-clicked').css('background-color', 'white');
+      }
+      else{
+        $(this).css('background-color', '#29ABE2').addClass('showoff-clicked');
+      }
+    })
+
   })

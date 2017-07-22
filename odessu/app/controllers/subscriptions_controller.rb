@@ -6,13 +6,6 @@ class SubscriptionsController < ApplicationController
   end
 
   def create
-    customer = Stripe::Customer.create(
-      :email => current_user.email,
-    )
 
-    Stripe::Subscription.create(
-      :customer => customer.id,
-      :plan => "basic-monthly", #call this whatever Leon names his plan.
-    )
   end
 end

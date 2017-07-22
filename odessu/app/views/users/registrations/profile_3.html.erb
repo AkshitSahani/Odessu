@@ -37,15 +37,15 @@
       <div class="issue">
         <h4> Fit </h4>
         <% ['Tight on Bust', 'Loose on Bust', 'Tight on Waist', 'Loose on Waist', 'Tight on Hip', 'Loose on Hip'].each do |value| %>
-          <%= i.check_box(:issue_top, { :multiple => true }, value, nil)%>
-          <%= i.label :issue_top, "#{value}" %>
+          <%= i.check_box(:issue_fit, { :multiple => true }, value, nil)%>
+          <%= i.label :issue_fit, "#{value}" %>
         <% end %>
       </div>
       <div class="issue">
         <h4> Length </h4>
         <% ['Too long on arms', 'Too short on arms', 'Too long on legs', 'Too short on legs'].each do |value| %>
-          <%= i.check_box(:issue_bottom, { :multiple => true }, value, nil)%>
-          <%= i.label :issue_bottom, "#{value}" %>
+          <%= i.check_box(:issue_length, { :multiple => true }, value, nil)%>
+          <%= i.label :issue_length, "#{value}" %>
         <% end %>
       </div>
       <br><br><br>
@@ -56,28 +56,19 @@
   </div>
 
   <h3 style="text-align: center">What do you want to show off? </h3><br>
-  <% fields_for :insecurities do |j| %>
-    <h4> Top </h4>
-    <% ['everything', 'nothing', 'too loose', 'too tight'].each do |value| %>
-      <%= j.check_box(:insecurity_top, { :multiple => true }, value, nil)%>
-      <%= j.label :insecurity_top, "#{value}" %>
-    <% end %>
-    <h4> Bottom </h4>
-    <% ['everything', 'nothing', 'too loose', 'too tight'].each do |value| %>
-      <%= j.check_box(:insecurity_bottom, { :multiple => true }, value, nil)%>
-      <%= j.label :insecurity_bottom, "#{value}" %>
-    <% end %>
+
+  <%= fields_for :showoffs do |j| %>
+
+    <div class="showoff">
+      <div class="showoff-option">BUST</div>
+      <div class="showoff-option">ARMS</div>
+      <div class="showoff-option">BACK</div>
+      <div class="showoff-option">STOMACH</div>
+      <div class="showoff-option">WAIST LINE</div>
+      <div class="showoff-option">BUTT</div>
+      <div class="showoff-option">LEGS</div>
+    </div>
   <% end %>
-
-  <div class="showoff">
-    <div class="showoff-option">BUST</div>
-    <div class="showoff-option">ARMS</div>
-    <div class="showoff-option">BACK</div>
-    <div class="showoff-option">STOMACH</div>
-    <div class="showoff-option">WAIST LINE</div>
-    <div class="showoff-option">BUTT</div>
-    <div class="showoff-option">LEGS</div>
-  </div>
-
+  
   <div class="issue-submit-container"><%= f.submit 'Next', class: 'prof3-submit'%></div>
 <% end %>

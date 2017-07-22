@@ -63,22 +63,48 @@ class Users::RegistrationsController < Devise::RegistrationsController
     # else
     #   render :profile_3
     # end
-    params["insecurities"]["insecurity_bottom"].each do |ins|
-      current_user.insecurities << Insecurity.create(insecurity_bottom: ins)
-    end
+    # params["insecurities"]["insecurity_bottom"].each do |ins|
+    #   current_user.insecurities << Insecurity.create(insecurity_bottom: ins)
+    # end
+    #
+    # params["insecurities"]["insecurity_top"].each do |ins|
+    #   current_user.insecurities << Insecurity.create(insecurity_top: ins)
+    # end
 
-    params["insecurities"]["insecurity_top"].each do |ins|
-      current_user.insecurities << Insecurity.create(insecurity_top: ins)
+    params['issues']['issue_fit'].each do |issue_fit|
+      current_user.issues << Issue.create(issue_fit: issue_fit)
     end
+    params['issues']['issue_length'].each do |issue_length|
+      current_user.issues << Issue.create(issue_length: issue_length)
+    end
+    redirect_to profile_4_path
+  end
 
-    params['issues']['issue_top'].each do |issue_top|
-      current_user.issues << Issue.create(issue_top: issue_top)
+  def profile_4
+    #code
+  end
+
+  def create_profile_4
+    #for when the subscription model is live
+    # customer = Stripe::Customer.create(
+    #   :email => current_user.email,
+    #   :source  => params[:stripeToken]
+    # )
+    #
+    # Stripe::Subscription.create(
+    #   :customer => customer.id,
+    #   :plan => "basic-monthly", #call this whatever Leon names his plan.
+    # )
+    #
+    # current_user.update_attributes(stripe_customer_id: customer.id)
+
+
+    if current_user.update_attributes(sign_up_params)
+      session[:user_signed_up?] = true
+      redirect_to products_path
+    else
+      render :profile_4
     end
-    params['issues']['issue_bottom'].each do |issue_bottom|
-      current_user.issues << Issue.create(issue_bottom: issue_bottom)
-    end
-    session[:user_signed_up?] = true
-    redirect_to products_path
   end
 
   def show
@@ -185,18 +211,20 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
   # If you have extra params to permit, append them to the sanitizer.
   def configure_sign_up_params
-    devise_parameter_sanitizer.permit(:sign_up, keys: [:first_name, :last_name, :address, :age_range, :height_ft,
+    devise_parameter_sanitizer.permit(:sign_up, keys: [:full_name, :address, :age_range, :height_ft,
       :height_in, :height_cm, :weight,:bust, :hip, :waist, :account_type, :tops_store, :tops_size, :tops_store_fit,
       :bottoms_store, :bottoms_size,:bottoms_store_fit, :bra_size, :bra_cup, :body_shape, :tops_fit, :preference, :bottoms_fit,
-      :birthdate, :advertisement_source, :weight_type])
+      :birthdate, :advertisement_source, :weight_type, :stripe_customer_id, :predicted_hip, :predicted_bust, :predicted_waist,
+       :bust_waist_hip_inseam_type, :inseam, :phone_number])
   end
 
   # If you have extra params to permit, append them to the sanitizer.
   def configure_account_update_params
-    devise_parameter_sanitizer.permit(:account_update, keys: [:first_name, :last_name, :address, :age_range, :height_ft,
+    devise_parameter_sanitizer.permit(:account_update, keys: [:full_name, :address, :age_range, :height_ft,
       :height_in, :height_cm, :weight,:bust, :hip, :waist, :account_type, :tops_store, :tops_size, :tops_store_fit,
       :bottoms_store, :bottoms_size,:bottoms_store_fit, :bra_size, :bra_cup, :body_shape, :tops_fit, :preference, :bottoms_fit,
-      :birthdate, :advertisement_source, :weight_type])
+      :birthdate, :advertisement_source, :weight_type, :stripe_customer_id, :predicted_hip, :predicted_bust, :predicted_waist,
+       :bust_waist_hip_inseam_type, :inseam, :phone_number])
   end
 
   # The path used after sign up.

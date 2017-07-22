@@ -12,8 +12,8 @@ class User < ApplicationRecord
   has_one :wish_list
   has_many :issues
   accepts_nested_attributes_for :issues, reject_if: :all_blank?
-  has_many :insecurities
-  accepts_nested_attributes_for :insecurities, reject_if: :all_blank?
+  has_many :showoffs
+  accepts_nested_attributes_for :showoffs, reject_if: :all_blank?
 
   def self.get_results(search)
     results_hash = {}

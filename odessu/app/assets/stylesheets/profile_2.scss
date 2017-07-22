@@ -1,3 +1,5 @@
+@import 'colorRules';
+
 .prof2-intro{
   text-align: center;
   color: red;
@@ -12,4 +14,19 @@
 .bodyshape{
   display: inline;
   margin: 0 8%;
+}
+
+.prof2-next{
+  text-align: center;
+}
+
+.bodyshape-submit{
+  text-align: center;
+  color: white;
+  background-color: $odessuBlue;
+  border-radius: 5px;
+  width: 150px;
+  height: 40px;
+  margin-top: 3%;
+  margin-bottom: 1%
 }
