@@ -1,66 +1,105 @@
+<div class="logotop">
+  <%= image_tag "odessu_logo.jpg", height: 60, width: 60 %> <b>ODESSU</b>
+</div>
+
+<div class="prof1-intro">
+  Hey there beautiful, let's figure out your body measurements!
+</div>
+
+<hr>
+
 <%= form_for(current_user, url: create_profile_1_path) do |f| %>
-  <%# devise_error_messages! %>
-  <%= f.label :first_name, "First Name" %>
-  <%= f.text_field :first_name %>
+  <div class="prof1-1st-row">
+    <div class="first-row-content">
+      <%= f.label :height, 'Height:'%>
+      <%= f.text_field :height_ft %> ft <%= f.text_field :height_in %> in
+      &nbsp; &nbsp; or &nbsp;&nbsp;
+      <%= f.text_field :height_cm %> cms
+    </div>
+    <div class="first-row-content">
+      <%= f.label :weight, "Weight:" %>
+      <%= f.text_field :weight %>
+      <%= f.radio_button :weight_type, 'Kg'%>Kg
+      <%= f.radio_button :weight_type, 'Lbs', checked: true%>Lbs
+    </div>
+    <div class="first-row-content">
+      <%= f.label :age_range, "Age:" %>
+      <%= f.select :age_range, ['Select', '18-24', '25-34', '35-45', '46-55', '56-65', '66+'] %>
+    </div>
+  </div>
 
-  <%= f.label :last_name, "Last Name" %>
-  <%= f.text_field :last_name %>
+  <div class="prof1-2nd-row">
+    <h3>Tops</h3><br>
+    <div class="second-row-content">
+      <%= f.label :tops_store, "Store:" %> &nbsp;
+      <%= f.select :tops_store, @stores %>
+    </div>
+    <div class="second-row-content">
+      <%= f.label :tops_size, "Size:" %> &nbsp;
+      <%= f.select :tops_size, [] %>
+    </div>
+    <div class="second-row-content">
+      <%= f.label :tops_store_fit, "Fit: " %>  &nbsp; &nbsp; &nbsp;
+      <%= f.radio_button :tops_store_fit, 'loose' %> Loose  &nbsp; &nbsp; &nbsp;
+      <%= f.radio_button :tops_store_fit, 'truesize' %> True Size  &nbsp; &nbsp; &nbsp;
+      <%= f.radio_button :tops_store_fit, 'tight' %> Tight
+    </div>
+  </div>
 
-  <%= f.label :age_range, "Age Range" %>
-  <%= f.select :age_range, ['18-24', '25-34', '35-45', '46-55', '56-65', '66+'] %>
+  <div class="prof1-2nd-row">
+    <h3>Bottoms</h3><br>
+    <div class="second-row-content">
+      <%= f.label :bottoms_store, "Store:" %> &nbsp;
+      <%= f.select :bottoms_store, @stores %>
+    </div>
+    <div class="second-row-content">
+      <%= f.label :bottoms_size, "Size:" %> &nbsp;
+      <%= f.select :bottoms_size, [] %>
+    </div>
 
-  Height:
-  <%= f.text_field :height_ft %> ft <%= f.text_field :height_in %> in
-  or
-  <%= f.text_field :height_cm %> cms
+    <div class="second-row-content">
+      <%= f.label :tops_store_fit, "Fit:" %> &nbsp; &nbsp; &nbsp;
+      <%= f.radio_button :bottoms_store_fit, 'loose' %> Loose &nbsp; &nbsp; &nbsp;
+      <%= f.radio_button :bottoms_store_fit, 'truesize' %> True Size &nbsp; &nbsp; &nbsp;
+      <%= f.radio_button :bottoms_store_fit, 'tight' %> Tight
+    </div>
+  </div>
 
-  <%= f.label :weight, "Weight" %>
-  <%= f.text_field :weight %>
-  <%= f.radio_button :weight_type, 'Kg'%>Kg
-  <%= f.radio_button :weight_type, 'Lbs'%>Lbs
-
-  <%= f.label :bust, "Bust" %>
-  <%= f.text_field :bust %>in
-
-  <%= f.label :hip, "Hip" %>
-  <%= f.text_field :hip %>in
-
-  <%= f.label :waist, "Waist" %>
-  <%= f.text_field :waist %>in
-
-  <h3>Tops</h3>
-  <%= f.label :tops_store, "Store" %>
-  <%= f.select :tops_store, @stores %>
-
-  <%= f.label :tops_size, "Size" %>
-  <%= f.select :tops_size, [] %>
-
-  <%= f.label :tops_store_fit, "How does it fit?" %>
-  <%= f.radio_button :tops_store_fit, 'tight' %>Tight
-  <%= f.radio_button :tops_store_fit, 'perfect' %>Perfect
-  <%= f.radio_button :tops_store_fit, 'loose' %>Loose
-
-  <h3>Bottoms</h3>
-
-  <%= f.label :bottoms_store, "Store" %>
-  <%= f.select :bottoms_store, @stores %>
-
-  <%= f.label :bottoms_size, "Size" %>
-  <%= f.select :bottoms_size, [] %>
-
-  <%= f.label :tops_store_fit, "How does it fit?" %>
-  <%= f.radio_button :bottoms_store_fit, 'tight' %>Tight
-  <%= f.radio_button :bottoms_store_fit, 'perfect' %>Perfect
-  <%= f.radio_button :bottoms_store_fit, 'loose' %>Loose
-
+  <div class="prof1-4th-row">
   <h3>Bras</h3>
+    <%= f.label :bra_size, "Size: " %> &nbsp;
+    <%= f.select :bra_size, ['28', '30', '32', '34', '36', '38', '40', '42', '44', '46', '48', '50'] %>
 
-  <%= f.label :bra_size, "Bra Size" %>
-  <%= f.select :bra_size, ['28', '30', '32', '34', '36', '38', '40', '42', '44', '46', '48', '50'] %>
+    <%= f.label :bra_cup, "Cup:" %> &nbsp;
+    <%= f.select :bra_cup, ['AA', 'A', 'B', 'C', 'D', 'DD or E', 'DDD or F', 'G', 'H', 'I', 'J'] %>
+  </div>
 
-  <%= f.label :bra_cup, "Bra Cup" %>
-  <%= f.select :bra_cup, ['AA', 'A', 'B', 'C', 'D', 'DD or E', 'DDD or F', 'G', 'H', 'I', 'J'] %>
+  <br><div class="prof1-intro"> Know your measurements? </div><br>
 
-  <%= f.submit "Next" %>
+  <div class="prof1-5th-row">
+    <%= f.label :bust, "Bust:" %> &nbsp;
+    <%= f.text_field :bust %> &nbsp; &nbsp; &nbsp; &nbsp;
+
+    <%= f.label :waist, "Waist:" %> &nbsp;
+    <%= f.text_field :waist %>&nbsp; &nbsp; &nbsp; &nbsp;
+
+    <%= f.label :hip, "Hip:" %> &nbsp;
+    <%= f.text_field :hip %>&nbsp; &nbsp; &nbsp; &nbsp;
+
+    <%= f.label :inseam, "Inseam:" %> &nbsp;
+    <%= f.text_field :inseam %>&nbsp; &nbsp; &nbsp; &nbsp;
+
+    <%= f.radio_button :bust_waist_hip_inseam_type, 'in', checked: true %> in
+    <%= f.radio_button :bust_waist_hip_inseam_type, 'cm' %> cm
+  </div>
+
+<!-- just for now. may ask for first and last name later. so may move it around. -->
+  <%# f.label :first_name, "First Name" %>
+  <%# f.text_field :first_name %>
+
+  <%# f.label :last_name, "Last Name" %>
+  <%# f.text_field :last_name %>
+<br>
+  <div class="prof1-submit-container"><%= f.submit "Next", class: 'prof1-next' %></div>
 
 <% end %>
