@@ -23,6 +23,6 @@ class ApplicationController < ActionController::Base
       :height_in, :height_cm, :weight,:bust, :hip, :waist, :account_type, :tops_store, :tops_size, :tops_store_fit,
       :bottoms_store, :bottoms_size,:bottoms_store_fit, :bra_size, :bra_cup, :body_shape, :tops_fit, :preference, :bottoms_fit,
       :birthdate, :advertisement_source, :weight_type, :predicted_hip, :predicted_bust, :predicted_waist, :bust_waist_hip_inseam_type,
-      :inseam, :phone_number, :stripe_customer_id])
+      :inseam, :phone_number, :stripe_customer_id, :terms_agreed?, :email_subscription])
   end
 end

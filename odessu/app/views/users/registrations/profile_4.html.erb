@@ -9,25 +9,38 @@
 <hr>
 
 <div>
+  <div class="shipping-info">
   <h4>Shipping Information</h4>
-  <div class="shipping info">
     <%= form_for current_user, url: create_profile_4_path do |f| %>
-      <%= f.label :full_name, 'Full Name' %>
-      <%= f.text_field :full_name %>
+      <%# f.label :full_name, 'Full Name' %>
+      <%= f.text_field :full_name, placeholder: "Full Name" %><br><br>
 
-      <%= f.label :address, 'Address' %>
-      <%= f.text_field :address %>
+      <%# f.label :address, 'Address' %>
+      <%= f.text_field :address, placeholder: "Full Address" %><br><br>
 
-      <%= f.label :phone_number, 'Phone Number' %>
-      <%= f.text_field :phone_number %>
+      <%# f.label :phone_number, 'Phone Number' %>
+      <%= f.text_field :phone_number, placeholder: "Phone number" %><br><br>
 
       <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
       data-key="<%= Rails.configuration.stripe[:publishable_key] %>"
-      data-description="Pay for cart items"
+      data-description="Subscribe to Odessu"
       data-amount="1200"
       data-locale="auto">
       </script>
-      
+
+
+      <div class="prof4-submit-container"><%= f.submit "Discover", class:'prof4-submit' %></div>
+
     <% end %>
   </div>
 </div>
+
+  <div class="prof4-disclaimer">
+    Your information will not be publicly shared <br>
+    Your credit card is Protected by Stripe <br>
+    You will only be called or messaged by phone for shipping delivery <br>
+    <%= form_tag update_terms_of_service_path, method: :patch do %>
+    <%= check_box_tag :email_subscription, true%> Odessu can send you emails for special deals and events <br>
+    <%= check_box_tag :terms_agreed?, true%> I agree to the <span class="tof"> Terms of Service </span>
+    <% end %>
+  </div>

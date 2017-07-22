@@ -107,6 +107,10 @@ class Users::RegistrationsController < Devise::RegistrationsController
     end
   end
 
+  def update_terms_of_service
+    byebug
+  end
+
   def show
     @user = current_user
     @bmi_results = User.bmiCalculator(@user)
@@ -215,7 +219,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
       :height_in, :height_cm, :weight,:bust, :hip, :waist, :account_type, :tops_store, :tops_size, :tops_store_fit,
       :bottoms_store, :bottoms_size,:bottoms_store_fit, :bra_size, :bra_cup, :body_shape, :tops_fit, :preference, :bottoms_fit,
       :birthdate, :advertisement_source, :weight_type, :stripe_customer_id, :predicted_hip, :predicted_bust, :predicted_waist,
-       :bust_waist_hip_inseam_type, :inseam, :phone_number])
+       :bust_waist_hip_inseam_type, :inseam, :phone_number, :email_subscription, :terms_agreed?])
   end
 
   # If you have extra params to permit, append them to the sanitizer.
@@ -224,7 +228,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
       :height_in, :height_cm, :weight,:bust, :hip, :waist, :account_type, :tops_store, :tops_size, :tops_store_fit,
       :bottoms_store, :bottoms_size,:bottoms_store_fit, :bra_size, :bra_cup, :body_shape, :tops_fit, :preference, :bottoms_fit,
       :birthdate, :advertisement_source, :weight_type, :stripe_customer_id, :predicted_hip, :predicted_bust, :predicted_waist,
-       :bust_waist_hip_inseam_type, :inseam, :phone_number])
+       :bust_waist_hip_inseam_type, :inseam, :phone_number, :email_subscription, :terms_agreed?])
   end
 
   # The path used after sign up.

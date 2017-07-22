@@ -17,6 +17,7 @@ Rails.application.routes.draw do
     patch '/update_profile', to: 'users/registrations#update_profile', as: 'update_profile'
     put '/update_issues', to: 'users/registrations#update_issues', as: 'update_issues'
     get '/get_results', to: 'users/sessions#get_results', as: 'get_results'
+    patch '/update_terms_of_service', to: 'users/registrations#update_terms_of_service', as: 'update_terms_of_service'
   end
 
   mount ActionCable.server => '/cable'
