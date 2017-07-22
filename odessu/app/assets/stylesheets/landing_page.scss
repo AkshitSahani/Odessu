@@ -59,15 +59,18 @@
 }
 
 .complement-text-container{
-  margin-left: 12%;
+  margin-left: 10%;
+  margin-top: 11%;
 }
 
 .complement-text-container h3{
   font-weight: 700;
+  font-size: 3em;
+  margin-bottom: 5%;
 }
 
 .complement-text-container span:last-child, .complement-text-container span:nth-of-type(2n) {
-  font-size: 0.8em;
+  font-size: 1.25em;
 }
 
 .body-complement-right{
@@ -77,6 +80,10 @@
   float: right;
   background: url('Leon-98.jpg');
   background-size: 650px 500px;
+}
+
+.complement-container{
+  margin-top: -7.75%;
 }
 
 .benefits-right{
@@ -212,4 +219,8 @@ footer{
 
 footer:last-child{
   text-align: center;
+}
+
+.mission-top a, .how-it-works-top a{
+  color: black;
 }

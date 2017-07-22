@@ -218,4 +218,17 @@ $(document).ready(function() {
     $('.bodyshape').on('mouseleave', function(){
       $('.bodyshape-desc').remove();
     })
+
+    $(".mission-top").click(function() {
+      $('html, body').animate({
+          scrollTop: $(".mission").offset().top
+      }, 2000);
+    });
+
+    $(".how-it-works-top").click(function() {
+      $('html, body').animate({
+          scrollTop: $(".how-it-works").offset().top
+      }, 2000);
+    });
+
   })
