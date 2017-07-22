@@ -1,20 +1,62 @@
-<h3> What issues do you usually have with your clothing? </h3>
+<div class="logotop">
+  <%= image_tag "odessu_logo.jpg", height: 60, width: 60 %> <b>ODESSU</b>
+</div>
+
+<div class="prof3-intro">
+  Tell us more about yourself!
+</div>
+
+<hr>
 
 <%= form_for current_user, url: create_profile_3_path do |f| %>
-  <%= fields_for :issues do |i| %>
-    <h4> Top </h4>
-    <% ['everything', 'nothing', 'too loose', 'too tight'].each do |value| %>
-      <%= i.check_box(:issue_top, { :multiple => true }, value, nil)%>
-      <%= i.label :issue_top, "#{value}" %>
+  <div class="cloth-fit">
+
+    <h3>How do you like your clothes to fit?</h3>
+
+    <div class="fitt">
+      <div>TOPS</div><br><br>
+      <%= f.radio_button :tops_fit, 'loose' %> Loose &nbsp; &nbsp;
+      <%= f.radio_button :tops_fit, 'right fit' %> Right Fit &nbsp; &nbsp;
+      <%= f.radio_button :tops_fit, 'tight' %> Tight &nbsp;
+    </div>
+
+    <div class="fitt">
+      <div>BOTTOMS</div><br><br>
+      <%= f.radio_button :bottoms_fit, 'loose' %> Loose &nbsp; &nbsp;
+      <%= f.radio_button :bottoms_fit, 'right fit' %> Just Right &nbsp; &nbsp;
+      <%= f.radio_button :bottoms_fit, 'tight' %> Tight &nbsp;
+    </div>
+
+  </div>
+
+  <div class="issues">
+    <h6>(Select all that apply)</h6>
+    <h3> What issues do you usually have with your clothing? </h3>
+
+    <%= fields_for :issues do |i| %>
+      <div class="issue">
+        <h4> Fit </h4>
+        <% ['Tight on Bust', 'Loose on Bust', 'Tight on Waist', 'Loose on Waist', 'Tight on Hip', 'Loose on Hip'].each do |value| %>
+          <%= i.check_box(:issue_top, { :multiple => true }, value, nil)%>
+          <%= i.label :issue_top, "#{value}" %>
+        <% end %>
+      </div>
+      <div class="issue">
+        <h4> Length </h4>
+        <% ['Too long on arms', 'Too short on arms', 'Too long on legs', 'Too short on legs'].each do |value| %>
+          <%= i.check_box(:issue_bottom, { :multiple => true }, value, nil)%>
+          <%= i.label :issue_bottom, "#{value}" %>
+        <% end %>
+      </div>
+      <br><br><br>
+      <span class="other-issues">Other: <%= i.text_field :other1 %> <br><%= i.text_field :other2 %></span><br><br>
     <% end %>
-    <h4> Bottom </h4>
-    <% ['everything', 'nothing', 'too loose', 'too tight'].each do |value| %>
-      <%= i.check_box(:issue_bottom, { :multiple => true }, value, nil)%>
-      <%= i.label :issue_bottom, "#{value}" %>
-    <% end %>
-  <% end %>
-<h3>What insecurities do you have </h3>
-  <%= fields_for :insecurities do |j| %>
+
+
+  </div>
+
+  <h3 style="text-align: center">What do you want to show off? </h3><br>
+  <% fields_for :insecurities do |j| %>
     <h4> Top </h4>
     <% ['everything', 'nothing', 'too loose', 'too tight'].each do |value| %>
       <%= j.check_box(:insecurity_top, { :multiple => true }, value, nil)%>
@@ -27,5 +69,15 @@
     <% end %>
   <% end %>
 
-  <%= f.submit 'Save' %>
+  <div class="showoff">
+    <div class="showoff-option">BUST</div>
+    <div class="showoff-option">ARMS</div>
+    <div class="showoff-option">BACK</div>
+    <div class="showoff-option">STOMACH</div>
+    <div class="showoff-option">WAIST LINE</div>
+    <div class="showoff-option">BUTT</div>
+    <div class="showoff-option">LEGS</div>
+  </div>
+
+  <div class="issue-submit-container"><%= f.submit 'Next', class: 'prof3-submit'%></div>
 <% end %>

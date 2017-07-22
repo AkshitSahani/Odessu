@@ -1,0 +1,89 @@
+@import 'colorRules';
+
+.prof3-intro{
+  text-align: center;
+  color: red;
+  font-size: 1.3em;
+}
+
+.cloth-fit h3{
+  text-align: center;
+  margin-top: 3%;
+  margin-bottom: 2%;
+}
+
+.fitt {
+  display: inline-block;
+  width: 30%;
+  margin: 0 4%;
+  height: 4em;
+}
+
+.fitt div{
+  display: inline;
+  text-align: center;
+  font-size: 1.5em;
+}
+
+.cloth-fit{
+  text-align: center;
+}
+
+.issues{
+  margin-top: 3%;
+  background-color: salmon;
+  text-align: center;
+  width: 88%;
+  margin-left: 6%;
+  border: 1px solid $odessuBlue;
+}
+
+.issue{
+  display: inline-block;
+  width: 31%;
+  margin: 0 4%;
+  height: 4em;
+}
+
+.issue div{
+  display: inline;
+  text-align: center;
+  font-size: 1.5em;
+}
+
+.other-issues input {
+  border: none;
+  border-bottom: 1px solid black;
+  width: 100px;
+  background-color: salmon;
+}
+
+.showoff{
+  text-align: center;
+  width: 84%;
+  margin-left: 8%;
+  margin-right: 8%;
+  line-height: 4em;
+}
+
+.showoff-option{
+  display: inline;
+  width: 15%;
+  margin: 5% 9%;
+  border: 1px solid red;
+  border-radius: 4px;
+  padding: 2px 5px;
+}
+
+.prof3-submit{
+  text-align: center;
+  border: 1px solid $odessuBlue;
+  padding: 1% 5%;
+  color: white;
+  background-color: $odessuBlue;
+}
+
+.issue-submit-container{
+  text-align: center;
+  margin: 2% 0%;
+}

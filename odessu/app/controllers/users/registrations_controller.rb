@@ -35,14 +35,10 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
   def create_profile_2
     if current_user.update_attributes(sign_up_params)
-      redirect_to body_shape_path(current_user)
+      redirect_to profile_3_path(current_user)
     else
       render :profile_2
     end
-  end
-
-  def body_shape
-    #code
   end
 
   def create_body_shape

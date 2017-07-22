@@ -26,14 +26,14 @@ $(document).ready(function() {
     $('#notice').slideUp();
   }, 2000);
 
-  $('.body_shape_img').on('click', function(){
-    $('.body_shape_img').removeClass('body_shape_clicked').css('opacity', '1');
-    $(this).addClass('body_shape_clicked').css('opacity', '0.3');
+  $('.bodyshape').on('click', function(){
+    $('.bodyshape').removeClass('bodyshape-clicked').css('opacity', '1');
+    $(this).addClass('bodyshape-clicked').css('opacity', '0.3');
   })
 
-  $('button.body_shape_save').on('click', function(e){
+  $('.bodyshape-submit').on('click', function(e){
     // e.preventDefault();
-    var bodyShape = $('.body_shape_clicked').attr('name');
+    var bodyShape = $('.bodyshape-clicked').attr('class').split(' ')[1];
     $.ajax({
       url: '/create_body_shape',
       method: 'post',
@@ -187,4 +187,35 @@ $(document).ready(function() {
        });
     }, 5000);
 
+
+    $('.bodyshape').on('mouseenter', function(){
+      var desc = $('<span>').addClass('bodyshape-desc').css('width', '400').css('height', '400');
+      var invTri = 'Inverted Triangle Body Shape: Generally, this body is athletic and strong. The broadest part of the body? The shoulders and the chest. The torso and waist are tighter.Health Implication: You benefit from a small waist, which can keep your heart disease risk low.Celebrity Examples: Super sports star Serena Williams and actress Hilary Swank.Fashion Tip: Inverted triangles can go bold with wide leg pants, which balance out the body.';
+      var ruler = 'Ruler Body Shape: With a ruler, there’s only a tiny bit of a curve at the hips. They mostly have a straight torso, with shoulders that align with the torso.Health Implication: A high WHR ratio could increase risk of certain diseases, but rulers tend to be thin overall. Keeping your Body Mass Index within healthy range can keep these risks at bay.Celebrity Examples: Two strong and successful women: Jennifer Garner and Madonna.Fashion Tip: Rulers can really play up a blouse with feminine ruffles and skirts with rounded hemlines.';
+      var triangle = 'Triangle Body Shape: This shape has a shapely bottom, with a tinier waist. Triangles are a classic feminine shape.Health Implication: Triangles are likely to have increased fertility, from the estrogen that’s putting more weight on their hips.Celebrity Examples: Tons of actresses and singers, from Jennifer Aniston to Jennifer Lopez.Fashion Tip: Triangles can rock a horizontal striped top and a jacket cropped above the waist, drawing attention above.';
+      var round = 'Circle Body Shape: Commonly called apples, women with a circle body shape have smaller shoulders and hips. They also tend to have slender legs and a slim booty. All fit! Though the fat has to go somewhere… With circles, it’s right smack in the middle: the stomach.Health Implications: According to past studies, a larger waist in comparison to the rest of the body could put you at greater risk for heart disease. Scientists are beginning to challenge this assertion. Either way, it’s important that you feel in control of your body fitness. As you move in different phases of your life, your shape can take different forms.Celebrity Examples: “30-Rock’s” Jane Krakowski and TV/film actress Dianne Wiest. Some celebs fluctuate with this body shape, like Renée Zellweger. Jennifer Hudson went from a circle shape to hourglass.Fashion Tip: Tops with a wide, scoop neck to show some skin up top, while giving shape.';
+      var hourGlass = 'Hourglass Body Shape: The name says it all. This body shape is curvy in all the right places: bust and booty. It’s pretty much a universal perception of what is womanly and attractive.Health Implications: Hourglasses tend to have more estrogen because of their wider hips and breasts, which is ideal for fertility and pregnancy.Celebrity Examples: You may have already guessed—Marilyn Monroe and Christina Hendricks (the modern 50s gal from “Mad Men”) are hourglasses.Fashion Tip: Pencil skirts in a solid color show of curves and leave much to the imagination—intriguing!';
+
+      switch($(this).attr('class').split(' ')[1].trim()){
+        case "inverted-triangle":
+          $('.bodyshapes-container').append($('<br>')).append(desc.text(invTri))
+          break;
+        case "ruler":
+          $('.bodyshapes-container').append($('<br>')).append(desc.text(ruler))
+          break;
+        case "round":
+          $('.bodyshapes-container').append($('<br>')).append(desc.text(round))
+          break;
+        case "triangle":
+          $('.bodyshapes-container').append($('<br>')).append(desc.text(triangle))
+          break;
+        case "hourglass":
+          $('.bodyshapes-container').append($('<br>')).append(desc.text(hourGlass))
+          break;
+      }
+    })
+
+    $('.bodyshape').on('mouseleave', function(){
+      $('.bodyshape-desc').remove();
+    })
   })

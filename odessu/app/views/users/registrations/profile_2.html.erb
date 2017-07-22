@@ -1,20 +1,43 @@
 
 <%= form_for(current_user, url: create_profile_2_path) do |f| %>
-  <h3>How do you like your clothes to fit</h3>
+  <div class="logotop">
+    <%= image_tag "odessu_logo.jpg", height: 60, width: 60 %> <b>ODESSU</b>
+  </div>
 
-  <%= f.label :Tops  %><br>
-  <%= f.radio_button :tops_fit, 'tight' %>Tight
-  <%= f.radio_button :tops_fit, 'just right' %>Just Right
-  <%= f.radio_button :tops_fit, 'loose' %>Loose
-  <br>
-  <%= f.label :Bottoms  %><br>
-  <%= f.radio_button :bottoms_fit, 'tight' %>Tight
-  <%= f.radio_button :bottoms_fit, 'just right' %>Just Right
-  <%= f.radio_button :bottoms_fit, 'loose' %>Loose
+  <div class="prof2-intro">
+    What shape is most similar to your body?
+    <p> You can hover over them to see detailed descriptions. When you're ready, click one! </p>
+  </div>
 
-  <h3> How did you hear about us </h3>
+  <hr>
 
-  <%= f.select :advertisement_source, ['LinkedIn', 'etc'] %>
+  <div class="bodyshapes-container">
 
-  <%= f.submit "Next" %>
+    <div class="bodyshape inverted-triangle">
+      <%= image_tag "inv_tri.jpeg" %>
+    </div>
+
+    <div class="bodyshape round">
+      <%= image_tag "round.jpeg" %>
+    </div>
+
+    <div class="bodyshape ruler">
+      <%= image_tag "ruler.jpeg" %>
+    </div>
+
+    <div class="bodyshape hourglass">
+      <%= image_tag "hourglass.jpeg" %>
+    </div>
+
+    <div class="bodyshape triangle">
+      <%= image_tag "triangle.jpeg" %>
+    </div>
+
+  </div>
+
+  <!-- <h3> How did you hear about us </h3> -->
+
+  <%# f.select :advertisement_source, ['LinkedIn', 'etc'] %>
+
+  <%= f.submit "Next", class: 'bodyshape-submit' %>
 <% end %>
