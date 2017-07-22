@@ -18,4 +18,8 @@ class ProductsController < ApplicationController
       @conversation = Conversation.between(current_user.id, 1)[0]
     end
   end
+
+  def landing_page
+    #code
+  end
 end

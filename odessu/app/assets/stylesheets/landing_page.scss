@@ -1,0 +1,215 @@
+@import 'colorRules';
+
+.company-title{
+  float: left;
+  font-weight: bold;
+  font-size: 1.25em;
+  margin-left: 5%;
+  margin-top: 1%;
+  margin-bottom: 1%;
+}
+
+.landing-header{
+  overflow: hidden;
+  border: 2px solid grey;
+  font-size: 1.25em;
+}
+
+.top-right-buttons{
+
+  width: 60%;
+  // margin-top: 2%;
+  margin-right: 1%;
+}
+
+.topright{
+  float: right;
+  margin: 2% 3%;
+}
+
+.topright:first-child{
+  border: 1px solid $odessuBlue;
+  padding: 1% 2%;
+  border-radius: 0.5em;
+  margin-top: 1%;
+  background-color: $odessuBlue;
+}
+
+.topright:first-child a {
+  color: white;
+}
+
+.getstarted{
+  border: 1px solid $odessuBlue;
+  padding: 4% 16%;
+  border-radius: 0.5em;
+  background-color: $odessuBlue;
+  font-size: 1.5em;
+}
+
+.getstarted a{
+  color: white;
+}
+
+.body-complement-left{
+  display: inline;
+  width:50%;
+  float: left;
+  height: 500px;
+}
+
+.complement-text-container{
+  margin-left: 12%;
+}
+
+.complement-text-container h3{
+  font-weight: 700;
+}
+
+.complement-text-container span:last-child, .complement-text-container span:nth-of-type(2n) {
+  font-size: 0.8em;
+}
+
+.body-complement-right{
+  width: 50%;
+  height: 500px;
+  display: inline;
+  float: right;
+  background: url('Leon-98.jpg');
+  background-size: 650px 500px;
+}
+
+.benefits-right{
+  width: 50%;
+  display: inline;
+  float: right;
+  height: 500px;
+  text-align: center;
+}
+
+.benefits-img-left{
+  width: 50%;
+  display: inline;
+  float: left;
+  margin-bottom: 1.5%;
+}
+
+.benefits-right h4 {
+  color: $odessuBlue;
+  margin-top: 12%;
+  margin-bottom: 8%;
+  font-size: 1.4em;
+}
+
+.benefits-right ul{
+  list-style-type: none;
+  // color: red;
+  margin-left: 5%;
+}
+
+.benefits-right li {
+  font-size: 1.4em;
+  line-height: 2em;
+  margin-right: 15%;
+  text-align: left;
+}
+
+.benefits-right li::before {
+  content: "■";
+  font-size: 1.5em;
+  color: red;
+  margin-right: 2%;
+}
+
+.benefits-right span:only-of-type{
+  color: $odessuBlue;
+  font-size: 1.5em;
+}
+
+.mission{
+  overflow: hidden;
+  background-color: $odessuPink;
+  width: 100%;
+  height: 620px;
+  text-align: center;
+}
+
+.mission > div {
+  margin-top: 8%;
+  font-size: 1.7em;
+  margin-bottom: 3%;
+}
+
+.mission h1 {
+  letter-spacing: 2px;
+  color: white;
+  font-size: 3.5em;
+}
+
+.mission h3{
+  color: white;
+  font-size: 2em;
+}
+.how-it-works{
+  overflow: hidden;
+}
+.how-it-works > div:first-child{
+  margin-top: 4%;
+  font-size: 1.7em;
+  text-align: center;
+  font-weight: bold;
+  margin-bottom: 4%;
+}
+
+.step{
+  display: inline;
+  width: 28%;
+  float: left;
+  border: 4px solid $odessuBlue;
+  border-radius: 30em;
+  margin: 0 2%;
+  height: 350px;
+  text-align: center;
+  margin-bottom: 7%;
+}
+
+.step:first-child{
+  margin-left: 3.5%;
+}
+
+.step > div:first-child{
+  font-size: 1.3em;
+  margin-top: 10%;
+  margin-bottom: 12%;
+}
+
+.step div:nth-child(2n){
+  color: red;
+  font-size: 1.8em;
+  margin-bottom: 6%;
+}
+
+.step span {
+  font-size: 1.3em;
+}
+
+footer{
+  width: 100%;
+  height: 130px;
+  background-color: $odessuBlue;
+  padding: 2%;
+}
+
+.footer-links-container{
+  text-align: center;
+}
+
+.footer-links-container div{
+  display: inline;
+  margin: 3% 4%;
+  font-size: 1.5em;
+}
+
+footer:last-child{
+  text-align: center;
+}

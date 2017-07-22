@@ -169,6 +169,22 @@ $(document).ready(function() {
           $('#conversation-body').scrollTop($('#conversation-body').prop("scrollHeight"));
         })
       })
-
     })
+
+    var images = ['/assets/Leon-98.jpg', '/assets/Leon-196.jpg', '/assets/Leon-342.jpg', '/assets/Leon-398.jpg'];
+
+    var index  = 0;
+    var top   = $('.body-complement-right');
+
+    setInterval(function() {
+       top.animate({ opacity: 0 }, 500, function() {
+         top.css('background-image', 'url('+images[++index]+')');
+         top.animate({ opacity: 1 }, 500, function() {
+           if(index === ((images.length) - 1)) {
+             index = -1;
+           }
+         });
+       });
+    }, 5000);
+
   })

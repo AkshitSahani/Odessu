@@ -15,6 +15,7 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
+  <% if session[:user_signed_up?] %>
   <div class="container">
     <div class="row">
       <div class="col-xs-6">
@@ -32,12 +33,15 @@
     <% end %>
 
     <% unless user_signed_in? %>
-      <%= link_to "Sign Up", new_user_registration_path%><br>
-      <%= link_to "Sign In", new_user_session_path %>
+    <%= link_to "Get Started", new_user_registration_path%><br>
+    <%= link_to "Sign In", new_user_session_path %>
     <% else %>
-      <div id="current-user"><%= link_to "My profile", user_path(current_user) %></div>
-      <%= link_to "Logout", destroy_user_session_path, :method => :delete %>
+    <div id="current-user"><%= link_to "My profile", user_path(current_user) %></div>
+    <%= link_to "Logout", destroy_user_session_path, :method => :delete %>
     <% end %>
+    
+  <% end %>
+
 
 
     <% if flash[:notice] %>
@@ -46,8 +50,9 @@
 
     <% if flash[:alert] %>
       <p id="alert"><%= flash[:alert] %></p>
-    <% end %>
+
     <div class="messager-insert"></div>
+<% end %>
     <%= yield %>
   </div>
   </body>

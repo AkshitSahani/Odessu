@@ -81,7 +81,8 @@ class Users::RegistrationsController < Devise::RegistrationsController
     params['issues']['issue_bottom'].each do |issue_bottom|
       current_user.issues << Issue.create(issue_bottom: issue_bottom)
     end
-    redirect_to root_path
+    session[:user_signed_up?] = true
+    redirect_to products_path
   end
 
   def show
