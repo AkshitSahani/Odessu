@@ -17,20 +17,19 @@
 <body>
   <% if session[:user_signed_up?] %>
   <div class="container">
-    <div class="row">
-      <div class="col-xs-6">
-        <h1><%= link_to "My Store", root_path %></h1>
+      <div class="top-logo-container">
+        <%= link_to products_path do %>
+          <div style="text-align: center"><%= image_tag "odessu_logo.jpg", width: 60, height: 60 %> <span style="color: black"><b style="font-size: 1.15em">ODESSU</b></span></div>
+        <% end %>
       </div>
-      <div class="col-xs-6 text-right">
-        <h1 class="cart-text"><%= render 'layouts/cart_text' %></h1>
-      </div>
-    </div>
-    <hr>
+        <span class="cart-text"><%= render 'layouts/cart_text' %></span>
+      <!-- <br> -->
+      <%= form_tag(get_results_path, method: :get, id: "search-form") do %>
+      <%= text_field_tag :search, params[:search], placeholder: "Search"%>
+      <% submit_tag "Search", :name => nil %>
+      <% end %>
+    <!-- <hr> -->
 
-    <%= form_tag(get_results_path, method: :get, id: "search-form") do %>
-      <%= text_field_tag :search, params[:search], placeholder: "Search Odessu"%>
-      <%= submit_tag "Search", :name => nil %>
-    <% end %>
 
     <% unless user_signed_in? %>
     <%= link_to "Get Started", new_user_registration_path%><br>
@@ -39,7 +38,7 @@
     <div id="current-user"><%= link_to "My profile", user_path(current_user) %></div>
     <%= link_to "Logout", destroy_user_session_path, :method => :delete %>
     <% end %>
-    
+
   <% end %>
 
 

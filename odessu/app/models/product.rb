@@ -36,13 +36,13 @@ class Product < ApplicationRecord
   def self.filter_results(filter)
     if filter == "All"
       Product.all
-    elsif filter == "Dresses"
+    elsif filter == "DRESSES"
       Product.where.not(dresses: nil)
-    elsif filter == "Tops"
+    elsif filter == "TOPS"
       Product.where.not(tops: nil)
-    elsif filter == "Bottoms"
+    elsif filter == "BOTTOMS"
       Product.where.not(bottoms: nil)
-    elsif filter == "Jumpsuits"
+    elsif filter == "JUMPSUITS"
       Product.where.not(jumpsuit: nil)
     end
   end

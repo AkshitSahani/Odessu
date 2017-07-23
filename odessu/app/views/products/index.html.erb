@@ -1,18 +1,22 @@
-<h2 class="text-center">Products</h2>
-<h3 class="filter">All</h3>
-<h3 class="filter">Dresses</h3>
-<h3 class="filter">Tops</h3>
-<h3 class="filter">Bottoms</h3>
-<h3 class="filter">Jumpsuits</h3>
+<div class="filters-container">
+  <h4 class="filter">DRESSES</h4>
+  <h4 class="filter">TOPS</h4>
+  <h4 class="filter">BOTTOMS</h4>
+  <h4 class="filter">ALL ITEMS</h4>
+  <h4 class="filter">SKIRTS</h4>
+  <h4 class="filter">SHORTS</h4>
+  <h4 class="filter">SALES</h4>
+</div>
+<hr>
 <div class="row">
-  <div class="col-xs-6 col-xs-offset-3 index">
+  <div class="index">
     <% @products.each do |product| %>
       <%= link_to product_path(product) do %>
-        <div>
-          <%= product.name %>
-          <div><%= image_tag(product.picture_src, height: '300', width: '200') %></div>
-          Price elsewhere: <span class="price-before"><%= product.pricebefore %></span><br>
-          Price: <%= product.priceafter %><br><br>
+        <div class="prod-container">
+          <%= image_tag(product.picture_src, height: '500', width: '350', class: 'prod-img') %><br><br>
+          <%= product.name.upcase %> by Voluptuous<br>
+          <span class="price-before"><%= product.pricebefore %></span> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;&nbsp;
+          <%= product.priceafter %><br><br><br><br>
         </div>
       <% end %>
     <% end %>

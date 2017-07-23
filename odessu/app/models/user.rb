@@ -92,7 +92,7 @@ class User < ApplicationRecord
      return results_hash
   end
 
-  def self.calcFromHeightWeight(user) #when you only have height and weight from the user.
+  def self.calcFromHeightWeight(user) #when you only have height and weight from the user. priority: 1**
     if user.height_cm
       getHeight = (user.height_cm.to_f) * 0.393701
     elsif user.height_ft
@@ -133,7 +133,7 @@ class User < ApplicationRecord
     return results_hash
   end
 
-  def self.calcFromStoresAndSizes(user) # when you only know the stores and sizes in each store for the user.
+  def self.calcFromStoresAndSizes(user) # when you only know the stores and sizes in each store for the user. priority 5
 
     #Variable Instantiation
     topBustMax = 0
@@ -423,7 +423,7 @@ class User < ApplicationRecord
     return results_hash
   end
 
-  def self.calcFromStoreAndHeightWeightBust(user) #when you get both bust, waist, hip measurements and stores with sizes from the user
+  def self.calcFromStoreAndHeightWeightBust(user) #priority 3
     #Variable Instantiation
     topBustMax = 0
     topBustMin = 0
@@ -750,7 +750,7 @@ class User < ApplicationRecord
     return results_hash
   end
 
-  def self.calcFromHeightWeightStore(user)
+  def self.calcFromHeightWeightStore(user) #priority 4
     if user.height_cm
       getHeight = (user.height_cm.to_f) * 0.393701
     elsif user.height_ft
@@ -1074,7 +1074,7 @@ class User < ApplicationRecord
     return results_hash
   end
 
-  def calcFromHeightWeightBra
+  def calcFromHeightWeightBra(user) #priority 2
     getBraBust = user.bra_size.to_f + (['AA', 'A', 'B', 'C', 'D', 'DD or E', 'DDD or F', 'G', 'H', 'I', 'J'].find_index(user.bra_cup))
 
     if user.height_cm

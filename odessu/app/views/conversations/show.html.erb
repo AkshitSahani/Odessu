@@ -1,4 +1,4 @@
-<h1>Chatting with <%= @conversation.with(current_user).first_name %></h1>
+<h1>Chatting with <%= @conversation.with(current_user).full_name %></h1>
 
 <div id="conversation-main">
   <div id="conversation-body" data-conversation-id="<%= @conversation.id %>">

@@ -76,6 +76,8 @@ $(document).ready(function() {
   })
 
   $('.filter').click(function(){
+    $('.filter').css('color', 'black').css('text-decoration', 'none');
+    $(this).css('color', 'red').css('text-decoration', 'underline');
     var filter = $(this).html();
     $.ajax({
       url: '/products',
@@ -85,19 +87,19 @@ $(document).ready(function() {
       },
       dataType: 'json'
     }).done(function(data){
-      var results = $("<div>").addClass("results-container").addClass('index');
+      var results = $("<div>").addClass('index');
       for(i=0; i < data.length; i++){
         var productId = data[i]['id'];
         var url = 'http://localhost:3000/products/' + productId;
         var link = $('<a>').attr('href', url);
-        var filterResultContainer = $("<div>").addClass('filter-result');
-        filterResultContainer.append($("<span>").html(data[i]["name"])).append($('<br>'));
+        var filterResultContainer = $("<div>").addClass('prod-container');
         var imgSrc = data[i]['picture_src']
-        var resultImage = $("<img>").attr('src', imgSrc).attr('height', "300").attr('width', "200");
-        filterResultContainer.append(resultImage).append($('<br>'));
+        var resultImage = $("<img>").attr('src', imgSrc).attr('height', "500").attr('width', "350").addClass('prod-img');
+        filterResultContainer.append(resultImage).append($('<br>')).append($('<br>'));
+        filterResultContainer.append(data[i]["name"].toUpperCase() + " by Voluptuous").append($('<br>'));
         filterResultContainer.append($("<span>").addClass('price-before').html(data[i]["pricebefore"]));
-        filterResultContainer.append('&nbsp; &nbsp;').append($("<span>").html(data[i]["priceafter"]));
-        (results.append(link.append(filterResultContainer))).append($('<br>')).append($('<br>'));
+        filterResultContainer.append('&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;').append(data[i]["priceafter"]).append($('<br>')).append($('<br>')).append($('<br>')).append($('<br>'));
+        (results.append(link.append(filterResultContainer)));
       }
       $('.index').replaceWith(results);
       })
@@ -257,5 +259,5 @@ $(document).ready(function() {
       })
     })
 
-    
+
   })

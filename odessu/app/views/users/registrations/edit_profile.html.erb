@@ -1,11 +1,8 @@
 <span class="form1"><%= form_for(current_user, url: update_profile_path) do |f| %>
 <%= current_user.id %>
   <h1>Profile 1</h1>
-  <%= f.label :first_name, "First Name" %>
-  <%= f.text_field :first_name %>
-
-  <%= f.label :last_name, "Last Name" %>
-  <%= f.text_field :last_name %>
+  <%= f.label :full_name, "Full Name" %>
+  <%= f.text_field :full_name %>
 
   <%= f.label :age_range, "Age Range" %>
   <%= f.select :age_range, ['11-19', '20-29', '21-29', '31-39', '41-49', '51-59'] %>
