@@ -106,9 +106,24 @@ class User < ApplicationRecord
     end
     # getBraBust = user.bust #(bra size)
 
-    predictedBust = (39.8828 + (getHeight.to_f * (-0.303664)) + (getWeight * 0.120713))
-    predictedWaist = (37.9338 + (getHeight.to_f * (-0.427647)) + (getWeight * 0.139814))
-    predictedHip = (33.4630 + (getHeight.to_f * (-0.163644)) + (getWeight * 0.118256))
+    if (getHeight >= 48) && (getHeight <=59)
+      predictedBust = (39.8264 + (getHeight.to_f * (-0.302730)) + (getWeight * 0.120800))
+      predictedWaist = (35.8677 + (getHeight.to_f * (-0.384542)) + (getWeight * 0.138296))
+      predictedHip = (33.4821 + (getHeight.to_f * (-0.166397)) + (getWeight * 0.118986))
+      predictedInseam = (-7.39781 + (getHeight.to_f * 0.602135)) + (getWeight * (-0.0133127))
+
+    elsif (getHeight >= 60) && (getHeight <=71)
+      predictedBust = (39.8602 + (getHeight.to_f * (-0.303865)) + (getWeight * 0.120917))
+      predictedWaist = (60.0865 + (getHeight.to_f * (-0.763514)) + (getWeight * 0.141982))
+      predictedHip = (33.3585 + (getHeight.to_f * (-0.162360)) + (getWeight * 0.118724))
+      predictedInseam = (-7.85941 + (getHeight.to_f * 0.608293)) + (getWeight * (-0.0128906))
+
+    elsif (getHeight >= 72) && (getHeight <=80)
+      predictedBust = (39.7441 + (getHeight.to_f * (-0.302251)) + (getWeight * 0.120945))
+      predictedWaist = (39.4437 + (getHeight.to_f * (-0.446287)) + (getWeight * 0.139020))
+      predictedHip = (33.0163 + (getHeight.to_f * (-0.160000)) + (getWeight * 0.119220))
+      predictedInseam = (-10.1759 + (getHeight.to_f * 0.636287)) + (getWeight * (-0.0117900))
+    end
 
     results_hash = {}
     results_hash[:true_bust] = predictedBust
@@ -401,9 +416,9 @@ class User < ApplicationRecord
     averageHip = ((averageTopHip.to_f + (averageBottomHip * 9)) / 10)
 
     results_hash = {}
-    results_hash[:bust] = averageBust
-    results_hash[:waist] = averageWaist
-    results_hash[:hip] = averageHip
+    results_hash[:true_bust] = averageBust
+    results_hash[:true_waist] = averageWaist
+    results_hash[:true_hip] = averageHip
 
     return results_hash
   end
@@ -702,9 +717,24 @@ class User < ApplicationRecord
     end
     # getBraBust = user.bust #(bra size)
 
-    predictedBust = (39.8828 + (getHeight.to_f * (-0.303664)) + (getWeight * 0.120713))
-    predictedWaist = (37.9338 + (getHeight.to_f * (-0.427647)) + (getWeight * 0.139814))
-    predictedHip = (33.4630 + (getHeight.to_f * (-0.163644)) + (getWeight * 0.118256))
+    if (getHeight >= 48) && (getHeight <=59)
+      predictedBust = (39.8264 + (getHeight.to_f * (-0.302730)) + (getWeight * 0.120800))
+      predictedWaist = (35.8677 + (getHeight.to_f * (-0.384542)) + (getWeight * 0.138296))
+      predictedHip = (33.4821 + (getHeight.to_f * (-0.166397)) + (getWeight * 0.118986))
+      predictedInseam = (-7.39781 + (getHeight.to_f * 0.602135)) + (getWeight * (-0.0133127))
+
+    elsif (getHeight >= 60) && (getHeight <=71)
+      predictedBust = (39.8602 + (getHeight.to_f * (-0.303865)) + (getWeight * 0.120917))
+      predictedWaist = (60.0865 + (getHeight.to_f * (-0.763514)) + (getWeight * 0.141982))
+      predictedHip = (33.3585 + (getHeight.to_f * (-0.162360)) + (getWeight * 0.118724))
+      predictedInseam = (-7.85941 + (getHeight.to_f * 0.608293)) + (getWeight * (-0.0128906))
+
+    elsif (getHeight >= 72) && (getHeight <=80)
+      predictedBust = (39.7441 + (getHeight.to_f * (-0.302251)) + (getWeight * 0.120945))
+      predictedWaist = (39.4437 + (getHeight.to_f * (-0.446287)) + (getWeight * 0.139020))
+      predictedHip = (33.0163 + (getHeight.to_f * (-0.160000)) + (getWeight * 0.119220))
+      predictedInseam = (-10.1759 + (getHeight.to_f * 0.636287)) + (getWeight * (-0.0117900))
+    end
 
     getBraBust = user.bra_size.to_f + (['AA', 'A', 'B', 'C', 'D', 'DD or E', 'DDD or F', 'G', 'H', 'I', 'J'].find_index(user.bra_cup))
 
@@ -734,9 +764,24 @@ class User < ApplicationRecord
     end
     # getBraBust = user.bust #(bra size)
 
-    predictedBust = (39.8828 + (getHeight.to_f * (-0.303664)) + (getWeight * 0.120713))
-    predictedWaist = (37.9338 + (getHeight.to_f * (-0.427647)) + (getWeight * 0.139814))
-    predictedHip = (33.4630 + (getHeight.to_f * (-0.163644)) + (getWeight * 0.118256))
+    if (getHeight >= 48) && (getHeight <=59)
+      predictedBust = (39.8264 + (getHeight.to_f * (-0.302730)) + (getWeight * 0.120800))
+      predictedWaist = (35.8677 + (getHeight.to_f * (-0.384542)) + (getWeight * 0.138296))
+      predictedHip = (33.4821 + (getHeight.to_f * (-0.166397)) + (getWeight * 0.118986))
+      predictedInseam = (-7.39781 + (getHeight.to_f * 0.602135)) + (getWeight * (-0.0133127))
+
+    elsif (getHeight >= 60) && (getHeight <=71)
+      predictedBust = (39.8602 + (getHeight.to_f * (-0.303865)) + (getWeight * 0.120917))
+      predictedWaist = (60.0865 + (getHeight.to_f * (-0.763514)) + (getWeight * 0.141982))
+      predictedHip = (33.3585 + (getHeight.to_f * (-0.162360)) + (getWeight * 0.118724))
+      predictedInseam = (-7.85941 + (getHeight.to_f * 0.608293)) + (getWeight * (-0.0128906))
+
+    elsif (getHeight >= 72) && (getHeight <=80)
+      predictedBust = (39.7441 + (getHeight.to_f * (-0.302251)) + (getWeight * 0.120945))
+      predictedWaist = (39.4437 + (getHeight.to_f * (-0.446287)) + (getWeight * 0.139020))
+      predictedHip = (33.0163 + (getHeight.to_f * (-0.160000)) + (getWeight * 0.119220))
+      predictedInseam = (-10.1759 + (getHeight.to_f * 0.636287)) + (getWeight * (-0.0117900))
+    end
 
     #Variable Instantiation
     topBustMax = 0
@@ -1045,9 +1090,24 @@ class User < ApplicationRecord
     end
     # getBraBust = user.bust #(bra size)
 
-    predictedBust = (39.8828 + (getHeight.to_f * (-0.303664)) + (getWeight * 0.120713))
-    predictedWaist = (37.9338 + (getHeight.to_f * (-0.427647)) + (getWeight * 0.139814))
-    predictedHip = (33.4630 + (getHeight.to_f * (-0.163644)) + (getWeight * 0.118256))
+    if (getHeight >= 48) && (getHeight <=59)
+      predictedBust = (39.8264 + (getHeight.to_f * (-0.302730)) + (getWeight * 0.120800))
+      predictedWaist = (35.8677 + (getHeight.to_f * (-0.384542)) + (getWeight * 0.138296))
+      predictedHip = (33.4821 + (getHeight.to_f * (-0.166397)) + (getWeight * 0.118986))
+      predictedInseam = (-7.39781 + (getHeight.to_f * 0.602135)) + (getWeight * (-0.0133127))
+
+    elsif (getHeight >= 60) && (getHeight <=71)
+      predictedBust = (39.8602 + (getHeight.to_f * (-0.303865)) + (getWeight * 0.120917))
+      predictedWaist = (60.0865 + (getHeight.to_f * (-0.763514)) + (getWeight * 0.141982))
+      predictedHip = (33.3585 + (getHeight.to_f * (-0.162360)) + (getWeight * 0.118724))
+      predictedInseam = (-7.85941 + (getHeight.to_f * 0.608293)) + (getWeight * (-0.0128906))
+
+    elsif (getHeight >= 72) && (getHeight <=80)
+      predictedBust = (39.7441 + (getHeight.to_f * (-0.302251)) + (getWeight * 0.120945))
+      predictedWaist = (39.4437 + (getHeight.to_f * (-0.446287)) + (getWeight * 0.139020))
+      predictedHip = (33.0163 + (getHeight.to_f * (-0.160000)) + (getWeight * 0.119220))
+      predictedInseam = (-10.1759 + (getHeight.to_f * 0.636287)) + (getWeight * (-0.0117900))
+    end
 
     trueBust = ((predictedBust.to_f * 4) + (getBraBust * 6)) / 10
     trueWaist = predictedWaist

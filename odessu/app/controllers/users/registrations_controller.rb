@@ -93,11 +93,10 @@ class Users::RegistrationsController < Devise::RegistrationsController
     #
     # Stripe::Subscription.create(
     #   :customer => customer.id,
-    #   :plan => "basic-monthly", #call this whatever Leon names his plan.
+    #   :plan => "What We Offer",
     # )
     #
     # current_user.update_attributes(stripe_customer_id: customer.id)
-
 
     if current_user.update_attributes(sign_up_params)
       session[:user_signed_up?] = true
@@ -108,7 +107,15 @@ class Users::RegistrationsController < Devise::RegistrationsController
   end
 
   def update_terms_of_service
-    byebug
+    if request.xhr?
+      if params['terms']['email_subscription'] == 'true'
+        current_user.update_attributes(email_subscription: true)
+      end
+
+      if params['terms']['terms_agreed?'] == 'true'
+        current_user.update_attributes(terms_agreed?: true)
+      end
+    end
   end
 
   def show
@@ -219,7 +226,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
       :height_in, :height_cm, :weight,:bust, :hip, :waist, :account_type, :tops_store, :tops_size, :tops_store_fit,
       :bottoms_store, :bottoms_size,:bottoms_store_fit, :bra_size, :bra_cup, :body_shape, :tops_fit, :preference, :bottoms_fit,
       :birthdate, :advertisement_source, :weight_type, :stripe_customer_id, :predicted_hip, :predicted_bust, :predicted_waist,
-       :bust_waist_hip_inseam_type, :inseam, :phone_number, :email_subscription, :terms_agreed?])
+       :bust_waist_hip_inseam_type, :inseam, :predicted_inseam, :phone_number, :email_subscription, :terms_agreed?])
   end
 
   # If you have extra params to permit, append them to the sanitizer.
@@ -228,7 +235,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
       :height_in, :height_cm, :weight,:bust, :hip, :waist, :account_type, :tops_store, :tops_size, :tops_store_fit,
       :bottoms_store, :bottoms_size,:bottoms_store_fit, :bra_size, :bra_cup, :body_shape, :tops_fit, :preference, :bottoms_fit,
       :birthdate, :advertisement_source, :weight_type, :stripe_customer_id, :predicted_hip, :predicted_bust, :predicted_waist,
-       :bust_waist_hip_inseam_type, :inseam, :phone_number, :email_subscription, :terms_agreed?])
+       :bust_waist_hip_inseam_type, :inseam, :predicted_inseam, :phone_number, :email_subscription, :terms_agreed?])
   end
 
   # The path used after sign up.

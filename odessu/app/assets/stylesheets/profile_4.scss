@@ -38,11 +38,43 @@
   width: 20px;
 }
 
+.shipping-info input[type = submit]{
+  width: 150px;
+}
+
 .prof4-disclaimer{
+  position: absolute;
+  top: 38em;
+  left: 30em;
   text-align: center;
   display: inline;
   width: 40%;
-  margin-left: 5%;
+  // margin-left: 5%;
   font-size: 0.75em;
-  margin-bottom: 10%;
+  // margin-bottom: 10%;
+}
+
+.prof4-disclaimer form {
+  display: inline;
+}
+
+.prof4-content-container{
+  position: relative;
+}
+
+.prof4-submit{
+  text-align: center;
+  color: white;
+  background-color: $odessuBlue;
+  border-radius: 5px;
+  width: 150px;
+  height: 40px;
+  position: absolute;
+  top: 50em;
+  left: 35em;
+  margin-bottom: 4%;
+}
+
+.prof4-disclaimer input[type = checkbox]{
+  text-align: left;
 }

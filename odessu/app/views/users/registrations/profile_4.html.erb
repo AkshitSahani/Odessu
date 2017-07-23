@@ -8,7 +8,7 @@
 
 <hr>
 
-<div>
+<div class="prof4-content-container">
   <div class="shipping-info">
   <h4>Shipping Information</h4>
     <%= form_for current_user, url: create_profile_4_path do |f| %>
@@ -23,17 +23,14 @@
 
       <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
       data-key="<%= Rails.configuration.stripe[:publishable_key] %>"
-      data-description="Subscribe to Odessu"
+      data-description="Odessu Shopping Service"
       data-amount="1200"
       data-locale="auto">
-      </script>
+      </script><br><br>
 
 
-      <div class="prof4-submit-container"><%= f.submit "Discover", class:'prof4-submit' %></div>
 
-    <% end %>
   </div>
-</div>
 
   <div class="prof4-disclaimer">
     Your information will not be publicly shared <br>
@@ -42,5 +39,10 @@
     <%= form_tag update_terms_of_service_path, method: :patch do %>
     <%= check_box_tag :email_subscription, true%> Odessu can send you emails for special deals and events <br>
     <%= check_box_tag :terms_agreed?, true%> I agree to the <span class="tof"> Terms of Service </span>
+    <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
     <% end %>
   </div>
+</div>
+
+<div class="prof4-submit-container"><%= f.submit "Discover", class:'prof4-submit' %></div>
+<% end %>

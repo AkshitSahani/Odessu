@@ -7,9 +7,15 @@ class Users::SessionsController < Devise::SessionsController
   # end
 
   # POST /resource/sign_in
-  # def create
-  #   super
-  # end
+  def create
+    super
+    session[:user_signed_up?] = true
+  end
+
+  def after_sign_in_path_for(resource)
+    super(resource)
+    products_path
+  end
 
   # DELETE /resource/sign_out
   # def destroy

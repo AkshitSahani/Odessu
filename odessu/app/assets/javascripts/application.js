@@ -240,4 +240,22 @@ $(document).ready(function() {
       }
     })
 
+    $('.prof4-submit').on('click', function(e){
+      e.preventDefault();
+      var terms = {}
+      $(':checkbox:checked').each(function(i){
+        terms[($(this).attr('name'))] = $(this).attr('value');
+      })
+      $.ajax({
+        url: '/update_terms_of_service',
+        method: 'patch',
+        data:{
+          terms: terms
+        }
+      }).done(function(){
+        $('.shipping-info > form').submit();
+      })
+    })
+
+    
   })
