@@ -7,12 +7,39 @@
     </ul>
   </div>
 <% end %>
+<hr style="border-color: black; border-width: thin; width: 100%; margin-left: 0;">
+
+<h3 style="text-align: center">Shopping Cart</h3>
 <% if @order_items.size == 0 %>
   <p class="text-center">
-    There are no items in your shopping cart.  Please <%= link_to "go back", root_path %> and add some items to your cart.
+    There are no items in your shopping cart.  Please <%= link_to "go back", products_path %> and add some items to your cart.
   </p>
 <% else %>
   <% @order_items.each do |order_item| %>
     <%= render 'carts/cart_row', product: order_item.product, order_item: order_item, show_total: true %>
   <% end %>
 <% end %>
+<br><br>
+<div class="cart-show-shipping">
+  <h3 style="display: inline;">Free Shipping</h3><br>
+  <%= check_box_tag '', {}%> 20 Dundas St West<br>
+  <%= check_box_tag '', {}%> 5985 Rodeo Drive
+</div>
+
+<div class="cart-show-totalamount">
+    <% if flash[:error].present? %>
+      <div id="error_explanation">
+        <p><%= flash[:error] %></p>
+      </div>
+    <% end %>
+    <label class="amount">
+      <span>Amount: CAD <%= @amount %></span>
+    </label><br>
+    <label class="tax">
+      <span>Taxes (13%): CAD <%= @tax %></span>
+    </label><br>
+    <hr style="width: 100%; margin-left: 0;">
+    <label class="final-charge">
+      <span>Total: CAD <%= @charge %></span>
+    </label>
+</div>

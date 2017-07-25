@@ -1,3 +1,77 @@
 // Place all the styles related to the Carts controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+@import 'colorRules';
+
+.cart-div{
+  border-top: 1px solid red;
+  border-bottom: 1px solid red;
+  position: relative;
+}
+
+.cart-show-prodname{
+  position: absolute;
+  top: 12%;
+  left: 20%;
+}
+
+.color-heading, .size-heading, .price-heading, .quantity-heading{
+  color: $odessuBlue;
+  display: inline;
+}
+
+.cart-show-colorrow{
+  position: absolute;
+  top: 37%;
+  left: 21%;
+}
+
+.cart-show-sizerow{
+  position: absolute;
+  top: 37%;
+  left: 43%;
+}
+
+.cart-show-quantityrow{
+  position: absolute;
+  top: 37%;
+  left: 65%;
+}
+
+.quantity-value{
+  width: 25%;
+  margin-left: 30%;
+    border: none;
+}
+
+.cart-show-pricerow{
+  position: absolute;
+  top: 37%;
+  left: 87%;
+}
+
+.price-value, .color-value, .size-value{
+  margin-left: 50%;
+}
+
+.remove-item{
+  position: absolute;
+  top: 2%;
+  left: 98%;
+  font-size: 1.5em;
+}
+
+.remove-item a {
+  color: black;
+}
+
+.cart-show-totalamount{
+  display: inline;
+  float: right;
+  width: 30%;
+}
+
+.cart-show-shipping{
+  display: inline;
+  width: 30%;
+}
