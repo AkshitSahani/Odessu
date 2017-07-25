@@ -34,7 +34,7 @@ class Product < ApplicationRecord
   end
 
   def self.filter_results(filter)
-    if filter == "All"
+    if filter == "ALL ITEMS"
       Product.all
     elsif filter == "DRESSES"
       Product.where.not(dresses: nil)

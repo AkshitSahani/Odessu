@@ -1,30 +1,28 @@
-<div class="">
-
-  <div class="row">
-  </div>
+<div class="prod-show-container">
 
     <div class="prod-show-left">
+      <span><%= link_to "<", products_path %></span><br>
       <h4><%= product.name %></h4>
       <%= image_tag(product.picture_src, height: '500', width: '350') %>
     </div>
 
     <div class="prod-show-right">
       <%= form_for order_item, remote: true do |f| %>
-      <h3> <%= product.name %> </h3>
+      <h3> <%= product.name.upcase %> </h3><br>
       <span class="pricebefore" style="text-decoration: line-through"><%= product.pricebefore %> </span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-      <span class="priceafter"><%= product.priceafter %></span><br>
-      <span> <%= product.description1 %></span><br>
+      <span class="priceafter"><%= product.priceafter %></span><br><br>
+      <div class="prod-show-desc"> <%= product.description1 %></div><br>
         <h4> Color</h4>
-        <% product.get_product_colors.each do |color| %>
+        <span class="prod-show-color"><% product.get_product_colors.each do |color| %>
           <%= color %>
-        <% end %>
+        <% end %></span>
         <h4>Sizes</h4>
-        <% product.get_product_sizes.each do |size| %>
-          <%= size %>
-        <% end %>
-        <div class="">
-          <%= f.number_field :quantity, value: 1, class: "", min: 1 %>
-          <div class="">
+        <span class="prod-show-sizes"><% product.get_product_sizes.each do |size| %>
+          <%= size %> &nbsp;&nbsp;
+        <% end %></span>
+        <br><br><div style="margin-left: 20%">
+          Quantity: <%= f.number_field :quantity, value: 1, min: 1, style: 'width: 40px;'%><br><br>
+          <div style="margin-left: 1%">
             <%= f.hidden_field :product_id, value: product.id %>
             <%= f.hidden_field :itemcode, value: product.itemcode %>
             <%= f.hidden_field :item_link, value: product.link_href %>

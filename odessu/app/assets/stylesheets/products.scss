@@ -31,3 +31,47 @@
   width: 49%;
   text-align: center;
 }
+
+.prod-show-right{
+  position: absolute;
+  top: 15%;
+  left: 49%;
+  text-align: left;
+  margin-left: 7%;
+}
+
+.prod-show-right span{
+  margin-left: 10%;
+}
+
+.prod-show-left span {
+  font-size: 4em;
+  float: left;
+  margin-left: 3%;
+}
+
+.prod-show-left a {
+  color: black;
+}
+
+.prod-show-left a:hover{
+  text-decoration: none;
+}
+
+.prod-show-container{
+  margin-top: 1%;
+  position: relative;
+}
+// 
+// .prod-show-right h4{
+//   text-align: left;
+//   margin-left: 25%;
+// }
+
+.prod-show-right h3{
+  display: inline-block;
+}
+
+.prod-show-desc{
+  width: 66%;
+}
