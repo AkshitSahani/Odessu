@@ -283,5 +283,27 @@ $(document).ready(function() {
       })
     })
 
+    $('.stripe-button-container').hide();
 
+    var checks = $('.verify-black');
+
+    var interval = 5000;
+    for(i = 0; i < checks.length; i++ ) {
+      (function(i){
+        setInterval(function(){
+          var check = checks[i];
+          $(check).attr('src', '/assets/success.svg');
+        }, interval)
+        interval += 5000;
+      })(i);
+    }
+
+    setTimeout(function(){
+      $('.wait-message').empty();
+      $('.wait-message').text('Everything is perfect!')
+    }, 15000)
+
+    setTimeout(function(){
+      $('.stripe-button-container').show();
+    }, 15000)
   })

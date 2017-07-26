@@ -1,3 +1,20 @@
 // Place all the styles related to the charges controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+@import 'colorRules';
+
+.checkout-verification-hr{
+  border-width: 1em;
+}
+
+.verify-black{
+  margin: 0 7%;
+}
+
+.getting-verified{
+  color: red;
+}
+
+.wait-message{
+  color: $odessuBlue;
+}

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170726153459) do
+ActiveRecord::Schema.define(version: 20170726190720) do
 
   create_table "conversations", force: :cascade do |t|
     t.integer  "author_id"
@@ -196,6 +196,10 @@ ActiveRecord::Schema.define(version: 20170726153459) do
     t.boolean  "terms_agreed?",              default: false
     t.string   "inseam"
     t.float    "predicted_inseam"
+    t.string   "city"
+    t.string   "postal_code"
+    t.string   "province"
+    t.string   "buzzer_code"
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
