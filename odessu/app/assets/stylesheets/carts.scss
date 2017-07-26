@@ -68,10 +68,33 @@
 .cart-show-totalamount{
   display: inline;
   float: right;
-  width: 30%;
+  width: 20%;
+  position: absolute;
+  bottom: -42.5%;
+  right: 5%;
 }
 
 .cart-show-shipping{
   display: inline;
   width: 30%;
+  margin-left: 44%;
+}
+
+.cart-show-shipping input{
+  margin-left: 42%;
+}
+
+.cart-show-checkout{
+  float: right;
+  margin-right: 4%;
+  margin-top: 2%;
+  margin-bottom: 2%;
+  background-color: $odessuBlue;
+  border-radius: 5px;
+  width: 150px;
+  height: 40px;
+}
+
+.cart-show-checkout a{
+  color: white;
 }
