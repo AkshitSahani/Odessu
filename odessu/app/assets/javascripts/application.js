@@ -259,5 +259,29 @@ $(document).ready(function() {
       })
     })
 
+    $('.quantity-value').on('change', function(){
+      var $this = $(this);
+      var quantity = $(this).val();
+      var itemId = $(this).siblings('#order_item_order_item_id').val();
+      console.log(quantity);
+      console.log(itemId);
+      $.ajax({
+        url: '/order_items/' + itemId,
+        method: 'put',
+        data:{
+          order_item_quantity: quantity,
+          order_item_id: itemId
+        },
+        dataType: 'json'
+      }).done(function(data){
+        console.log(data);
+        var totalPrice = data['total_price'];
+        console.log(totalPrice);
+        console.log($this.attr('class'));
+        $($this).parent().siblings('.text-right').children('.cart-show-totalprice').empty();
+        $($this).parent().siblings('.text-right').children('.cart-show-totalprice').text(totalPrice);
+      })
+    })
+
 
   })

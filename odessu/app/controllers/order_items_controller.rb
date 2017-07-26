@@ -15,10 +15,23 @@ class OrderItemsController < ApplicationController
     end
 
     def update
-      @order = current_order
-      @order_item = @order.order_items.find(params[:id])
-      @order_item.update_attributes(order_item_params)
-      @order_items = @order.order_items
+      if request.xhr?
+        @order = current_order
+        @order_item = @order.order_items.find(params['order_item_id'])
+        @order_item.update_attributes(quantity: params['order_item_quantity'])
+        @order_items = @order.order_items
+        respond_to do |format|
+          format.html
+          format.json { render json: @order_item }
+        end
+      end
+
+      if params.has_key?('order_item_params')
+        @order = current_order
+        @order_item = @order.order_items.find(params[:id])
+        @order_item.update_attributes(order_item_params)
+        @order_items = @order.order_items
+      end
     end
 
     def destroy
@@ -29,6 +42,6 @@ class OrderItemsController < ApplicationController
     end
   private
     def order_item_params
-      params.require(:order_item).permit(:order_id, :unit_price, :quantity, :product_id)
+      params.require(:order_item).permit(:order_id, :unit_price, :quantity, :product_id, :color, :size)
     end
 end

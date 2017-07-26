@@ -14,6 +14,7 @@
         <div class="cart-show-quantityrow">
           <h4 style="display: inline;" class="quantity-heading">Quantity </h4><br><%= f.number_field :quantity, value: order_item.quantity.to_i, class: "quantity-value", min: 1 %>
           <%= f.hidden_field :product_id, value: product.id %>
+          <%= f.hidden_field :order_item_id, value: order_item.id %>
         </div>
         <span class="remove-item"><%= link_to "X", order_item, { data: { confirm: "Are you sure you wish to delete the product '#{order_item.product.name}' from your cart?" }, method: :delete, remote: true } %></span>
           <div class="">
@@ -23,7 +24,7 @@
             </div>
           </div>
         </div>
-        <h4 class="text-right">Total Price: <span style="color: green"><%= number_to_currency order_item.total_price %></span></h4>
+        <h4 class="text-right">Total Price: <span style="color: green" class="cart-show-totalprice"><%= number_to_currency order_item.total_price %></span></h4>
       <% end %>
     </div>
 

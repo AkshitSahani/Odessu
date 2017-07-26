@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170725193243) do
+ActiveRecord::Schema.define(version: 20170726153459) do
 
   create_table "conversations", force: :cascade do |t|
     t.integer  "author_id"
@@ -81,9 +81,12 @@ ActiveRecord::Schema.define(version: 20170725193243) do
   create_table "orders", force: :cascade do |t|
     t.integer  "user_id"
     t.integer  "order_total"
-    t.datetime "created_at",      null: false
-    t.datetime "updated_at",      null: false
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
     t.integer  "order_status_id"
+    t.string   "delivery_type"
+    t.string   "shipping_address"
+    t.string   "delivery_address"
   end
 
   create_table "products", force: :cascade do |t|

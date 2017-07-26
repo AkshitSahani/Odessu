@@ -1,5 +1,6 @@
 class ChargesController < ApplicationController
   def new
+    # byebug
     @amount = current_order.subtotal.round(2)
     @tax = (@amount * 0.13).round(2)
     @charge = (@amount + @tax)
@@ -33,7 +34,7 @@ class ChargesController < ApplicationController
         :description => 'Rails Stripe customer',
         :currency    => 'cad'
       )
-      
+
     end
 
   rescue Stripe::CardError => e
