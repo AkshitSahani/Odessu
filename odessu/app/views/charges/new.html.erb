@@ -1,22 +1,24 @@
-<hr class="checkout-verification-hr">
-<div class="checkout-verification-container" style="text-align: center">
-  <div class="getting-verified"> GETTING VERIFIED</div><br>
+<%= form_tag charges_path do %>
+  <hr class="checkout-verification-hr">
+  <div class="checkout-verification-container" style="text-align: center">
+    <div class="getting-verified"> GETTING VERIFIED</div><br>
 
-  <div class="wait-message"> Please Wait! </div><br>
-  
-  <%= image_tag "success (1).svg", height: 100, width: 100, class: 'verify-black' %>
-  <%= image_tag "success (1).svg", height: 100, width: 100, class: 'verify-black' %>
-  <%= image_tag "success (1).svg", height: 100, width: 100, class: 'verify-black' %><br><br>
-  <span> RIGHT FIT </span>
-  <span> AVAILABILITY </span>
-  <span> DETAILS </span>
+    <div class="wait-message"> Please Wait! </div><br>
 
-</div><br><br>
-<hr class="checkout-verification-hr">
-<br>
-<div class="stripe-button-container"style="text-align: center;"><script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
-data-key="<%= Rails.configuration.stripe[:publishable_key] %>"
-data-description="Pay for cart items"
-data-amount="<%= (@charge * 100).to_i %>"
-data-locale="auto">
-</script></div>
+    <%= image_tag "success (1).svg", height: 100, width: 100, class: 'verify-black' %>
+    <%= image_tag "success (1).svg", height: 100, width: 100, class: 'verify-black' %>
+    <%= image_tag "success (1).svg", height: 100, width: 100, class: 'verify-black' %><br><br>
+    <span> RIGHT FIT </span>
+    <span> AVAILABILITY </span>
+    <span> DETAILS </span>
+
+  </div><br><br>
+  <hr class="checkout-verification-hr">
+  <br>
+  <div class="stripe-button-container"style="text-align: center;"><script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+  data-key="<%= Rails.configuration.stripe[:publishable_key] %>"
+  data-description="Pay for cart items"
+  data-amount="<%= (@charge * 100).to_i %>"
+  data-locale="auto">
+  </script></div>
+<% end %>

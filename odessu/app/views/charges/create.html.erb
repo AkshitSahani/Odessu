@@ -1,3 +1,40 @@
+<div class="receipt-items-container">
+  <% current_order.order_items.each do |item| %>
+    <div class="receipt-item">
+      <%= image_tag Product.find(item.product_id).picture_src, height: 200, width: 150 %>
+      <%= Product.find(item.product_id).name %>
+      Color: <%= item.color %>
+      Size: <%= item.size %>
+      Price: <%= item.unit_price %>
+    </div>
+  <% end %>
+</div>
+
+<div class="receipt-info-container">
+  <span>FREE PICK UP</span><br>
+  <span class="receipt-info-blue">20 DUNDAS STREET WEST</span><br>
+  <span>office location</span><br><br>
+  <span>Monday - friday</span><br>
+  <span class="receipt-info-blue">Open 10am - 9pm</span><br>
+  <span>Saturday - Sunday</span><br>
+  <span>Open 1pm - 10pm</span><br><br>
+  <span>647 - 685 - 0625</span><br>
+  <span class="receipt-info-blue">shop@odessu.com</span>
+</div>
+<br><br>
+<div class="charge-labels-container">
+  <label class="amount">
+    <span>Amount: CAD <%= @amount %></span>
+  </label><br>
+  <label class="tax">
+    <span>Taxes (13%): CAD <%= @tax %></span>
+  </label><br>
+  <hr style="width: 100%; margin-left: 0;">
+  <label class="final-charge">
+    <span>Total: CAD <%= @charge %></span>
+  </label>
+</div>
+
 <h2>Thanks, you paid <strong>CAD <%= @charge %></strong>!</h2>
 <h4>
   We hope you enjoyed our service! We look forward to you continuing to provide you the trendiest clothing that best fits YOUR body!
