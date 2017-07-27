@@ -18,3 +18,13 @@
 .wait-message{
   color: $odessuBlue;
 }
+
+.checkout-verification-container > span:first-of-type{
+  float: left;
+  margin-left: 24%;
+}
+
+.checkout-verification-container > span:last-of-type{
+  float: right;
+  margin-right: 24.5%;
+}
