@@ -35,6 +35,11 @@
   float: left;
   clear: both;
   overflow: auto;
+  border-top: 2px solid red;
+  padding-bottom: 3%;
+  padding-top: 3%;
+  border-bottom: 2px solid red;
+  margin-bottom: 5%;
 }
 
 .receipt-info-container{
@@ -51,5 +56,55 @@
 }
 
 .charge-labels-container{
-  width: 30%;
+  width: 25%;
+  margin: auto;
+}
+
+.receipt-item{
+  // margin-bottom: 6%;
+  position: relative;
+}
+
+.receipt-size{
+  position: absolute;
+  top: 40%;
+  left: 54%;
+  color: $odessuBlue;
+}
+
+.receipt-color{
+  position: absolute;
+  top: 40%;
+  left: 28%;
+  color: $odessuBlue;
+}
+
+.receipt-price{
+  position: absolute;
+  top: 0%;
+  left: 580%;
+  color: $odessuBlue;
+}
+
+.receipt-color-value, .receipt-size-value, .receipt-price-value{
+  margin-left: 45%;
+  color: black
+}
+
+.receipt-itemname{
+  position: absolute;
+  top: 15%;
+  left: 26%;
+}
+
+.back-home{
+  float: right;
+  background-color: $odessuBlue;
+  width: 150px;
+  height: 50px;
+  border-radius: 5px;
+}
+
+.back-home a {
+  color: white;
 }

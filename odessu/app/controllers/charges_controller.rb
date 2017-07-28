@@ -37,8 +37,10 @@ class ChargesController < ApplicationController
 
     end
 
-  rescue Stripe::CardError => e
-    flash[:error] = e.message
-    redirect_to new_charge_path
-  end
+    session[:order_id] = nil
+
+    rescue Stripe::CardError => e
+      flash[:error] = e.message
+      redirect_to new_charge_path
+    end
 end

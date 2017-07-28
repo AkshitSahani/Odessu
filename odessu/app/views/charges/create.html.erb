@@ -1,21 +1,30 @@
-<div class="receipt-items-container">
-  <% current_order.order_items.each do |item| %>
-    <div class="receipt-item">
-      <%= image_tag Product.find(item.product_id).picture_src, height: 200, width: 150 %>
-      <%= Product.find(item.product_id).name %>
-      Color: <%= item.color %>
-      Size: <%= item.size %>
-      Price: <%= item.unit_price %>
-    </div>
-  <% end %>
+<div style="text-align: center;">RECEIPT</div>
+
+<div>Status: 
+  <% if current_user.orders.last.delivery_type == "Pickup" %>
+    <span>On Hold</span>
+  <% elsif current_user.orders.last.delivery_type == "Shipping" %>
+    <span>Shipping</span>
 </div>
 
+<div class="receipt-items-container">
+  <% current_user.orders.last.order_items.each do |item| %>
+    <div class="receipt-item">
+      <%= image_tag Product.find(item.product_id).picture_src, height: 150, width: 100 %>
+      <span class="receipt-itemname"><%= Product.find(item.product_id).name.upcase %></span>
+      <span class="receipt-color">Color: <br><span class="receipt-color-value"><%= item.color %></span></span>
+      <span class="receipt-size">Size: <br><span class="receipt-size-value"><%= item.size %><span></span>
+      <span class="receipt-price"> Price:<br><span class="receipt-price-value"><%= item.unit_price %></span></span>
+    </div><br><br>
+  <% end %>
+</div><br><br>
+
 <div class="receipt-info-container">
-  <span>FREE PICK UP</span><br>
+  <span>FREE PICK UP</span><br><br>
   <span class="receipt-info-blue">20 DUNDAS STREET WEST</span><br>
   <span>office location</span><br><br>
   <span>Monday - friday</span><br>
-  <span class="receipt-info-blue">Open 10am - 9pm</span><br>
+  <span class="receipt-info-blue">Open 10am - 9pm</span><br><br>
   <span>Saturday - Sunday</span><br>
   <span>Open 1pm - 10pm</span><br><br>
   <span>647 - 685 - 0625</span><br>
@@ -35,8 +44,10 @@
   </label>
 </div>
 
-<h2>Thanks, you paid <strong>CAD <%= @charge %></strong>!</h2>
+<h3>Thank you for your payment of <strong>CAD <%= @charge %></strong>!</h3>
 <h4>
   We hope you enjoyed our service! We look forward to you continuing to provide you the trendiest clothing that best fits YOUR body!
   Explore and shop more!
 </h4>
+
+<button class="back-home"><%= link_to 'Back Home', products_path %></button>
