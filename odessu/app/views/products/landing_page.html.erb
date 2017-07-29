@@ -27,8 +27,7 @@
 
 <div>
   <div class="benefits-img-left">
-    <%= image_tag "Leon-74.jpg", height: 500, width: 317 %>
-    <%= image_tag "Leon-76.jpg", height: 500, width: 318 %>
+    <%= image_tag "Leon-74.jpg", height: 500, width: 320 %><%= image_tag "Leon-76.jpg", height: 500, width: 320 %>
   </div>
   <div class="benefits-right">
     <h4><b>Your Benefits</b></h4>
@@ -42,12 +41,12 @@
     <span>$12/month</span>
   </div>
 </div>
-
 <div class="mission">
   <div><b>Our Mission</b></div>
   <h1>Make shopping enjoyable for everyone.</h1>
   <h3>Feel confident and look good in the clothes you wear.</h3><br><br>
-  <%= raw(Product.youtube_embed('www.youtube.com/watch?v=XcHFPF6NMqc')) %>
+  <span class="vid-container"><%= raw(Product.youtube_embed('www.youtube.com/watch?v=XcHFPF6NMqc')) %></span>
+  <div id="overlay"></div>
 </div>
 
   <div class="how-it-works">

@@ -191,28 +191,28 @@ $(document).ready(function() {
 
 
     $('.bodyshape').on('mouseenter', function(){
-      var desc = $('<span>').addClass('bodyshape-desc').css('width', '400').css('height', '400');
-      var invTri = 'Inverted Triangle Body Shape: Generally, this body is athletic and strong. The broadest part of the body? The shoulders and the chest. The torso and waist are tighter.Health Implication: You benefit from a small waist, which can keep your heart disease risk low.Celebrity Examples: Super sports star Serena Williams and actress Hilary Swank.Fashion Tip: Inverted triangles can go bold with wide leg pants, which balance out the body.';
-      var ruler = 'Ruler Body Shape: With a ruler, there’s only a tiny bit of a curve at the hips. They mostly have a straight torso, with shoulders that align with the torso.Health Implication: A high WHR ratio could increase risk of certain diseases, but rulers tend to be thin overall. Keeping your Body Mass Index within healthy range can keep these risks at bay.Celebrity Examples: Two strong and successful women: Jennifer Garner and Madonna.Fashion Tip: Rulers can really play up a blouse with feminine ruffles and skirts with rounded hemlines.';
-      var triangle = 'Triangle Body Shape: This shape has a shapely bottom, with a tinier waist. Triangles are a classic feminine shape.Health Implication: Triangles are likely to have increased fertility, from the estrogen that’s putting more weight on their hips.Celebrity Examples: Tons of actresses and singers, from Jennifer Aniston to Jennifer Lopez.Fashion Tip: Triangles can rock a horizontal striped top and a jacket cropped above the waist, drawing attention above.';
-      var round = 'Circle Body Shape: Commonly called apples, women with a circle body shape have smaller shoulders and hips. They also tend to have slender legs and a slim booty. All fit! Though the fat has to go somewhere… With circles, it’s right smack in the middle: the stomach.Health Implications: According to past studies, a larger waist in comparison to the rest of the body could put you at greater risk for heart disease. Scientists are beginning to challenge this assertion. Either way, it’s important that you feel in control of your body fitness. As you move in different phases of your life, your shape can take different forms.Celebrity Examples: “30-Rock’s” Jane Krakowski and TV/film actress Dianne Wiest. Some celebs fluctuate with this body shape, like Renée Zellweger. Jennifer Hudson went from a circle shape to hourglass.Fashion Tip: Tops with a wide, scoop neck to show some skin up top, while giving shape.';
-      var hourGlass = 'Hourglass Body Shape: The name says it all. This body shape is curvy in all the right places: bust and booty. It’s pretty much a universal perception of what is womanly and attractive.Health Implications: Hourglasses tend to have more estrogen because of their wider hips and breasts, which is ideal for fertility and pregnancy.Celebrity Examples: You may have already guessed—Marilyn Monroe and Christina Hendricks (the modern 50s gal from “Mad Men”) are hourglasses.Fashion Tip: Pencil skirts in a solid color show of curves and leave much to the imagination—intriguing!';
+      var desc = $('<div>').addClass('bodyshape-desc').css('width', '395').css('min-height', '200').css('z-index', '2').css('position', 'absolute').css('bottom', '-25px').css('left', '-100px').css('border', '2px solid black').css('border-radius', '5px');
+      var invTri = '<b><u> Inverted Triangle Body Shape </u></b>: Generally, this body is athletic and strong. The broadest part of the body? The shoulders and the chest. The torso and waist are tighter.Health Implication: You benefit from a small waist, which can keep your heart disease risk low.Celebrity Examples: Super sports star Serena Williams and actress Hilary Swank.Fashion Tip: Inverted triangles can go bold with wide leg pants, which balance out the body.';
+      var ruler = '<b><u>Ruler Body Shape</b></u>: With a ruler, there’s only a tiny bit of a curve at the hips. They mostly have a straight torso, with shoulders that align with the torso.Health Implication: A high WHR ratio could increase risk of certain diseases, but rulers tend to be thin overall. Keeping your Body Mass Index within healthy range can keep these risks at bay.Celebrity Examples: Two strong and successful women: Jennifer Garner and Madonna.Fashion Tip: Rulers can really play up a blouse with feminine ruffles and skirts with rounded hemlines.';
+      var triangle = '<b><u>Triangle Body Shape</b></u>: This shape has a shapely bottom, with a tinier waist. Triangles are a classic feminine shape.Health Implication: Triangles are likely to have increased fertility, from the estrogen that’s putting more weight on their hips.Celebrity Examples: Tons of actresses and singers, from Jennifer Aniston to Jennifer Lopez.Fashion Tip: Triangles can rock a horizontal striped top and a jacket cropped above the waist, drawing attention above.';
+      var round = '<b><u>Circle Body Shape</b></u>: Commonly called apples, women with a circle body shape have smaller shoulders and hips. They also tend to have slender legs and a slim booty. All fit! Though the fat has to go somewhere… With circles, it’s right smack in the middle: the stomach.Health Implications: According to past studies, a larger waist in comparison to the rest of the body could put you at greater risk for heart disease. Scientists are beginning to challenge this assertion. Either way, it’s important that you feel in control of your body fitness. As you move in different phases of your life, your shape can take different forms.Celebrity Examples: “30-Rock’s” Jane Krakowski and TV/film actress Dianne Wiest. Some celebs fluctuate with this body shape, like Renée Zellweger. Jennifer Hudson went from a circle shape to hourglass.Fashion Tip: Tops with a wide, scoop neck to show some skin up top, while giving shape.';
+      var hourGlass = '<b><u>Hourglass Body Shape</b></u>: The name says it all. This body shape is curvy in all the right places: bust and booty. It’s pretty much a universal perception of what is womanly and attractive.Health Implications: Hourglasses tend to have more estrogen because of their wider hips and breasts, which is ideal for fertility and pregnancy.Celebrity Examples: You may have already guessed—Marilyn Monroe and Christina Hendricks (the modern 50s gal from “Mad Men”) are hourglasses.Fashion Tip: Pencil skirts in a solid color show of curves and leave much to the imagination—intriguing!';
 
       switch($(this).attr('class').split(' ')[1].trim()){
         case "inverted-triangle":
-          $('.bodyshapes-container').append($('<br>')).append(desc.text(invTri))
+          $('.bodyshapes-container').append(desc.html(invTri));
           break;
         case "ruler":
-          $('.bodyshapes-container').append($('<br>')).append(desc.text(ruler))
+          $('.bodyshapes-container').append(desc.html(ruler));
           break;
         case "round":
-          $('.bodyshapes-container').append($('<br>')).append(desc.text(round))
+          $('.bodyshapes-container').append(desc.html(round));
           break;
         case "triangle":
-          $('.bodyshapes-container').append($('<br>')).append(desc.text(triangle))
+          $('.bodyshapes-container').append(desc.html(triangle));
           break;
         case "hourglass":
-          $('.bodyshapes-container').append($('<br>')).append(desc.text(hourGlass))
+          $('.bodyshapes-container').append(desc.html(hourGlass));
           break;
       }
     })
@@ -306,4 +306,18 @@ $(document).ready(function() {
     setTimeout(function(){
       $('.stripe-button-container').show();
     }, 15000)
+
+    $("#overlay").on("click",function(event){
+		  $('iframe').css('opacity', 1);
+      var iframeSrc = $('iframe').attr('src');
+      var playIframeSrc = iframeSrc + "?autoplay=1";
+      $('iframe').attr('src', playIframeSrc);
+      event.preventDefault();
+		  $("#overlay").css("z-index",-1);
+    });
+
+    $("iframe").on("mouseleave",function(){
+    	$("#overlay").css("z-index",1);
+    });
+
   })

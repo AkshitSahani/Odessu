@@ -25,37 +25,53 @@
   font-size: 1.5em;
 }
 
+.select-that-apply{
+  text-align: center;
+  margin: 3% 4%;
+}
+
 .cloth-fit{
   text-align: center;
 }
 
 .issues{
   margin-top: 3%;
-  background-color: salmon;
   text-align: center;
   width: 88%;
   margin-left: 6%;
+}
+
+.prof-3-issue{
+  display: inline-block;
   border: 1px solid $odessuBlue;
+  background-color: salmon;
+  border-radius: 5px;
+  margin: -2px;
+  padding: 2px 4px;
+  font-size: 1em;
+  width: 35%;
 }
 
 .issue{
   display: inline-block;
-  width: 31%;
-  margin: 0 4%;
+  width: 40%;
+  margin: 0%;
   height: 4em;
 }
 
-.issue div{
-  display: inline;
+.other-issues{
   text-align: center;
-  font-size: 1.5em;
+  margin-left: 38%;
 }
 
 .other-issues input {
   border: none;
   border-bottom: 1px solid black;
-  width: 100px;
-  background-color: salmon;
+  width: 250px;
+}
+
+.other-issues input:last-child{
+  margin-left: 41.5%;
 }
 
 .showoff{
@@ -67,12 +83,11 @@
 }
 
 .showoff-option{
-  display: inline;
+  display: inline-block;
   width: 15%;
-  margin: 5% 9%;
+  margin: 2% 5%;
   border: 1px solid red;
   border-radius: 4px;
-  padding: 2px 5px;
 }
 
 .prof3-submit{

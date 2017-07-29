@@ -15,45 +15,53 @@
 
     <div class="fitt">
       <div>TOPS</div><br><br>
-      <%= f.radio_button :tops_fit, 'loose' %> Loose &nbsp; &nbsp;
-      <%= f.radio_button :tops_fit, 'right fit' %> Right Fit &nbsp; &nbsp;
-      <%= f.radio_button :tops_fit, 'tight' %> Tight &nbsp;
+      <%= f.radio_button :tops_fit, 'flowy' %> Flowy &nbsp; &nbsp;
+      <%= f.radio_button :tops_fit, 'fitted' %> Fitted &nbsp; &nbsp;
     </div>
 
     <div class="fitt">
       <div>BOTTOMS</div><br><br>
-      <%= f.radio_button :bottoms_fit, 'loose' %> Loose &nbsp; &nbsp;
-      <%= f.radio_button :bottoms_fit, 'right fit' %> Just Right &nbsp; &nbsp;
-      <%= f.radio_button :bottoms_fit, 'tight' %> Tight &nbsp;
+      <%= f.radio_button :bottoms_fit, 'tight' %> Tight &nbsp; &nbsp;
+      <%= f.radio_button :bottoms_fit, 'relaxed' %> Relaxed &nbsp; &nbsp;
     </div>
 
   </div>
 
+<div class="select-that-apply">
+  <h6>(Select all that apply)</h6>
+  <h3> What issues do you usually have with your clothing? </h3>
+</div>
+
   <div class="issues">
-    <h6>(Select all that apply)</h6>
-    <h3> What issues do you usually have with your clothing? </h3>
 
     <%= fields_for :issues do |i| %>
       <div class="issue">
         <h4> Fit </h4>
+        <% count = 0 %>
         <% ['Tight on Bust', 'Loose on Bust', 'Tight on Waist', 'Loose on Waist', 'Tight on Hip', 'Loose on Hip'].each do |value| %>
-          <%= i.check_box(:issue_fit, { :multiple => true }, value, nil)%>
-          <%= i.label :issue_fit, "#{value}" %>
+        <% count += 1 %>
+          <div class="prof-3-issue">
+            <%= i.check_box(:issue_fit, { :multiple => true }, value, nil)%>
+            <%= i.label :issue_fit, "#{value}" %>
+          </div>
+          <% if count % 2 == 0 %> <br> <% end %>
         <% end %>
       </div>
       <div class="issue">
         <h4> Length </h4>
+        <% count = 0 %>
         <% ['Too long on arms', 'Too short on arms', 'Too long on legs', 'Too short on legs'].each do |value| %>
-          <%= i.check_box(:issue_length, { :multiple => true }, value, nil)%>
-          <%= i.label :issue_length, "#{value}" %>
+          <% count += 1 %>
+          <div class="prof-3-issue">
+            <%= i.check_box(:issue_length, { :multiple => true }, value, nil)%>
+            <%= i.label :issue_length, "#{value}" %>
+          </div>
+          <% if count % 2 == 0 %> <br> <% end %>
         <% end %>
       </div>
-      <br><br><br>
-      <span class="other-issues">Other: <%= i.text_field :other1 %> <br><%= i.text_field :other2 %></span><br><br>
-    <% end %>
-
-
-  </div>
+  </div><br><br>
+  <span class="other-issues">Other: <%= i.text_field :other1 %> <br><%= i.text_field :other2 %></span><br><br>
+  <% end %>
 
   <h3 style="text-align: center">What do you want to show off? </h3><br>
 
@@ -69,6 +77,13 @@
       <div class="showoff-option">LEGS</div>
     </div>
   <% end %>
-  
+
   <div class="issue-submit-container"><%= f.submit 'Next', class: 'prof3-submit'%></div>
 <% end %>
+
+<div class="prof-setup-progress">
+  <%= image_tag "success.svg", height: 50, width: 50 %>
+  <%= image_tag "success.svg", height: 50, width: 50 %>
+  <%= image_tag "success.svg", height: 50, width: 50%>
+  <%= image_tag "success (1).svg", height: 50, width: 50 %>
+</div>

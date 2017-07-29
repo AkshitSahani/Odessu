@@ -79,11 +79,11 @@
   display: inline;
   float: right;
   background: url('Leon-98.jpg');
-  background-size: 650px 500px;
+  background-size: 700px 500px;
 }
 
 .complement-container{
-  margin-top: -7.75%;
+  margin-top: -7.80%;
 }
 
 .benefits-right{
@@ -98,7 +98,6 @@
   width: 50%;
   display: inline;
   float: left;
-  margin-bottom: 1.5%;
 }
 
 .benefits-right h4 {
@@ -157,6 +156,24 @@
   color: white;
   font-size: 2em;
 }
+
+iframe{
+  opacity: 0.4;
+  position: absolute;
+  right: 32%;
+  bottom: -161.5%;
+}
+
+#overlay{
+  margin: 0;
+  display: inline;
+  width: 450px;
+  height: 300px;
+  position: absolute;
+  right: 32%;
+  bottom: -161.5%;
+}
+
 .how-it-works{
   overflow: hidden;
 }

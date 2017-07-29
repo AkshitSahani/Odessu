@@ -1,12 +1,3 @@
-<!-- <h2> Stores </h2>
-<%# if !@results[:store_results].empty? %>
-  <%# @results[:store_results].each do |store|%>
-    <%# store.store_name %><br>
-  <%# end %>
-<%# else %>
-  <h4> There were no stores found containing the term "<%= params[:search] %>".</h4>
-<%# end %> -->
-
 <h2 class="search-results-header"> Search results for "<%= params[:search] %>"</h2><br>
 <% if !@results[:product_results].empty? %>
   <div class="index">

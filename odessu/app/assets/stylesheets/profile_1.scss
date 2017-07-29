@@ -75,7 +75,7 @@ hr{
 .prof1-4th-row select {
   width: 200px;
   margin-right: 4%;
-  border: 1px solid red;
+  border: 1px solid $odessuBlue;
 }
 
 .prof1-next{
@@ -94,6 +94,7 @@ hr{
 .prof1-5th-row{
   text-align: center;
   margin: 0 8%;
+  margin-bottom: 2%;
 }
 
 .prof1-5th-row input {

@@ -8,7 +8,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # end
 
   def profile_1
-    @stores = (["Select a store"] << Store.all.distinct.pluck(:store_name)).flatten
+    @stores = (["Select a store"] << Store.all.distinct.order(:store_name).pluck(:store_name)).flatten
     if request.xhr?
       @sizes = Store.where(store_name: params['store_name'], feature: "BUST").map{|x| x.store_size}
       respond_to do |format|

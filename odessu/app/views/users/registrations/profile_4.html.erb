@@ -16,7 +16,15 @@
       <%= f.text_field :full_name, placeholder: "Full Name" %><br><br>
 
       <%# f.label :address, 'Address' %>
-      <%= f.text_field :address, placeholder: "Full Address" %><br><br>
+      <%= f.text_field :address, placeholder: "Address" %><br><br>
+
+      <%= f.text_field :city, placeholder: "City" %><br><br>
+
+      <%= f.text_field :province, placeholder: "Province" %><br><br>
+
+      <%= f.text_field :postal_code, placeholder: "Postal Code" %><br><br>
+
+      <%= f.text_field :buzzer_code, placeholder: "Buzzer Code" %><br><br>
 
       <%# f.label :phone_number, 'Phone Number' %>
       <%= f.text_field :phone_number, placeholder: "Phone number" %><br><br>
@@ -46,3 +54,10 @@
 
 <div class="prof4-submit-container"><%= f.submit "Discover", class:'prof4-submit' %></div>
 <% end %>
+
+<div class="prof-setup-progress-prof-4">
+  <%= image_tag "success.svg", height: 50, width: 50 %>
+  <%= image_tag "success.svg", height: 50, width: 50 %>
+  <%= image_tag "success.svg", height: 50, width: 50%>
+  <%= image_tag "success.svg", height: 50, width: 50 %>
+</div>
