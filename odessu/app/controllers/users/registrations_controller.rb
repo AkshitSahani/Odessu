@@ -98,17 +98,17 @@ class Users::RegistrationsController < Devise::RegistrationsController
     #
     # current_user.update_attributes(stripe_customer_id: customer.id)
 
-    if ((current_user.height_ft != nil || current_user.height_cm != nil) && current_user.weight != nil)
-      predictions = User.calcFromHeightWeight(current_user)
-    elsif (((current_user.height_ft != nil || current_user.height_cm != nil) && current_user.weight == nil) && current_user.tops_store != "Select a store" && current_user.tops_size != nil && current_user.bottoms_store != "Select a store" && current_user.bottoms_size != nil)
-      predictions = User.calcFromStoresAndSizes(current_user)
-    elsif (((current_user.height_ft == nil && current_user.height_cm == nil) && current_user.weight != nil) && current_user.tops_store != "Select a store" && current_user.tops_size != nil && current_user.bottoms_store != "Select a store" && current_user.bottoms_size != nil)
-      predictions = User.calcFromStoresAndSizes(current_user)
-    elsif (((current_user.height_ft == nil && current_user.height_cm == nil) && current_user.weight == nil) && current_user.tops_store != "Select a store" && current_user.tops_size != nil && current_user.bottoms_store != "Select a store" && current_user.bottoms_size != nil)
-      predictions = User.calcFromStoresAndSizes(current_user)
-    end
-
-    current_user.update_attributes(predicted_bust: predictions['true_bust'], predicted_waist: predictions['true_waist'], predicted_hip: predictions['true_hip'])
+    # if ((current_user.height_ft != nil || current_user.height_cm != nil) && current_user.weight != nil)
+    #   predictions = User.calcFromHeightWeight(current_user)
+    # elsif (((current_user.height_ft != nil || current_user.height_cm != nil) && current_user.weight == nil) && current_user.tops_store != "Select a store" && current_user.tops_size != nil && current_user.bottoms_store != "Select a store" && current_user.bottoms_size != nil)
+    #   predictions = User.calcFromStoresAndSizes(current_user)
+    # elsif (((current_user.height_ft == nil && current_user.height_cm == nil) && current_user.weight != nil) && current_user.tops_store != "Select a store" && current_user.tops_size != nil && current_user.bottoms_store != "Select a store" && current_user.bottoms_size != nil)
+    #   predictions = User.calcFromStoresAndSizes(current_user)
+    # elsif (((current_user.height_ft == nil && current_user.height_cm == nil) && current_user.weight == nil) && current_user.tops_store != "Select a store" && current_user.tops_size != nil && current_user.bottoms_store != "Select a store" && current_user.bottoms_size != nil)
+    #   predictions = User.calcFromStoresAndSizes(current_user)
+    # end
+    #
+    # current_user.update_attributes(predicted_bust: predictions['true_bust'], predicted_waist: predictions['true_waist'], predicted_hip: predictions['true_hip'])
 
     if current_user.update_attributes(sign_up_params)
       session[:user_signed_up?] = true

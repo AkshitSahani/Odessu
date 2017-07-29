@@ -75,6 +75,10 @@ $(document).ready(function() {
     })
   })
 
+  var allItems = $('.filters-container > h4')[3];
+  $(allItems).css('color', 'red').css('text-decoration', 'underline');
+
+
   $('.filter').click(function(){
     $('.filter').css('color', 'black').css('text-decoration', 'none');
     $(this).css('color', 'red').css('text-decoration', 'underline');
